@@ -1,8 +1,5 @@
 
-![FilamentsFiscal-removebg-preview](https://github.com/SSancaSH-Projetos/FilamentsFiscal3D/assets/128731254/60f2589f-0efd-49f6-9e52-448e82c4c5ae)
-
-<img src="(https://github.com/SSancaSH-Projetos/FilamentsFiscal3D/assets/128731254/60f2589f-0efd-49f6-9e52-448e82c4c5ae" heigth="30px"/>
-<img src="(https://github.com/SSancaSH-Projetos/FilamentsFiscal3D/assets/128731254/60f2589f-0efd-49f6-9e52-448e82c4c5ae" width="30px"/>
+<img src="https://github.com/SSancaSH-Projetos/FilamentsFiscal3D/assets/128731254/60f2589f-0efd-49f6-9e52-448e82c4c5ae.png" width="200px"/>
 
 # Problema: Custeamento de Peças em 3D
 ## Área: TI
