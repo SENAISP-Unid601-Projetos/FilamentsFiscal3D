@@ -1,5 +1,6 @@
 
-<img src="https://github.com/SSancaSH-Projetos/FilamentsFiscal3D/assets/128731254/174056dc-626b-46ca-a299-ac3d94db88c1" alt="Logo Da Minha inpresa" width"300"/>
+<img src=![FilamentsFiscal-removebg-preview](https://github.com/SSancaSH-Projetos/FilamentsFiscal3D/assets/128731254/60f2589f-0efd-49f6-9e52-448e82c4c5ae)
+"" alt="Logo Da Minha inpresa" width"300"/>
 
 # Problema: Custeamento de Peças em 3D
 ## Área: TI
