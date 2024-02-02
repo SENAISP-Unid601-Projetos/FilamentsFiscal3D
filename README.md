@@ -1,3 +1,6 @@
+
+![FilamentsFiscal-removebg-preview](https://github.com/SSancaSH-Projetos/FilamentsFiscal3D/assets/128731254/174056dc-626b-46ca-a299-ac3d94db88c1)
+
 # Problema: Custeamento de Peças em 3D
 ## Área: TI
 ## Responsáveis: João Paulo, Matheus Henrique, Vinicius Chalch
