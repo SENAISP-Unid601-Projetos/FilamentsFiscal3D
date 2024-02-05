@@ -19,8 +19,8 @@ O projeto visa desenvolver um sistema para custear peças em 3D, proporcionando 
 ## 3. Análise de Riscos
 
 ### Risco: Resistencia a Integração do Sistema  
--Estratégias de Mitigação: Garantir uma comunicação clara e aberta sobre os benefícios do novo sistema, envolvendo os professores desde o início do processo. Oferecer sessões de treinamento adequadas para garantir que os professores se sintam confortáveis e confiantes ao usar a nova aplicação.
--Plano de Contingência: Realizar pesquisas periódicas de satisfação para identificar e abordar rapidamente qualquer resistência emergente.
+- Estratégias de Mitigação: Garantir uma comunicação clara e aberta sobre os benefícios do novo sistema, envolvendo os professores desde o início do processo. Oferecer sessões de treinamento adequadas para garantir que os professores se sintam confortáveis e confiantes ao usar a nova aplicação.
+- Plano de Contingência: Realizar pesquisas periódicas de satisfação para identificar e abordar rapidamente qualquer resistência emergente.
 
 
 ### Risco: Mudanças nos Requisitos durante o Desenvolvimento
