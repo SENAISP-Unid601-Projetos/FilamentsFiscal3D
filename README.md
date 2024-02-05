@@ -17,25 +17,19 @@ O projeto visa desenvolver um sistema para custear peças em 3D, proporcionando 
 - Colaboração: Possibilitar a colaboração entre professores, compartilhando dados e insights sobre as melhores práticas e eficiências no uso de peças em 3D.
 
 ## 3. Análise de Riscos
-### Risco: Resistência à Adoção do Aplicativo pelos Funcionários
-- Estratégias de Mitigação: Realizar sessões de treinamento abrangentes para garantir a compreensão e aceitação do novo sistema. Envolva os funcionários desde as fases iniciais do projeto para receber feedback e endereçar preocupações.
-- Plano de Contingência: Disponibilizar suporte técnico contínuo e recursos de aprendizado online. Implementar um programa de incentivo para promover a adoção do aplicativo.
 
-### Risco: Problemas de Integração com Sistemas Existentes (mesmo que físicos)
-- Estratégias de Mitigação: Realizar uma análise detalhada dos sistemas existentes antes da implementação. Envolver a equipe de TI desde o início para garantir uma integração suave.
-- Plano de Contingência: Manter uma equipe de suporte técnico preparada para lidar rapidamente com problemas de integração. Ter um plano de rollback para restaurar sistemas anteriores, se necessário.
+### Risco: Resistencia a Integração do Sistema  
+-Estratégias de Mitigação: Garantir uma comunicação clara e aberta sobre os benefícios do novo sistema, envolvendo os professores desde o início do processo. Oferecer sessões de treinamento adequadas para garantir que os professores se sintam confortáveis e confiantes ao usar a nova aplicação.
+-Plano de Contingência: Realizar pesquisas periódicas de satisfação para identificar e abordar rapidamente qualquer resistência emergente.
 
-### Risco: Falhas Técnicas no Aplicativo
-- Estratégias de Mitigação: Realizar testes rigorosos do aplicativo antes do lançamento. Contratar profissionais de desenvolvimento qualificados e experientes.
-- Plano de Contingência: Implementar um sistema de backup que permita a rápida restauração em caso de falhas críticas. Manter uma equipe de suporte técnico disponível para resolver problemas imprevistos.
 
 ### Risco: Mudanças nos Requisitos durante o Desenvolvimento
 - Estratégias de Mitigação: Realizar uma análise completa dos requisitos antes do início do desenvolvimento. Estabelecer um processo formal para gerenciar alterações nos requisitos.
 - Plano de Contingência: Avaliar o impacto das mudanças nos prazos e recursos. Comunicar prontamente as alterações aos stakeholders e ajustar o cronograma conforme necessário.
 
-### Risco: Atualizações Tecnológicas
-- Estratégias de Mitigação: Implementar uma política de revisão periódica do sistema para avaliar a necessidade de atualizações em resposta às mudanças tecnológicas.
-- Plano de Contingência: Designar uma equipe responsável por monitorar as tendências tecnológicas e ajustar o sistema conforme necessário.
+### Risco: Mudanças nos Requisitos 
+- Estratégias de Mitigação: Manter canais abertos de comunicação para identificar e incorporar alterações nos requisitos à medida que surgem.
+- Plano de Contingência: Manter documentação atualizada e detalhada para facilitar a compreensão dos requisitos e permitir ajustes ágeis. Realizar análises regulares de impacto para entender as implicações de mudanças nos requisitos e ajustar o plano de desenvolvimento conforme necessário.
 
 ### Risco: Adaptação a Mudanças no Mercado
 - Estratégias de Mitigação: Monitorar regularmente as tendências do mercado e ajustar os modelos de custeamento com base em dados atualizados.
@@ -43,8 +37,8 @@ O projeto visa desenvolver um sistema para custear peças em 3D, proporcionando 
 
 ### Risco: Precisão dos Dados de Entrada
 - Estratégias de Mitigação: Implementar verificações automáticas de consistência e validação nos dados de entrada para identificar e corrigir possíveis erros.
-- Plano de Contingência: Implementar backups regulares dos dados de entrada para permitir a restauração rápida em caso de perda ou corrupção.
-
+- Plano de Contingência: Implementar alertas automáticos que notifiquem os usuários sobre possíveis erros ou inconsistências nos dados inseridos.
+  
 ## 4. Cronograma
 - **Janeiro/2024:** Planejamento e Análise
   - Formação das equipes
