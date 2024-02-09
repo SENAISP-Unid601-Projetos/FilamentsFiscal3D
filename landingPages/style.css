@@ -1,6 +1,7 @@
 /* /*ESTILO GERAL */
 * {
     margin: 0%;
+    gap: 20px;
     padding: 0%;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
@@ -84,61 +85,6 @@ header nav.menu-desktop ul li {
     font-size: 20px
 }
 
-/* ESTILO DO MENU MOBILE */
-.btn-abrir-menu i{
-    color: #00FF08;
-    font-size: 40px;
-}
-.menu-mobile{
-    background-color: #000;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 999;
-    width: 0%;
-    overflow: hidden;
-}
-.menu-mobile.abrir-menu{
-    width: 70%;
-    transition: .5s;
-}
-.menu-mobile.abrir-menu ~ .overlay-menu{
-    display: block;
-}
-.menu-mobile .btn-fechar{
-    padding: 20px 5%;
-}
-.menu-mobile .btn-fechar i{
-    color: #00FF08;
-    font-size: 30px;
-
-}
-.menu-mobile nav ul{
-    text-align: right;
-}
-.menu-mobile nav ul li a{
-    color: #fff;
-    font-size: 20px;
-    font-weight: 300;
-    padding: 20px 5%;
-    display: block;
-}
-.menu-mobile nav ul li a:hover{
-    background-color: #00FF08;
-    color: #000;
-
-}
-.overlay-menu{
-    background-color: #000000a7;
-    width: 100% ;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 888;
-    display: none;
-}
 /* ESTILO DO TOPO DO SITE */
 section .topo-do-site {
     padding: 60px 4%;
@@ -152,19 +98,22 @@ section .topo-do-site .flex {
 
 .topo-do-site h1 {
     color: #fff;
-    font-size: 42px;
+    font-size: 30px;
     line-height: 40px;
+    gap: 20px;
+    margin-left: 20px;
 }
 
 .topo-do-site .txt-topo-site h1 span {
     color: #00FF08;
-    font-size: 42px;
+    font-size: 30px;
 }
 
 .topo-do-site .txt-topo-site p {
     color: #fff;
     margin: 40px 0;
     font-size: 20px;
+    margin-left: 20px;
 }
 
 .topo-do-site .img-topo-site img {
@@ -219,12 +168,13 @@ section.especialidades .flex {
 }
 
 /* ESTILO DO SOBRE */
+
 section.sobre {
     padding: 80px 4%;
 }
 
 section.sobre .flex {
-    align-items: center;
+    align-items: flex;
     gap: 60px;
 }
 
@@ -263,26 +213,25 @@ section.sobre .flex {
 }
 
 /* ESTILO DO PORTIFOLIO */
-section.portifolio {
+section.desenvolvedores {
     padding: 80px 4%;
     box-shadow: 0 0 40px 10px #ffffff1d;
 
 }
 
-section.portifolio .flex {
-    gap: 80px;
+section.desenvolvedores .flex {
+    gap: 20px;
     margin-top: 60px;
 }
 
 .img-port {
-    width: 360px;
+    width: 400px;
     height: 400px;
     background-size: cover;
     background-position: 100% 0%;
     transition: 3s;
     cursor: pointer;
     border-radius: 40px;
-    position: relative;
 }
 
 .img-port:hover {
@@ -310,53 +259,6 @@ section.portifolio .flex {
 
 .overlay:hover {
     opacity: 1;
-}
-
-/* ESTILO DO FORMULARIO DE CONTATO*/
-section.formulario {
-    padding: 80px 4%;
-}
-
-form {
-    max-width: 500px;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 40px;
-
-}
-
-form input,
-form textarea {
-    width: 100%;
-    background-color: #242424;
-    border: 0;
-    outline: 0;
-    padding: 20px 15px;
-    border-radius: 15px;
-    color: #fff;
-    font-size: 18px;
-}
-
-form textarea {
-    resize: none;
-    max-height: 200px;
-}
-
-form .btn-enviar {
-    margin-top: 20px;
-    text-align: center;
-}
-
-form .btn-enviar input {
-    width: 120px;
-    background-color: #00FF08;
-    color: #000;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
 }
 
 /* ESTILO DO RODAPE */
@@ -387,79 +289,7 @@ footer .line-footer p a {
     color: #fff;
     font-size: 22px;
 }
-
-@media screen and (max-width: 1020px) {
-
-    /* GERAIS */
-    .flex {
-        flex-direction: column;
-    }
-
-    h2.titulo {
-        font-size: 30px;
-        line-height: 35px;
-    }
-
-    /* CABECALHO */
-    .menu-desktop,
-    .btn-contato {
-        display: none;
-    }
-
-    /* TOPO DO SITE */
-    section .topo-do-site .flex {
-        gap: 40px;
-    }
-
-    section .topo-do-site {
-        padding: 20px 8%;
-    }
-
-    .topo-do-site h1 {
-        font-size: 30px;
-    }
-
-
-    /* Estilo das especialidades */
-
-    section.especialidades {
-        padding: 40px 8%;
-
-    }
-
-    /* SOBRE */
-    section.sobre {
-        padding: 80px 8%;
-    }
-    .sobre .txt-sobre h2 {
-        font-size: 34px;
-        line-height: 35px;
-        text-align: center;
-    }
-    .btn-social{
-        text-align: center;
-    }
-    .img-sobre img{
-        width: 100%;
-
-    }
-    /* PORTIFOLIO */
-    section.portifolio {
-        padding: 80px 8%;
-    
-    }
-    .img-port {
-        width: 100%;
-        max-width: 360px;
-        margin: 0 auto;
-    }
-    /* RODAPE */
-    footer .flex{
-        flex-direction: column;
-    }
-    footer .line-footer {
-        text-align: center;
-    
-    }
-
-}
+.separacao{
+    margin-bottom: 1px;
+    align-items: flex;
+}   

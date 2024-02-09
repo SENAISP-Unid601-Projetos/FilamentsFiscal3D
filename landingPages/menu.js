@@ -13,3 +13,8 @@ menu.addEventListener('click',()=>{
 overlay.addEventListener('click',()=>{
     menu.classList.remove('abrir-menu')
 })
+
+function scrollToBottom() {
+    var conteudo = document.getElementById('overlay');
+    conteudo.scrollIntoView({ behavior: 'smooth' });
+}
