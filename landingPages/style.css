@@ -260,3 +260,14 @@ section.desenvolvedores .flex {
 .overlay:hover {
     opacity: 1;
 }
+#link-topo{
+    text-decoration: none;
+    color: #00FF08;
+    background-color: #262626;
+    padding: 8px;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    box-shadow: 3px 3px 10px #464646;
+    border-radius: 5px;
+}
