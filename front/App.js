@@ -186,6 +186,7 @@ const Orca3d = () => {
           </View>
 
 
+
           <View style={styles.inputContainerpayback}>
             {/* Seção para a Calculadora de Payback */}
             <Text>Investimento inicial (R$):</Text>
