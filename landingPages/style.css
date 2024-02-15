@@ -61,8 +61,18 @@ header a {
 }
 
 header nav.menu-desktop a:hover {
-    color: #fff;
-    transform: scale(1.1);
+    color: #000000;
+    transform: scale(1.0);
+    padding: 10px 40px;
+    font-size: 24px;
+    font-weight: 600px;
+    background-color: #00FF08;
+    border: 0;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .2s;
+
+
 }
 
 header nav ul {
