@@ -15,6 +15,6 @@ overlay.addEventListener('click',()=>{
 })
 
 function scrollToBottom() {
-    var conteudo = document.getElementById('overlay');
+    var conteudo = document.getElementById('desenvolvedores2');
     conteudo.scrollIntoView({ behavior: 'smooth' });
 }
