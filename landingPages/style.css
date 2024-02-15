@@ -23,16 +23,6 @@ body {
     display: flex;
 }
 
-.btn-contato button {
-    padding: 10px 40px;
-    font-size: 24px;
-    font-weight: 600px;
-    background-color: #00FF08;
-    border: 0;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: .2s;
-}
 
 h2.titulo {
     color: #fff;
