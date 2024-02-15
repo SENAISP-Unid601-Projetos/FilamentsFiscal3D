@@ -1,76 +1,91 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  ScrollView,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
 
 const Orca3d = () => {
   // Estado para a Calculadora de Filamento
-  const [pesoPeca, setPesoPeca] = useState('');
-  const [pesoFilamento, setPesoFilamento] = useState('');
-  const [valorTotalFilamento, setValorTotalFilamento] = useState('');
+  const [pesoPeca, setPesoPeca] = useState("");
+  const [pesoFilamento, setPesoFilamento] = useState("");
+  const [valorTotalFilamento, setValorTotalFilamento] = useState("");
 
   const calcularCustoFilamento = () => {
-    const custoTotalFilamento = parseFloat(pesoPeca) * parseFloat(pesoFilamento);
+    const custoTotalFilamento =
+      parseFloat(pesoPeca) * parseFloat(pesoFilamento);
     setValorTotalFilamento(custoTotalFilamento.toFixed(2)); // Ajusta para duas casas decimais
   };
 
   // Estado para a Calculadora de Energia
-  const [potenciaEquipamento, setPotenciaEquipamento] = useState('');
-  const [horasImpressao, setHorasImpressao] = useState('');
-  const [consumoEnergia, setConsumoEnergia] = useState('');
-  const [valorKwh, setValorKwh] = useState('');
+  const [potenciaEquipamento, setPotenciaEquipamento] = useState("");
+  const [horasImpressao, setHorasImpressao] = useState("");
+  const [consumoEnergia, setConsumoEnergia] = useState("");
+  const [valorKwh, setValorKwh] = useState("");
 
   const calcularConsumoEnergia = () => {
-    const consumoCalculado = (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000;
+    const consumoCalculado =
+      (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000;
     const consumoFinal = consumoCalculado * parseFloat(valorKwh);
     setConsumoEnergia(consumoFinal.toFixed(2)); // Ajusta para duas casas decimais
   };
 
   // Função para calcular a taxa de lucro
   const calcularTaxaLucro = () => {
-    const taxaLucro = (parseFloat(valorTotalFilamento) / parseFloat(consumoEnergia)) * 100;
+    const taxaLucro =
+      (parseFloat(valorTotalFilamento) / parseFloat(consumoEnergia)) * 100;
     return taxaLucro.toFixed(2);
   };
 
   // Estado e função para a Calculadora de Margem de Lucro
-  const [porcentagemLucro, setPorcentagemLucro] = useState('');
-  const [margemLucro, setMargemLucro] = useState('');
+  const [porcentagemLucro, setPorcentagemLucro] = useState("");
+  const [margemLucro, setMargemLucro] = useState("");
 
   const calcularMargemLucro = () => {
-    const margemLucroCalculada = (parseFloat(valorTotalFilamento) * parseFloat(porcentagemLucro)) / 100;
+    const margemLucroCalculada =
+      (parseFloat(valorTotalFilamento) * parseFloat(porcentagemLucro)) / 100;
     setMargemLucro(margemLucroCalculada.toFixed(2)); // Ajusta para duas casas decimais
   };
 
   // Estado e função para a Calculadora do preço dos colaboradores
-  const [porcentagemCola, setPorcentagemCola] = useState('');
-  const [margemCola, setMargemCola] = useState('');
+  const [porcentagemCola, setPorcentagemCola] = useState("");
+  const [margemCola, setMargemCola] = useState("");
 
   const calcularMargemCola = () => {
-    const margemColaCalculada = (parseFloat(valorTotalFilamento) * parseFloat(porcentagemCola)) / 100;
+    const margemColaCalculada =
+      (parseFloat(valorTotalFilamento) * parseFloat(porcentagemCola)) / 100;
     setMargemCola(margemColaCalculada.toFixed(2)); // Ajusta para duas casas decimais
   };
 
   // Estado para a Calculadora de prossessos de preparação
-  const [horaPreparacao, setHoraPreparacao] = useState('');
-  const [horaFatiador, setHoraFatiador] = useState('');
-  const [valorHora, setValorHora] = useState('');
-  const [valorTrabalho, setValorTrabalho] = useState('');
+  const [horaPreparacao, setHoraPreparacao] = useState("");
+  const [horaFatiador, setHoraFatiador] = useState("");
+  const [valorHora, setValorHora] = useState("");
+  const [valorTrabalho, setValorTrabalho] = useState("");
 
   const calcularCustoPreparacao = () => {
-    const custoPreparacao = parseFloat(valorHora) * (parseFloat(horaFatiador) + parseFloat(horaPreparacao));
+    const custoPreparacao =
+      parseFloat(valorHora) *
+      (parseFloat(horaFatiador) + parseFloat(horaPreparacao));
     setValorTrabalho(custoPreparacao.toFixed(2)); // Ajusta para duas casas decimais
   };
 
   // Estado para a Calculadora de payback
-  const [periodo, setPeriodo] = useState('');
-  const [fluxoDeCaixa, setFluxoDeCaixa] = useState('');
-  const [investimento, setInvestimento] = useState('');
+  const [fluxoCaixa, setFluxoCaixa] = useState("");
+  const [investimento, setInvestimento] = useState("");
+  const [periodo, setPeriodo] = useState("");
 
-  const calcularPayback = () => {
-    const payback = parseFloat(investimento) / parseFloat(fluxoDeCaixa);
-    setPeriodo(payback.toFixed(2)); // Ajusta para duas casas decimais
+  const fazerpay = () => {
+    const payback = parseFloat(investimento) / parseFloat(periodo);
+    setFluxoCaixa(payback.toFixed(2));
   };
 
   // Estado e função para a Calculadora de Total com Lucro
-  const [totalComLucro, setTotalComLucro] = useState('');
+  const [totalComLucro, setTotalComLucro] = useState("");
 
   const calcularTotalComLucro = () => {
     const totalCalculado =
@@ -79,14 +94,14 @@ const Orca3d = () => {
       parseFloat(margemLucro) +
       parseFloat(margemCola) +
       parseFloat(valorTrabalho) +
-      parseFloat(periodo);
+      parseFloat(fluxoCaixa);
     setTotalComLucro(totalCalculado.toFixed(2)); // Ajusta para duas casas decimais
   };
 
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={styles.container}>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: "row" }}>
           <View style={styles.inputContainerFilamento}>
             {/* Seção para a Calculadora de Filamento */}
             <Text>Peso da peça impressa (g):</Text>
@@ -100,16 +115,18 @@ const Orca3d = () => {
 
             <View style={styles.separator} />
 
-            <Text>Peso do filamento (g):</Text>
+            <Text>Preço do filamento (g):</Text>
             <TextInput
               style={styles.input}
-              placeholder="Digite o peso do filamento"
+              placeholder="Digite o preço do filamento"
               keyboardType="numeric"
               value={pesoFilamento}
               onChangeText={(text) => setPesoFilamento(text)}
             />
             <Button title="Calcular" onPress={calcularCustoFilamento} />
-            <Text style={{ marginTop: 10 }}>Valor Total Filamento: R$ {valorTotalFilamento}</Text>
+            <Text style={{ marginTop: 10 }}>
+              Valor Total Filamento: R$ {valorTotalFilamento}
+            </Text>
           </View>
 
           <View style={styles.inputContainerEnergia}>
@@ -124,8 +141,7 @@ const Orca3d = () => {
               onChangeText={(text) => setPotenciaEquipamento(text)}
             />
 
-            <View style={styles.separator} />
-
+            <Text>Duração da impreção (H):</Text>
             <TextInput
               style={styles.input}
               placeholder="Digite o número de horas"
@@ -133,8 +149,8 @@ const Orca3d = () => {
               value={horasImpressao}
               onChangeText={(text) => setHorasImpressao(text)}
             />
-            <View style={styles.separator} />
 
+            <Text>Taxa de Energia (R$/kwh):</Text>
             <TextInput
               style={styles.input}
               placeholder="Digite o valor do kWh"
@@ -143,15 +159,19 @@ const Orca3d = () => {
               onChangeText={(text) => setValorKwh(text)}
             />
             <Button title="Calcular" onPress={calcularConsumoEnergia} />
-            <Text style={{ marginTop: 10 }}>Consumo Energia: R$ {consumoEnergia}</Text>
+            <Text style={{ marginTop: 10 }}>
+              Consumo Energia: R$ {consumoEnergia}
+            </Text>
           </View>
         </View>
 
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: "row" }}>
           <View style={styles.inputContainerLucro}>
             {/* Seção para a Calculadora de Margem de Lucro */}
-            <Text style={{ marginTop: 20 }}>Calculadora de Margem de Lucro:</Text>
-            <Text>Valor do Lucro (R$):</Text>
+            <Text style={{ marginTop: 20 }}>
+              Calculadora de Margem de Lucro:
+            </Text>
+            <Text>porcentagem do Lucro (R$):</Text>
             <TextInput
               style={styles.input}
               placeholder="Digite a porcentagem de lucro"
@@ -160,31 +180,57 @@ const Orca3d = () => {
               onChangeText={(text) => setPorcentagemLucro(text)}
             />
             <Button title="Calcular" onPress={calcularMargemLucro} />
-            <Text style={{ marginTop: 10 }}>Margem de Lucro: R$ {margemLucro}</Text>
+            <Text style={{ marginTop: 10 }}>
+              Margem de Lucro: R$ {margemLucro}
+            </Text>
           </View>
 
-          <View style={styles.inputContainerLucroFinal}>
-            {/* Seção para a Calculadora de Total com Lucro */}
-            <Text style={{ marginTop: 20 }}>Calculadora de Total com Lucro:</Text>
-            <Button title="Calcular" onPress={calcularTotalComLucro} />
-            <Text style={{ marginTop: 10 }}>Total com Lucro: R$ {totalComLucro}</Text>
+
+          <View style={styles.inputContainerpayback}>
+            {/* Seção para a Calculadora de Payback */}
+            <Text>Investimento inicial (R$):</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite o investimento"
+              keyboardType="numeric"
+              value={investimento}
+              onChangeText={(text) => setInvestimento(text)}
+            />
+
+            <View style={styles.separator} />
+
+            <Text>Tempo de recuperação (Dias):</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite o tempo de recuperação"
+              keyboardType="numeric"
+              value={periodo}
+              onChangeText={(text) => setPeriodo(text)}
+            />
+            <Button title="Calcular" onPress={fazerpay} />
+            <Text style={{ marginTop: 10 }}>Valor do Payback: R$ {fluxoCaixa}</Text>
           </View>
+
         </View>
 
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: "row" }}>
           <View style={styles.inputContainerCola}>
             {/* Seção para a Calculadora do preço da hora dos funcionários */}
-            <Text style={{ marginTop: 20 }}>Calculadora de Margem de preço Hora do funcionário:</Text>
+            <Text style={{ marginTop: 20 }}>
+            Calcule porcentagens para funcionários:
+            </Text>
             <Text>Valor da hora (R$):</Text>
             <TextInput
               style={styles.input}
-              placeholder="Digite a porcentagem dos custos do funcionário"
+              placeholder="Digite a porcentagem"
               keyboardType="numeric"
               value={porcentagemCola}
               onChangeText={(text) => setPorcentagemCola(text)}
             />
             <Button title="Calcular" onPress={calcularMargemCola} />
-            <Text style={{ marginTop: 10 }}>Margem do funcionário: R$ {margemCola}</Text>
+            <Text style={{ marginTop: 10 }}>
+              Margem do funcionário: R$ {margemCola}
+            </Text>
           </View>
 
           <View style={styles.inputContainerTrabalho}>
@@ -220,35 +266,24 @@ const Orca3d = () => {
               onChangeText={(text) => setValorHora(text)}
             />
             <Button title="Calcular" onPress={calcularCustoPreparacao} />
-            <Text style={{ marginTop: 10 }}>Valor do trabalho de preparação: R$ {valorTrabalho}</Text>
+            <Text style={{ marginTop: 10 }}>
+              Valor da preparação: R$ {valorTrabalho}
+            </Text>
           </View>
         </View>
 
-        <View style={styles.inputContainerpayback}>
-          {/* Seção para a Calculadora de payback */}
-          <Text>Investimento inicial (R$):</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite o investimento"
-            keyboardType="numeric"
-            value={investimento}
-            onChangeText={(text) => setInvestimento(text)}
-          />
-
-          <View style={styles.separator} />
-
-          <Text>Fluxo de caixa (R$):</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite o fluxo de caixa"
-            keyboardType="numeric"
-            value={fluxoDeCaixa}
-            onChangeText={(text) => setFluxoDeCaixa(text)}
-          />
-          <Button title="Calcular" onPress={calcularPayback} />
-          <Text style={{ marginTop: 10 }}>Período de Payback: {periodo} anos</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.inputContainerLucroFinal}>
+            {/* Seção para a Calculadora de Total com Lucro */}
+            <Text style={{ marginTop: 20 }}>
+              Calculadora de Total com Lucro:
+            </Text>
+            <Button title="Calcular" onPress={calcularTotalComLucro} />
+            <Text style={{ marginTop: 10 }}>
+              Total do Orçamento: R$ {totalComLucro}
+            </Text>
+          </View>
         </View>
-
       </SafeAreaView>
     </ScrollView>
   );
@@ -257,105 +292,105 @@ const Orca3d = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 10, // Adicionando espaço horizontal ao redor de todo o conteúdo
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 10, 
   },
   inputContainerFilamento: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: 250,
-    height: 220,
-    backgroundColor: 'lightgray',
+    alignItems: "center",
+    justifyContent: "center", 
+    width: 255,
+    height: 310,
+    backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
-    marginBottom: 20,
-    marginRight: 10, // Adicionando espaço horizontal entre os contêineres
+    marginBottom: 10, 
+    marginRight: 5,
   },
 
   inputContainerEnergia: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: 250,
-    height: 300,
-    backgroundColor: 'lightgray',
+    alignItems: "center",
+    justifyContent: "flex-end", 
+    width: 255,
+    height: 310,
+    backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
     marginBottom: 20,
-    marginLeft: 10, // Adicionando espaço horizontal entre os contêineres
+    marginLeft: 5, 
   },
 
   inputContainerLucro: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: 250,
-    height: 190,
-    backgroundColor: 'lightgray',
+    alignItems: "center",
+    justifyContent: "center",
+    width: 255,
+    height: 310,
+    backgroundColor: "lightgray",
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical:  5,
     marginBottom: 20,
-    marginRight: 10, // Adicionando espaço horizontal entre os contêineres
+    marginRight: 5, 
   },
 
   inputContainerLucroFinal: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: 250,
-    height: 190,
-    backgroundColor: 'lightgray',
+    alignItems: "center",
+    justifyContent: "center", 
+    width: 255,
+    height: 120,
+    backgroundColor: "lightgray",
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 5,
     marginBottom: 20,
-    marginLeft: 10, // Adicionando espaço horizontal entre os contêineres
+    marginRight: 5,
   },
 
   inputContainerCola: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: 250,
-    height: 190,
-    backgroundColor: 'lightgray',
+    alignItems: "center",
+    justifyContent: "center", 
+    width: 255,
+    height: 310,
+    backgroundColor: "lightgray",
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 5,
     marginBottom: 20,
-    marginLeft: 10, // Adicionando espaço horizontal entre os contêineres
+    marginRight: 5, 
   },
 
   inputContainerTrabalho: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: 250,
-    height: 300,
-    backgroundColor: 'lightgray',
+    alignItems: "center",
+    justifyContent: "flex-end",
+    width: 255,
+    height: 310,
+    backgroundColor: "lightgray",
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 5,
     marginBottom: 20,
-    marginRight: 10, // Adicionando espaço horizontal entre os contêineres
+    marginLeft: 5, 
   },
 
   inputContainerpayback: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: 250,
-    height: 220,
-    backgroundColor: 'lightgray',
+    alignItems: "center",
+    justifyContent: "center", 
+    width: 255,
+    height: 310,
+    backgroundColor: "lightgray",
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 5,
     marginBottom: 20,
-    marginRight: 10, // Adicionando espaço horizontal entre os contêineres
+    marginLeft: 5, 
   },
 
   input: {
-    width: '80%',
+    width: "80%",
     height: 40,
     marginVertical: 10,
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   separator: {
-    width: '80%',
-    height: 0,
-    backgroundColor: 'black',
+    width: "100%", 
+    height: 10, 
+    backgroundColor: "transparent", 
   },
 });
 
