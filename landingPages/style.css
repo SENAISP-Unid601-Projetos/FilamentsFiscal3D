@@ -260,36 +260,3 @@ section.desenvolvedores .flex {
 .overlay:hover {
     opacity: 1;
 }
-
-/* ESTILO DO RODAPE */
-footer {
-    padding: 40px 4%;
-    box-shadow: 0 0 40px 10px #ffffff1d;
-}
-
-footer .flex {
-    justify-content: space-between;
-}
-
-footer .line-footer {
-    padding: 20px 0;
-
-}
-
-.borda {
-    border-top: 2px solid #00FF08;
-}
-
-footer .line-footer p i {
-    color: #00FF08;
-    font-size: 22px;
-}
-
-footer .line-footer p a {
-    color: #fff;
-    font-size: 22px;
-}
-.separacao{
-    margin-bottom: 1px;
-    align-items: flex;
-}   
