@@ -163,77 +163,6 @@ const Orca3d = () => {
               Consumo Energia: R$ {consumoEnergia}
             </Text>
           </View>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.inputContainerLucro}>
-            {/* Seção para a Calculadora de Margem de Lucro */}
-            <Text style={{ marginTop: 20 }}>
-              Calculadora de Margem de Lucro:
-            </Text>
-            <Text>porcentagem do Lucro (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite a porcentagem de lucro"
-              keyboardType="numeric"
-              value={porcentagemLucro}
-              onChangeText={(text) => setPorcentagemLucro(text)}
-            />
-            <Button title="Calcular" onPress={calcularMargemLucro} />
-            <Text style={{ marginTop: 10 }}>
-              Margem de Lucro: R$ {margemLucro}
-            </Text>
-          </View>
-
-
-
-          <View style={styles.inputContainerpayback}>
-            {/* Seção para a Calculadora de Payback */}
-            <Text>Investimento inicial (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o investimento"
-              keyboardType="numeric"
-              value={investimento}
-              onChangeText={(text) => setInvestimento(text)}
-            />
-
-            <View style={styles.separator} />
-
-            <Text>Tempo de recuperação (Dias):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o tempo de recuperação"
-              keyboardType="numeric"
-              value={periodo}
-              onChangeText={(text) => setPeriodo(text)}
-            />
-            <Button title="Calcular" onPress={fazerpay} />
-            <Text style={{ marginTop: 10 }}>Valor do Payback: R$ {fluxoCaixa}</Text>
-          </View>
-
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.inputContainerCola}>
-            {/* Seção para a Calculadora do preço da hora dos funcionários */}
-            <Text style={{ marginTop: 20 }}>
-            Calcule porcentagens para funcionários:
-            </Text>
-            <Text>Valor da hora (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite a porcentagem"
-              keyboardType="numeric"
-              value={porcentagemCola}
-              onChangeText={(text) => setPorcentagemCola(text)}
-            />
-            <Button title="Calcular" onPress={calcularMargemCola} />
-            <Text style={{ marginTop: 10 }}>
-              Margem do funcionário: R$ {margemCola}
-            </Text>
-          </View>
-
           <View style={styles.inputContainerTrabalho}>
             {/* Seção para a Calculadora de Preço de preparações da peça */}
             <Text>Horas gastas no fatiador (h):</Text>
@@ -269,6 +198,72 @@ const Orca3d = () => {
             <Button title="Calcular" onPress={calcularCustoPreparacao} />
             <Text style={{ marginTop: 10 }}>
               Valor da preparação: R$ {valorTrabalho}
+            </Text>
+          </View>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+        <View style={styles.inputContainerpayback}>
+            {/* Seção para a Calculadora de Payback */}
+            <Text>Investimento inicial (R$):</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite o investimento"
+              keyboardType="numeric"
+              value={investimento}
+              onChangeText={(text) => setInvestimento(text)}
+            />
+
+            <View style={styles.separator} />
+
+            <Text>Tempo de recuperação (Dias):</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite o tempo de recuperação"
+              keyboardType="numeric"
+              value={periodo}
+              onChangeText={(text) => setPeriodo(text)}
+            />
+            <Button title="Calcular" onPress={fazerpay} />
+            <Text style={{ marginTop: 10 }}>Valor do Payback: R$ {fluxoCaixa}</Text>
+          </View>
+          <View style={styles.inputContainerCola}>
+            {/* Seção para a Calculadora do preço da hora dos funcionários */}
+            <Text style={{ marginTop: 20 }}>
+            Calcule porcentagens para funcionários:
+            </Text>
+            <Text>Valor da hora (R$):</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite a porcentagem"
+              keyboardType="numeric"
+              value={porcentagemCola}
+              onChangeText={(text) => setPorcentagemCola(text)}
+            />
+            <Button title="Calcular" onPress={calcularMargemCola} />
+            <Text style={{ marginTop: 10 }}>
+              Margem do funcionário: R$ {margemCola}
+            </Text>
+          </View>
+
+
+
+          <View style={styles.inputContainerLucro}>
+            {/* Seção para a Calculadora de Margem de Lucro */}
+            <Text style={{ marginTop: 20 }}>
+              Calculadora de Margem de Lucro:
+            </Text>
+            <Text>porcentagem do Lucro (R$):</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite a porcentagem de lucro"
+              keyboardType="numeric"
+              value={porcentagemLucro}
+              onChangeText={(text) => setPorcentagemLucro(text)}
+            />
+            <Button title="Calcular" onPress={calcularMargemLucro} />
+            <Text style={{ marginTop: 10 }}>
+              Margem de Lucro: R$ {margemLucro}
             </Text>
           </View>
         </View>
@@ -318,7 +313,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 10,
     marginBottom: 20,
-    marginLeft: 5, 
+    marginLeft: 5,
+    marginRight: 5,   
   },
 
   inputContainerLucro: {
@@ -328,8 +324,9 @@ const styles = StyleSheet.create({
     height: 310,
     backgroundColor: "lightgray",
     borderRadius: 10,
-    marginVertical:  5,
+    marginVertical: 10,
     marginBottom: 20,
+    marginLeft: 5,
     marginRight: 5, 
   },
 
@@ -340,9 +337,10 @@ const styles = StyleSheet.create({
     height: 120,
     backgroundColor: "lightgray",
     borderRadius: 10,
-    marginVertical: 5,
+    marginVertical: 10,
     marginBottom: 20,
-    marginRight: 5,
+    marginLeft: 5,
+    marginRight: 5, 
   },
 
   inputContainerCola: {
@@ -352,9 +350,10 @@ const styles = StyleSheet.create({
     height: 310,
     backgroundColor: "lightgray",
     borderRadius: 10,
-    marginVertical: 5,
+    marginVertical: 10,
     marginBottom: 20,
-    marginRight: 5, 
+    marginLeft: 5,
+    marginRight: 5,  
   },
 
   inputContainerTrabalho: {
@@ -364,9 +363,10 @@ const styles = StyleSheet.create({
     height: 310,
     backgroundColor: "lightgray",
     borderRadius: 10,
-    marginVertical: 5,
+    marginVertical: 10,
     marginBottom: 20,
-    marginLeft: 5, 
+    marginLeft: 5,
+    marginRight: 5, 
   },
 
   inputContainerpayback: {
@@ -376,9 +376,10 @@ const styles = StyleSheet.create({
     height: 310,
     backgroundColor: "lightgray",
     borderRadius: 10,
-    marginVertical: 5,
+    marginVertical: 10,
     marginBottom: 20,
-    marginLeft: 5, 
+    marginLeft: 5,
+    marginRight: 5, 
   },
 
   input: {
