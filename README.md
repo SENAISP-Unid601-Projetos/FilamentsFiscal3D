@@ -101,14 +101,10 @@ O projeto visa desenvolver um sistema para custear peças em 3D, proporcionando 
   - Registro de domínio Por R$ R$ 29,99/Ano
 - Ferramentas de Teste de Software: Custo total (considerando licenças): $0
 
-### Equipamentos:
-- Leitor de código de barra: R$ 109,99
-
 ### Total Geral:
 - Pessoal: $0
 - Tecnologia: R$ 513,19
-- Equipamentos: R$ 109,99
-- Custo Total do Projeto: R$ 650
+- Custo Total do Projeto: R$ 525,00
 
 ## 7. Documentação
 ### Requisitos funcionais
