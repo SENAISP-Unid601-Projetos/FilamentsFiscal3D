@@ -53,7 +53,7 @@ const Orca3d = () => {
       return;
     }
     const taxaLucro =
-      (parseFloat(valorTotalFilamento) / parseFloat(consumoEnergia)) * 100;
+      (parseFloat(valorTotalFilamento) + parseFloat(valorKwh) / parseFloat(consumoEnergia)) * 100;
     return taxaLucro.toFixed(2);
   };
 
@@ -67,7 +67,7 @@ const Orca3d = () => {
       return;
     }
     const margemLucroCalculada =
-      (parseFloat(valorTotalFilamento) * parseFloat(porcentagemLucro)) / 100;
+      (parseFloat(valorTotalFilamento) + parseFloat(valorKwh) * parseFloat(porcentagemLucro)) / 100;
     setMargemLucro(margemLucroCalculada.toFixed(2)); // Ajusta para duas casas decimais
   };
 
