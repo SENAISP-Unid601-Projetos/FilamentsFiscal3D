@@ -13,9 +13,9 @@ import {
 const Orca3d = () => {
   
   // Estado para a Calculadora de Filamento
-  const [pesoPeca, setPesoPeca] = useState("");
-  const [pesoFilamento, setPesoFilamento] = useState("");
-  const [valorTotalFilamento, setValorTotalFilamento] = useState("");
+  const [pesoPeca, setPesoPeca] = useState(0);
+  const [pesoFilamento, setPesoFilamento] = useState(0);
+  const [valorTotalFilamento, setValorTotalFilamento] = useState(0);
 
   const calcularCustoFilamento = () => {
     if (!pesoPeca || !pesoFilamento || isNaN(parseFloat(pesoPeca)) || isNaN(parseFloat(pesoFilamento))) {
@@ -30,10 +30,10 @@ const Orca3d = () => {
   
 
   // Estado para a Calculadora de Energia
-  const [potenciaEquipamento, setPotenciaEquipamento] = useState("");
-  const [horasImpressao, setHorasImpressao] = useState("");
-  const [consumoEnergia, setConsumoEnergia] = useState("");
-  const [valorKwh, setValorKwh] = useState("");
+  const [potenciaEquipamento, setPotenciaEquipamento] = useState(0);
+  const [horasImpressao, setHorasImpressao] = useState(0);
+  const [consumoEnergia, setConsumoEnergia] = useState(0);
+  const [valorKwh, setValorKwh] = useState(0);
 
   const calcularConsumoEnergia = () => {
     if (!potenciaEquipamento || !horasImpressao || isNaN(parseFloat(potenciaEquipamento)) || isNaN(parseFloat(horasImpressao))) {
@@ -58,8 +58,8 @@ const Orca3d = () => {
   };
 
   // Estado e função para a Calculadora de Margem de Lucro
-  const [porcentagemLucro, setPorcentagemLucro] = useState("");
-  const [margemLucro, setMargemLucro] = useState("");
+  const [porcentagemLucro, setPorcentagemLucro] = useState(0);
+  const [margemLucro, setMargemLucro] = useState(0);
 
   const calcularMargemLucro = () => {
     if (!valorTotalFilamento || !porcentagemLucro || isNaN(parseFloat(valorTotalFilamento)) || isNaN(parseFloat(porcentagemLucro))) {
@@ -72,8 +72,8 @@ const Orca3d = () => {
   };
 
   // Estado e função para a Calculadora do preço dos colaboradores
-  const [porcentagemCola, setPorcentagemCola] = useState("");
-  const [margemCola, setMargemCola] = useState("");
+  const [porcentagemCola, setPorcentagemCola] = useState(0);
+  const [margemCola, setMargemCola] = useState(0);
 
   const calcularMargemCola = () => {
     if (!valorTotalFilamento || !porcentagemCola || isNaN(parseFloat(valorTotalFilamento)) || isNaN(parseFloat(porcentagemCola))) {
@@ -86,10 +86,10 @@ const Orca3d = () => {
   };
 
   // Estado para a Calculadora de prossessos de preparação
-  const [horaPreparacao, setHoraPreparacao] = useState("");
-  const [horaFatiador, setHoraFatiador] = useState("");
-  const [valorHora, setValorHora] = useState("");
-  const [valorTrabalho, setValorTrabalho] = useState("");
+  const [horaPreparacao, setHoraPreparacao] = useState(0);
+  const [horaFatiador, setHoraFatiador] = useState(0);
+  const [valorHora, setValorHora] = useState(0);
+  const [valorTrabalho, setValorTrabalho] = useState(0);
 
   const calcularCustoPreparacao = () => {
     if (!horaPreparacao || !horaFatiador || isNaN(parseFloat(horaPreparacao)) || isNaN(parseFloat(horaFatiador))) {
@@ -103,9 +103,9 @@ const Orca3d = () => {
   };
 
   // Estado para a Calculadora de payback
-  const [fluxoCaixa, setFluxoCaixa] = useState("");
-  const [investimento, setInvestimento] = useState("");
-  const [periodo, setPeriodo] = useState("");
+  const [fluxoCaixa, setFluxoCaixa] = useState(0);
+  const [investimento, setInvestimento] = useState(0);
+  const [periodo, setPeriodo] = useState(0);
 
   const fazerpay = () => {
     if (!investimento || !periodo || isNaN(parseFloat(investimento)) || isNaN(parseFloat(periodo))) {
