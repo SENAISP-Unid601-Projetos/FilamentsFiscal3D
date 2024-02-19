@@ -7,19 +7,27 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
+  Image,
 } from "react-native";
 
 const Orca3d = () => {
+  
   // Estado para a Calculadora de Filamento
   const [pesoPeca, setPesoPeca] = useState("");
   const [pesoFilamento, setPesoFilamento] = useState("");
   const [valorTotalFilamento, setValorTotalFilamento] = useState("");
 
   const calcularCustoFilamento = () => {
+    if (!pesoPeca || !pesoFilamento || isNaN(parseFloat(pesoPeca)) || isNaN(parseFloat(pesoFilamento))) {
+      alert('Por favor, preencha todos os campos com valores numéricos.');
+      return;
+    }
+  
     const custoTotalFilamento =
       parseFloat(pesoPeca) * parseFloat(pesoFilamento);
     setValorTotalFilamento(custoTotalFilamento.toFixed(2)); // Ajusta para duas casas decimais
   };
+  
 
   // Estado para a Calculadora de Energia
   const [potenciaEquipamento, setPotenciaEquipamento] = useState("");
@@ -28,6 +36,10 @@ const Orca3d = () => {
   const [valorKwh, setValorKwh] = useState("");
 
   const calcularConsumoEnergia = () => {
+    if (!potenciaEquipamento || !horasImpressao || isNaN(parseFloat(potenciaEquipamento)) || isNaN(parseFloat(horasImpressao))) {
+      alert('Por favor, preencha todos os campos com valores numéricos.');
+      return;
+    }
     const consumoCalculado =
       (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000;
     const consumoFinal = consumoCalculado * parseFloat(valorKwh);
@@ -36,6 +48,10 @@ const Orca3d = () => {
 
   // Função para calcular a taxa de lucro
   const calcularTaxaLucro = () => {
+    if (!valorTotalFilamento || !consumoEnergia || isNaN(parseFloat(valorTotalFilamento)) || isNaN(parseFloat(consumoEnergia))) {
+      alert('Por favor, preencha todos os campos com valores numéricos.');
+      return;
+    }
     const taxaLucro =
       (parseFloat(valorTotalFilamento) / parseFloat(consumoEnergia)) * 100;
     return taxaLucro.toFixed(2);
@@ -46,6 +62,10 @@ const Orca3d = () => {
   const [margemLucro, setMargemLucro] = useState("");
 
   const calcularMargemLucro = () => {
+    if (!valorTotalFilamento || !porcentagemLucro || isNaN(parseFloat(valorTotalFilamento)) || isNaN(parseFloat(porcentagemLucro))) {
+      alert('Por favor, preencha todos os campos com valores numéricos.');
+      return;
+    }
     const margemLucroCalculada =
       (parseFloat(valorTotalFilamento) * parseFloat(porcentagemLucro)) / 100;
     setMargemLucro(margemLucroCalculada.toFixed(2)); // Ajusta para duas casas decimais
@@ -56,6 +76,10 @@ const Orca3d = () => {
   const [margemCola, setMargemCola] = useState("");
 
   const calcularMargemCola = () => {
+    if (!valorTotalFilamento || !porcentagemCola || isNaN(parseFloat(valorTotalFilamento)) || isNaN(parseFloat(porcentagemCola))) {
+      alert('Por favor, preencha todos os campos com valores numéricos.');
+      return;
+    }
     const margemColaCalculada =
       (parseFloat(valorTotalFilamento) * parseFloat(porcentagemCola)) / 100;
     setMargemCola(margemColaCalculada.toFixed(2)); // Ajusta para duas casas decimais
@@ -68,6 +92,10 @@ const Orca3d = () => {
   const [valorTrabalho, setValorTrabalho] = useState("");
 
   const calcularCustoPreparacao = () => {
+    if (!horaPreparacao || !horaFatiador || isNaN(parseFloat(horaPreparacao)) || isNaN(parseFloat(horaFatiador))) {
+      alert('Por favor, preencha todos os campos com valores numéricos.');
+      return;
+    }
     const custoPreparacao =
       parseFloat(valorHora) *
       (parseFloat(horaFatiador) + parseFloat(horaPreparacao));
@@ -80,6 +108,10 @@ const Orca3d = () => {
   const [periodo, setPeriodo] = useState("");
 
   const fazerpay = () => {
+    if (!investimento || !periodo || isNaN(parseFloat(investimento)) || isNaN(parseFloat(periodo))) {
+      alert('Por favor, preencha todos os campos com valores numéricos.');
+      return;
+    }
     const payback = parseFloat(investimento) / parseFloat(periodo);
     setFluxoCaixa(payback.toFixed(2));
   };
@@ -101,6 +133,10 @@ const Orca3d = () => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={styles.container}>
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.inputContainercabeçalho}>
+          </View>
+        </View>
         <View style={{ flexDirection: "row" }}>
           <View style={styles.inputContainerFilamento}>
             {/* Seção para a Calculadora de Filamento */}
@@ -124,9 +160,6 @@ const Orca3d = () => {
               onChangeText={(text) => setPesoFilamento(text)}
             />
             <Button title="Calcular" onPress={calcularCustoFilamento} />
-            <Text style={{ marginTop: 10 }}>
-              Valor Total Filamento: R$ {valorTotalFilamento}
-            </Text>
           </View>
 
           <View style={styles.inputContainerEnergia}>
@@ -159,9 +192,6 @@ const Orca3d = () => {
               onChangeText={(text) => setValorKwh(text)}
             />
             <Button title="Calcular" onPress={calcularConsumoEnergia} />
-            <Text style={{ marginTop: 10 }}>
-              Consumo Energia: R$ {consumoEnergia}
-            </Text>
           </View>
           <View style={styles.inputContainerTrabalho}>
             {/* Seção para a Calculadora de Preço de preparações da peça */}
@@ -196,14 +226,35 @@ const Orca3d = () => {
               onChangeText={(text) => setValorHora(text)}
             />
             <Button title="Calcular" onPress={calcularCustoPreparacao} />
+          </View>
+          <View style={styles.inputContainerresultados}>
+            {/* Seção para a Calculadora de Total com Lucro */}
+            <Text style={{ marginTop: 10 }}>
+              Valor Total Filamento: R$ {valorTotalFilamento}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              Consumo Energia: R$ {consumoEnergia}
+            </Text>
             <Text style={{ marginTop: 10 }}>
               Valor da preparação: R$ {valorTrabalho}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              Valor do Payback: R$ {fluxoCaixa}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              Margem do funcionário: R$ {margemCola}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              Margem de Lucro: R$ {margemLucro}
+            </Text>{" "}
+            <Text style={{ marginTop: 10 }}>
+              Total do Orçamento: R$ {totalComLucro}
             </Text>
           </View>
         </View>
 
         <View style={{ flexDirection: "row" }}>
-        <View style={styles.inputContainerpayback}>
+          <View style={styles.inputContainerpayback}>
             {/* Seção para a Calculadora de Payback */}
             <Text>Investimento inicial (R$):</Text>
             <TextInput
@@ -225,12 +276,11 @@ const Orca3d = () => {
               onChangeText={(text) => setPeriodo(text)}
             />
             <Button title="Calcular" onPress={fazerpay} />
-            <Text style={{ marginTop: 10 }}>Valor do Payback: R$ {fluxoCaixa}</Text>
           </View>
           <View style={styles.inputContainerCola}>
             {/* Seção para a Calculadora do preço da hora dos funcionários */}
             <Text style={{ marginTop: 20 }}>
-            Calcule porcentagens para funcionários:
+              Calcule porcentagens para funcionários:
             </Text>
             <Text>Valor da hora (R$):</Text>
             <TextInput
@@ -241,12 +291,7 @@ const Orca3d = () => {
               onChangeText={(text) => setPorcentagemCola(text)}
             />
             <Button title="Calcular" onPress={calcularMargemCola} />
-            <Text style={{ marginTop: 10 }}>
-              Margem do funcionário: R$ {margemCola}
-            </Text>
           </View>
-
-
 
           <View style={styles.inputContainerLucro}>
             {/* Seção para a Calculadora de Margem de Lucro */}
@@ -262,23 +307,18 @@ const Orca3d = () => {
               onChangeText={(text) => setPorcentagemLucro(text)}
             />
             <Button title="Calcular" onPress={calcularMargemLucro} />
-            <Text style={{ marginTop: 10 }}>
-              Margem de Lucro: R$ {margemLucro}
-            </Text>
           </View>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
           <View style={styles.inputContainerLucroFinal}>
             {/* Seção para a Calculadora de Total com Lucro */}
             <Text style={{ marginTop: 20 }}>
               Calculadora de Total com Lucro:
             </Text>
             <Button title="Calcular" onPress={calcularTotalComLucro} />
-            <Text style={{ marginTop: 10 }}>
-              Total do Orçamento: R$ {totalComLucro}
-            </Text>
           </View>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+
         </View>
       </SafeAreaView>
     </ScrollView>
@@ -289,24 +329,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 10, 
+    alignItems: "flex-start",
+    paddingHorizontal: 10,
   },
   inputContainerFilamento: {
     alignItems: "center",
-    justifyContent: "center", 
+    justifyContent: "center",
     width: 255,
     height: 310,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
-    marginBottom: 10, 
+    marginBottom: 20,
+    marginLeft: 20,
     marginRight: 5,
   },
 
   inputContainerEnergia: {
     alignItems: "center",
-    justifyContent: "flex-end", 
+    justifyContent: "center",
     width: 255,
     height: 310,
     backgroundColor: "lightgray",
@@ -314,7 +355,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginBottom: 20,
     marginLeft: 5,
-    marginRight: 5,   
+    marginRight: 5,
   },
 
   inputContainerLucro: {
@@ -327,25 +368,25 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginBottom: 20,
     marginLeft: 5,
-    marginRight: 5, 
+    marginRight: 5,
   },
 
   inputContainerLucroFinal: {
     alignItems: "center",
-    justifyContent: "center", 
+    justifyContent: "center",
     width: 255,
     height: 120,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
     marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5, 
+    marginLeft: 100,
+    marginRight: 5,
   },
 
   inputContainerCola: {
     alignItems: "center",
-    justifyContent: "center", 
+    justifyContent: "center",
     width: 255,
     height: 310,
     backgroundColor: "lightgray",
@@ -353,12 +394,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginBottom: 20,
     marginLeft: 5,
-    marginRight: 5,  
+    marginRight: 5,
   },
 
   inputContainerTrabalho: {
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     width: 255,
     height: 310,
     backgroundColor: "lightgray",
@@ -366,20 +407,46 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginBottom: 20,
     marginLeft: 5,
-    marginRight: 5, 
+    marginRight: 5,
   },
 
   inputContainerpayback: {
     alignItems: "center",
-    justifyContent: "center", 
+    justifyContent: "center",
     width: 255,
     height: 310,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
     marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5, 
+    marginLeft: 20,
+    marginRight: 5,
+  },
+
+  inputContainerresultados: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 250,
+    height: 300,
+    backgroundColor: "lightgray",
+    borderRadius: 20,
+    marginVertical: 50,
+    marginBottom: 1,
+    marginLeft: 100,
+    marginRight: 5,
+  },
+
+  inputContainercabeçalho: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 1264,
+    height: 90,
+    backgroundColor: "lightgray",
+    borderRadius: 20,
+    marginVertical: 10,
+    marginBottom: 10,
+    marginLeft: 0,
+    marginRight: 5,
   },
 
   input: {
@@ -390,9 +457,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   separator: {
-    width: "100%", 
-    height: 10, 
-    backgroundColor: "transparent", 
+    width: "100%",
+    height: 10,
+    backgroundColor: "transparent",
   },
 });
 
