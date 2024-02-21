@@ -20,7 +20,7 @@ const Orca3d = () => {
 
 
   const handleLogin = () => {
-    if (username === 'adimin' && password === 'adimin') {
+    if (username === 'admin' && password === 'admin') {
     // Se o login for bem-sucedido, você pode fechar o modal
     setModalVisible(false);
     setErrorMessage('');
