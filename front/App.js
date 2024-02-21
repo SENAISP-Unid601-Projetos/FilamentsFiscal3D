@@ -1,15 +1,40 @@
 import React, { useState } from "react";
 import {
-  View, Text, TextInput, Button, ScrollView, StyleSheet, SafeAreaView, Image } from "react-native";
+  View,
+  Text,
+  TextInput,
+  Button,
+  ScrollView,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  Modal, // Importe o Modal
+} from "react-native";
+
 
 const Orca3d = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [modalVisible, setModalVisible] = useState(true); // Inicia o modal como visível
+  const [errorMessage, setErrorMessage] = useState('');
+
+
+  const handleLogin = () => {
+    if (username === 'admim' && password === 'admim') {
+    // Se o login for bem-sucedido, você pode fechar o modal
+    setModalVisible(false);
+    setErrorMessage('');
+  } else {
+    // Caso contrário, exiba uma mensagem de erro
+    setErrorMessage('Usuário ou senha incorretos. Por favor, tente novamente.');
+  }
+  };
   
   // Estado para a Calculadora de Filamento
   const [pesoPeca, setPesoPeca] = useState(0);
   const [pesoFilamento, setPesoFilamento] = useState(0);
   const [valorTotalFilamento, setValorTotalFilamento] = useState(0);
 
-  // Função para calcular o custo do filamento
   const calcularCustoFilamento = () => {
     if (!pesoPeca || !pesoFilamento || isNaN(parseFloat(pesoPeca)) || isNaN(parseFloat(pesoFilamento))) {
       alert('Por favor, preencha todos os campos com valores numéricos.');
@@ -28,7 +53,6 @@ const Orca3d = () => {
   const [consumoEnergia, setConsumoEnergia] = useState(0);
   const [valorKwh, setValorKwh] = useState(0);
 
-  // Função para calcular o consumo de energia
   const calcularConsumoEnergia = () => {
     if (!potenciaEquipamento || !horasImpressao || isNaN(parseFloat(potenciaEquipamento)) || isNaN(parseFloat(horasImpressao))) {
       alert('Por favor, preencha todos os campos com valores numéricos.');
@@ -55,7 +79,6 @@ const Orca3d = () => {
   const [porcentagemLucro, setPorcentagemLucro] = useState(0);
   const [margemLucro, setMargemLucro] = useState(0);
 
-  // Função para calcular a margem de lucro
   const calcularMargemLucro = () => {
     if (!valorTotalFilamento || !porcentagemLucro || isNaN(parseFloat(valorTotalFilamento)) || isNaN(parseFloat(porcentagemLucro))) {
       alert('Por favor, preencha todos os campos com valores numéricos.');
@@ -70,7 +93,6 @@ const Orca3d = () => {
   const [porcentagemCola, setPorcentagemCola] = useState(0);
   const [margemCola, setMargemCola] = useState(0);
 
-  // Função para calcular a margem dos colaboradores
   const calcularMargemCola = () => {
     if (!valorTotalFilamento || !porcentagemCola || isNaN(parseFloat(valorTotalFilamento)) || isNaN(parseFloat(porcentagemCola))) {
       alert('Por favor, preencha todos os campos com valores numéricos.');
@@ -87,7 +109,6 @@ const Orca3d = () => {
   const [valorHora, setValorHora] = useState(0);
   const [valorTrabalho, setValorTrabalho] = useState(0);
 
-  // Função para calcular o custo de preparação
   const calcularCustoPreparacao = () => {
     if (!horaPreparacao || !horaFatiador || isNaN(parseFloat(horaPreparacao)) || isNaN(parseFloat(horaFatiador))) {
       alert('Por favor, preencha todos os campos com valores numéricos.');
@@ -104,7 +125,6 @@ const Orca3d = () => {
   const [investimento, setInvestimento] = useState(0);
   const [periodo, setPeriodo] = useState(0);
 
-  // Função para calcular o payback
   const fazerpay = () => {
     if (!investimento || !periodo || isNaN(parseFloat(investimento)) || isNaN(parseFloat(periodo))) {
       alert('Por favor, preencha todos os campos com valores numéricos.');
@@ -115,9 +135,8 @@ const Orca3d = () => {
   };
 
   // Estado e função para a Calculadora de Total com Lucro
-  const [totalComLucro, setTotalComLucro] = useState(null); // Alterado para null
+  const [totalComLucro, setTotalComLucro] = useState("");
 
-  // Função para calcular o total com lucro
   const calcularTotalComLucro = () => {
     const totalCalculado =
       parseFloat(valorTotalFilamento) +
@@ -144,8 +163,39 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite o peso da peça"
               keyboardType="numeric"
+              value={pesoPeca}
               onChangeText={(text) => setPesoPeca(text)}
             />
+            <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+        handleClose();
+      }}
+    >
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+          <TextInput
+            placeholder="Usuario"
+            value={username}
+            onChangeText={text => setUsername(text)}
+            style={{ marginBottom: 10, borderBottomWidth: 1, borderBottomColor: 'black' }}
+          />
+          <TextInput
+            placeholder="Senha"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            secureTextEntry={true}
+            style={{ marginBottom: 10, borderBottomWidth: 1, borderBottomColor: 'black' }}
+          />
+          {errorMessage ? <Text style={{ color: 'red', marginBottom: 10 }}>{errorMessage}</Text> : null}
+          <Button title="Login" onPress={handleLogin} />
+          
+        </View>
+      </View>
+    </Modal>
 
             <View style={styles.separator} />
 
@@ -154,6 +204,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite o preço do filamento"
               keyboardType="numeric"
+              value={pesoFilamento}
               onChangeText={(text) => setPesoFilamento(text)}
             />
             <Button title="Calcular" onPress={calcularCustoFilamento} />
@@ -167,6 +218,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite a potência"
               keyboardType="numeric"
+              value={potenciaEquipamento}
               onChangeText={(text) => setPotenciaEquipamento(text)}
             />
 
@@ -175,6 +227,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite o número de horas"
               keyboardType="numeric"
+              value={horasImpressao}
               onChangeText={(text) => setHorasImpressao(text)}
             />
 
@@ -183,6 +236,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite o valor do kWh"
               keyboardType="numeric"
+              value={valorKwh}
               onChangeText={(text) => setValorKwh(text)}
             />
             <Button title="Calcular" onPress={calcularConsumoEnergia} />
@@ -194,6 +248,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite as horas gastas no fatiador"
               keyboardType="numeric"
+              value={horaFatiador}
               onChangeText={(text) => setHoraFatiador(text)}
             />
 
@@ -204,6 +259,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite as horas gastas na preparação da peça"
               keyboardType="numeric"
+              value={horaPreparacao}
               onChangeText={(text) => setHoraPreparacao(text)}
             />
 
@@ -214,6 +270,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite o valor da hora de trabalho"
               keyboardType="numeric"
+              value={valorHora}
               onChangeText={(text) => setValorHora(text)}
             />
             <Button title="Calcular" onPress={calcularCustoPreparacao} />
@@ -252,6 +309,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite o investimento"
               keyboardType="numeric"
+              value={investimento}
               onChangeText={(text) => setInvestimento(text)}
             />
 
@@ -262,6 +320,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite o tempo de recuperação"
               keyboardType="numeric"
+              value={periodo}
               onChangeText={(text) => setPeriodo(text)}
             />
             <Button title="Calcular" onPress={fazerpay} />
@@ -276,6 +335,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite a porcentagem"
               keyboardType="numeric"
+              value={porcentagemCola}
               onChangeText={(text) => setPorcentagemCola(text)}
             />
             <Button title="Calcular" onPress={calcularMargemCola} />
@@ -291,6 +351,7 @@ const Orca3d = () => {
               style={styles.input}
               placeholder="Digite a porcentagem de lucro"
               keyboardType="numeric"
+              value={porcentagemLucro}
               onChangeText={(text) => setPorcentagemLucro(text)}
             />
             <Button title="Calcular" onPress={calcularMargemLucro} />
@@ -450,4 +511,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Orca3d; 
+export default Orca3d;
