@@ -20,7 +20,7 @@ const Orca3d = () => {
 
 
   const handleLogin = () => {
-    if (username === 'admim' && password === 'admim') {
+    if (username === 'adimin' && password === 'adimin') {
     // Se o login for bem-sucedido, você pode fechar o modal
     setModalVisible(false);
     setErrorMessage('');
@@ -150,23 +150,22 @@ const Orca3d = () => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <SafeAreaView style={styles.container}>
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.inputContainercabeçalho}>
-          </View>
+    <SafeAreaView style={styles.container}>
+      <View style={{ flexDirection: "row" }}>
+        <View style={styles.inputContainercabeçalho}>
         </View>
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.inputContainerFilamento}>
-            {/* Seção para a Calculadora de Filamento */}
-            <Text>Peso da peça impressa (g):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o peso da peça"
-              keyboardType="numeric"
-              value={pesoPeca}
-              onChangeText={(text) => setPesoPeca(text)}
-            />
-            <Modal
+      </View>
+      <View style={{ flexDirection: "row" }}>
+        <View style={styles.inputContainerFilamento}>
+          {/* Seção para a Calculadora de Filamento */}
+          <Text>Peso da peça impressa (g):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite o peso da peça"
+            keyboardType="numeric"
+            onChangeText={(text) => setPesoPeca(text)}
+          />
+           <Modal
       animationType="slide"
       transparent={true}
       visible={modalVisible}
@@ -197,179 +196,168 @@ const Orca3d = () => {
       </View>
     </Modal>
 
-            <View style={styles.separator} />
+          <View style={styles.separator} />
 
-            <Text>Preço do filamento (g):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o preço do filamento"
-              keyboardType="numeric"
-              value={pesoFilamento}
-              onChangeText={(text) => setPesoFilamento(text)}
-            />
-            <Button title="Calcular" onPress={calcularCustoFilamento} />
-          </View>
-
-          <View style={styles.inputContainerEnergia}>
-            {/* Seção para a Calculadora de Energia */}
-            <Text style={{ marginTop: 20 }}>Calculadora de Energia:</Text>
-            <Text>Potência do equipamento (W):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite a potência"
-              keyboardType="numeric"
-              value={potenciaEquipamento}
-              onChangeText={(text) => setPotenciaEquipamento(text)}
-            />
-
-            <Text>Duração da impreção (H):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o número de horas"
-              keyboardType="numeric"
-              value={horasImpressao}
-              onChangeText={(text) => setHorasImpressao(text)}
-            />
-
-            <Text>Taxa de Energia (R$/kwh):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o valor do kWh"
-              keyboardType="numeric"
-              value={valorKwh}
-              onChangeText={(text) => setValorKwh(text)}
-            />
-            <Button title="Calcular" onPress={calcularConsumoEnergia} />
-          </View>
-          <View style={styles.inputContainerTrabalho}>
-            {/* Seção para a Calculadora de Preço de preparações da peça */}
-            <Text>Horas gastas no fatiador (h):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite as horas gastas no fatiador"
-              keyboardType="numeric"
-              value={horaFatiador}
-              onChangeText={(text) => setHoraFatiador(text)}
-            />
-
-            <View style={styles.separator} />
-
-            <Text>Horas gastas na preparação (h):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite as horas gastas na preparação da peça"
-              keyboardType="numeric"
-              value={horaPreparacao}
-              onChangeText={(text) => setHoraPreparacao(text)}
-            />
-
-            <View style={styles.separator} />
-
-            <Text>Preço da hora de trabalho (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o valor da hora de trabalho"
-              keyboardType="numeric"
-              value={valorHora}
-              onChangeText={(text) => setValorHora(text)}
-            />
-            <Button title="Calcular" onPress={calcularCustoPreparacao} />
-          </View>
-          <View style={styles.inputContainerresultados}>
-            {/* Seção para a Calculadora de Total com Lucro */}
-            <Text style={{ marginTop: 10 }}>
-              Valor Total Filamento: R$ {valorTotalFilamento}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Consumo Energia: R$ {consumoEnergia}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Valor da preparação: R$ {valorTrabalho}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Valor do Payback: R$ {fluxoCaixa}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Margem do funcionário: R$ {margemCola}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Margem de Lucro: R$ {margemLucro}
-            </Text>{" "}
-            <Text style={{ marginTop: 10 }}>
-              Total do Orçamento: R$ {totalComLucro}
-            </Text>
-          </View>
+          <Text>Preço do filamento (g):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite o preço do filamento"
+            keyboardType="numeric"
+            onChangeText={(text) => setPesoFilamento(text)}
+          />
+          <Button title="Calcular" onPress={calcularCustoFilamento} />
         </View>
 
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.inputContainerpayback}>
-            {/* Seção para a Calculadora de Payback */}
-            <Text>Investimento inicial (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o investimento"
-              keyboardType="numeric"
-              value={investimento}
-              onChangeText={(text) => setInvestimento(text)}
-            />
+        <View style={styles.inputContainerEnergia}>
+          {/* Seção para a Calculadora de Energia */}
+          <Text style={{ marginTop: 20 }}>Calculadora de Energia:</Text>
+          <Text>Potência do equipamento (W):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite a potência"
+            keyboardType="numeric"
+            onChangeText={(text) => setPotenciaEquipamento(text)}
+          />
 
-            <View style={styles.separator} />
+          <Text>Duração da impreção (H):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite o número de horas"
+            keyboardType="numeric"
+            onChangeText={(text) => setHorasImpressao(text)}
+          />
 
-            <Text>Tempo de recuperação (Dias):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o tempo de recuperação"
-              keyboardType="numeric"
-              value={periodo}
-              onChangeText={(text) => setPeriodo(text)}
-            />
-            <Button title="Calcular" onPress={fazerpay} />
-          </View>
-          <View style={styles.inputContainerCola}>
-            {/* Seção para a Calculadora do preço da hora dos funcionários */}
-            <Text style={{ marginTop: 20 }}>
-              Calcule porcentagens para funcionários:
-            </Text>
-            <Text>Valor da hora (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite a porcentagem"
-              keyboardType="numeric"
-              value={porcentagemCola}
-              onChangeText={(text) => setPorcentagemCola(text)}
-            />
-            <Button title="Calcular" onPress={calcularMargemCola} />
-          </View>
+          <Text>Taxa de Energia (R$/kwh):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite o valor do kWh"
+            keyboardType="numeric"
+            onChangeText={(text) => setValorKwh(text)}
+          />
+          <Button title="Calcular" onPress={calcularConsumoEnergia} />
+        </View>
+        <View style={styles.inputContainerTrabalho}>
+          {/* Seção para a Calculadora de Preço de preparações da peça */}
+          <Text>Horas gastas no fatiador (h):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite as horas gastas no fatiador"
+            keyboardType="numeric"
+            onChangeText={(text) => setHoraFatiador(text)}
+          />
 
-          <View style={styles.inputContainerLucro}>
-            {/* Seção para a Calculadora de Margem de Lucro */}
-            <Text style={{ marginTop: 20 }}>
-              Calculadora de Margem de Lucro:
-            </Text>
-            <Text>porcentagem do Lucro (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite a porcentagem de lucro"
-              keyboardType="numeric"
-              value={porcentagemLucro}
-              onChangeText={(text) => setPorcentagemLucro(text)}
-            />
-            <Button title="Calcular" onPress={calcularMargemLucro} />
-          </View>
-          <View style={styles.inputContainerLucroFinal}>
-            {/* Seção para a Calculadora de Total com Lucro */}
-            <Text style={{ marginTop: 20 }}>
-              Calculadora de Total com Lucro:
-            </Text>
-            <Button title="Calcular" onPress={calcularTotalComLucro} />
-          </View>
+          <View style={styles.separator} />
+
+          <Text>Horas gastas na preparação (h):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite as horas gastas na preparação da peça"
+            keyboardType="numeric"
+            onChangeText={(text) => setHoraPreparacao(text)}
+          />
+
+          <View style={styles.separator} />
+
+          <Text>Preço da hora de trabalho (R$):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite o valor da hora de trabalho"
+            keyboardType="numeric"
+            onChangeText={(text) => setValorHora(text)}
+          />
+          <Button title="Calcular" onPress={calcularCustoPreparacao} />
+        </View>
+        <View style={styles.inputContainerresultados}>
+          {/* Seção para a Calculadora de Total com Lucro */}
+          <Text style={{ marginTop: 10 }}>
+            Valor Total Filamento: R$ {valorTotalFilamento}
+          </Text>
+          <Text style={{ marginTop: 10 }}>
+            Consumo Energia: R$ {consumoEnergia}
+          </Text>
+          <Text style={{ marginTop: 10 }}>
+            Valor da preparação: R$ {valorTrabalho}
+          </Text>
+          <Text style={{ marginTop: 10 }}>
+            Valor do Payback: R$ {fluxoCaixa}
+          </Text>
+          <Text style={{ marginTop: 10 }}>
+            Margem do funcionário: R$ {margemCola}
+          </Text>
+          <Text style={{ marginTop: 10 }}>
+            Margem de Lucro: R$ {margemLucro}
+          </Text>{" "}
+          <Text style={{ marginTop: 10 }}>
+            Total do Orçamento: R$ {totalComLucro}
+          </Text>
+        </View>
+      </View>
+
+      <View style={{ flexDirection: "row" }}>
+        <View style={styles.inputContainerpayback}>
+          {/* Seção para a Calculadora de Payback */}
+          <Text>Investimento inicial (R$):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite o investimento"
+            keyboardType="numeric"
+            onChangeText={(text) => setInvestimento(text)}
+          />
+
+          <View style={styles.separator} />
+
+          <Text>Tempo de recuperação (Dias):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite o tempo de recuperação"
+            keyboardType="numeric"
+            onChangeText={(text) => setPeriodo(text)}
+          />
+          <Button title="Calcular" onPress={fazerpay} />
+        </View>
+        <View style={styles.inputContainerCola}>
+          {/* Seção para a Calculadora do preço da hora dos funcionários */}
+          <Text style={{ marginTop: 20 }}>
+            Calcule porcentagens para funcionários:
+          </Text>
+          <Text>Valor da hora (R$):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite a porcentagem"
+            keyboardType="numeric"
+            onChangeText={(text) => setPorcentagemCola(text)}
+          />
+          <Button title="Calcular" onPress={calcularMargemCola} />
         </View>
 
-        <View style={{ flexDirection: "row" }}>
-
+        <View style={styles.inputContainerLucro}>
+          {/* Seção para a Calculadora de Margem de Lucro */}
+          <Text style={{ marginTop: 20 }}>
+            Calculadora de Margem de Lucro:
+          </Text>
+          <Text>porcentagem do Lucro (R$):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite a porcentagem de lucro"
+            keyboardType="numeric"
+            onChangeText={(text) => setPorcentagemLucro(text)}
+          />
+          <Button title="Calcular" onPress={calcularMargemLucro} />
         </View>
-      </SafeAreaView>
-    </ScrollView>
+        <View style={styles.inputContainerLucroFinal}>
+          {/* Seção para a Calculadora de Total com Lucro */}
+          <Text style={{ marginTop: 20 }}>
+            Calculadora de Total com Lucro:
+          </Text>
+          <Button title="Calcular" onPress={calcularTotalComLucro} />
+        </View>
+      </View>
+
+      <View style={{ flexDirection: "row" }}>
+
+      </View>
+    </SafeAreaView>
+  </ScrollView>
   );
 };
 
@@ -512,3 +500,4 @@ const styles = StyleSheet.create({
 });
 
 export default Orca3d;
+
