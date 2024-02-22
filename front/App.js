@@ -175,19 +175,19 @@ const Orca3d = () => {
       }}
     >
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+        <View style={{ backgroundColor: 'white', padding: 30, width:400, right:0, borderRadius: 10 }}>
           <TextInput
             placeholder="Usuario"
             value={username}
             onChangeText={text => setUsername(text)}
-            style={{ marginBottom: 10, borderBottomWidth: 1, borderBottomColor: 'black' }}
+            style={{ marginBottom: 20, borderBottomWidth: 1, borderBottomColor: 'black' , width: 340}}
           />
           <TextInput
             placeholder="Senha"
             value={password}
             onChangeText={text => setPassword(text)}
             secureTextEntry={true}
-            style={{ marginBottom: 10, borderBottomWidth: 1, borderBottomColor: 'black' }}
+            style={{ marginBottom: 20, borderBottomWidth: 1, borderBottomColor: 'black' }}
           />
           {errorMessage ? <Text style={{ color: 'red', marginBottom: 10 }}>{errorMessage}</Text> : null}
           <Button title="Login" onPress={handleLogin} />
