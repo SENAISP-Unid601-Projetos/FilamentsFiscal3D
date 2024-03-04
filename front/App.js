@@ -9,7 +9,7 @@ import {
   SafeAreaView,
   Image,
   Modal,
-  CheckBox  
+  Switch,
 } from "react-native";
 
 const Orca3d = () => {
@@ -173,6 +173,9 @@ const Orca3d = () => {
     setFluxoCaixa(payback.toFixed(2));
   };
 
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
   // Estado e função para a Calculadora de Total com Lucro
   const [totalComLucro, setTotalComLucro] = useState("");
 
@@ -195,64 +198,64 @@ const Orca3d = () => {
         </View>
         <View style={{ flexDirection: "row" }}>
           <View style={styles.inputContainerlateral}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: 15,
-              }}
-            >
-              <CheckBox style={{ marginRight: 10 }} />
+          <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
               <Text>Calcular gasto de filamento</Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: 15,
-              }}
-            >
-              <CheckBox style={{ marginRight: 10 }} />
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
               <Text>Calcular gasto de energia</Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: 15,
-              }}
-            >
-              <CheckBox style={{ marginRight: 10 }} />
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
               <Text>Calcular gasto no acabamento</Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: 15,
-              }}
-            >
-              <CheckBox style={{ marginRight: 10 }} />
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
               <Text>Calcular payback</Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: 15,
-              }}
-            >
-              <CheckBox style={{ marginRight: 10 }} />
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
               <Text>Calcular margem do funcionario</Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: 15,
-              }}
-            >
-              <CheckBox style={{ marginRight: 10 }} />
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
               <Text>Calcular margem de lucro</Text>
             </View>
           </View>
