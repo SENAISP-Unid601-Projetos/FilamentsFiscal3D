@@ -7,12 +7,20 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
-  Image,
   Modal,
   Switch,
 } from "react-native";
 
 const Orca3d = () => {
+  const [showFilamentoSeparator, setShowFilamentoSeparator] = useState(true);
+  const [showEnergiaSeparator, setShowEnergiaSeparator] = useState(true);
+  const [showAcabamentoSeparator, setShowAcabamentoSeparator] = useState(true);
+  const [showPaybackSeparator, setShowPaybackSeparator] = useState(true);
+  const [showMargemFuncionarioSeparator, setShowMargemFuncionarioSeparator] =
+    useState(true);
+  const [showMargemLucroSeparator, setShowMargemLucroSeparator] =
+    useState(true);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [modalVisible, setModalVisible] = useState(true); // Inicia o modal como visível
@@ -29,6 +37,40 @@ const Orca3d = () => {
         "Usuário ou senha incorretos. Por favor, tente novamente."
       );
     }
+  };
+
+  const [isEnabledFilamento, setIsEnabledFilamento] = useState(false);
+  const toggleSwitchFilamento = () => {
+    setIsEnabledFilamento((previousState) => !previousState);
+    setShowFilamentoSeparator((previousState) => !previousState);
+  };
+  const [isEnabledEnergia, setIsEnabledEnergia] = useState(false);
+  const toggleSwitchEnergia = () => {
+    setIsEnabledEnergia((previousState) => !previousState);
+    setShowEnergiaSeparator((previousState) => !previousState);
+  };
+
+  const [isEnabledAcabamento, setIsEnabledAcabamento] = useState(false);
+  const toggleSwitchAcabamento = () => {
+    setIsEnabledAcabamento((previousState) => !previousState);
+    setShowAcabamentoSeparator((previousState) => !previousState);
+  };
+  const [isEnabledPayback, setIsEnabledPayback] = useState(false);
+  const toggleSwitchPayback = () => {
+    setIsEnabledPayback((previousState) => !previousState);
+    setShowPaybackSeparator((previousState) => !previousState);
+  };
+  const [isEnabledMargemFuncionario, setIsEnabledMargemFuncionario] =
+    useState(false);
+  const toggleSwitchMargemFuncionario = () => {
+    setIsEnabledMargemFuncionario((previousState) => !previousState);
+    setShowMargemFuncionarioSeparator((previousState) => !previousState);
+  };
+
+  const [isEnabledMargemLucro, setIsEnabledMargemLucro] = useState(false);
+  const toggleSwitchMargemLucro = () => {
+    setIsEnabledMargemLucro((previousState) => !previousState);
+    setShowMargemLucroSeparator((previousState) => !previousState);
   };
 
   // Estado para a Calculadora de Filamento
@@ -198,207 +240,297 @@ const Orca3d = () => {
         </View>
         <View style={{ flexDirection: "row" }}>
           <View style={styles.inputContainerlateral}>
-          <View style={styles.container}>
+            <View style={styles.container}>
               <Switch
                 trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                thumbColor={isEnabledFilamento ? "#f5dd4b" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
+                onValueChange={toggleSwitchFilamento}
+                value={isEnabledFilamento}
               />
               <Text>Calcular gasto de filamento</Text>
             </View>
             <View style={styles.container}>
               <Switch
                 trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                thumbColor={isEnabledEnergia ? "#f5dd4b" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
+                onValueChange={toggleSwitchEnergia}
+                value={isEnabledEnergia}
               />
               <Text>Calcular gasto de energia</Text>
             </View>
             <View style={styles.container}>
               <Switch
                 trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                thumbColor={isEnabledAcabamento ? "#f5dd4b" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
+                onValueChange={toggleSwitchAcabamento}
+                value={isEnabledAcabamento}
               />
               <Text>Calcular gasto no acabamento</Text>
             </View>
             <View style={styles.container}>
               <Switch
                 trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                thumbColor={isEnabledPayback ? "#f5dd4b" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
+                onValueChange={toggleSwitchPayback}
+                value={isEnabledPayback}
               />
               <Text>Calcular payback</Text>
             </View>
             <View style={styles.container}>
               <Switch
                 trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                thumbColor={isEnabledMargemFuncionario ? "#f5dd4b" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
+                onValueChange={toggleSwitchMargemFuncionario}
+                value={isEnabledMargemFuncionario}
               />
-              <Text>Calcular margem do funcionario</Text>
+              <Text>Calcular margem do funcionário</Text>
             </View>
             <View style={styles.container}>
               <Switch
                 trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                thumbColor={isEnabledMargemLucro ? "#f5dd4b" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
+                onValueChange={toggleSwitchMargemLucro}
+                value={isEnabledMargemLucro}
               />
               <Text>Calcular margem de lucro</Text>
             </View>
           </View>
 
+          {showFilamentoSeparator && <View style={styles.separator} />}
           <View style={styles.inputContainerFilamento}>
-            {/* Seção para a Calculadora de Filamento */}
-            <Text>Peso da peça impressa (g):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o peso da peça"
-              keyboardType="numeric"
-              onChangeText={(text) => setPesoPeca(text)}
-            />
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
-                handleClose();
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: "white",
-                    padding: 30,
-                    width: 400,
-                    right: 0,
-                    borderRadius: 10,
+            {isEnabledFilamento && (
+              <>
+                {/* Seção para a Calculadora de Filamento */}
+                <Text>Peso da peça impressa (g):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o peso da peça"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPesoPeca(text)}
+                />
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+                    handleClose();
                   }}
                 >
-                  <TextInput
-                    placeholder="Usuario"
-                    value={username}
-                    onChangeText={(text) => setUsername(text)}
+                  <View
                     style={{
-                      marginBottom: 20,
-                      borderBottomWidth: 1,
-                      borderBottomColor: "black",
-                      width: 340,
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
                     }}
-                  />
-                  <TextInput
-                    placeholder="Senha"
-                    value={password}
-                    onChangeText={(text) => setPassword(text)}
-                    secureTextEntry={true}
-                    style={{
-                      marginBottom: 20,
-                      borderBottomWidth: 1,
-                      borderBottomColor: "black",
-                    }}
-                  />
-                  {errorMessage ? (
-                    <Text style={{ color: "red", marginBottom: 10 }}>
-                      {errorMessage}
-                    </Text>
-                  ) : null}
-                  <Button title="Login" onPress={handleLogin} />
-                </View>
-              </View>
-            </Modal>
-
-            <View style={styles.separator} />
-
-            <Text>Preço do filamento (g):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o preço do filamento"
-              keyboardType="numeric"
-              onChangeText={(text) => setPesoFilamento(text)}
-            />
-            <Button title="Calcular" onPress={calcularCustoFilamento} />
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        padding: 30,
+                        width: 400,
+                        right: 0,
+                        borderRadius: 10,
+                      }}
+                    >
+                      <TextInput
+                        placeholder="Usuario"
+                        value={username}
+                        onChangeText={(text) => setUsername(text)}
+                        style={{
+                          marginBottom: 20,
+                          borderBottomWidth: 1,
+                          borderBottomColor: "black",
+                          width: 340,
+                        }}
+                      />
+                      <TextInput
+                        placeholder="Senha"
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                        secureTextEntry={true}
+                        style={{
+                          marginBottom: 20,
+                          borderBottomWidth: 1,
+                          borderBottomColor: "black",
+                        }}
+                      />
+                      {errorMessage ? (
+                        <Text style={{ color: "red", marginBottom: 10 }}>
+                          {errorMessage}
+                        </Text>
+                      ) : null}
+                      <Button title="Login" onPress={handleLogin} />
+                    </View>
+                  </View>
+                </Modal>
+                <View style={styles.separator} />
+                <Text>Preço do filamento (g):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o preço do filamento"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPesoFilamento(text)}
+                />
+                <Button title="Calcular" onPress={calcularCustoFilamento} />
+              </>
+            )}
           </View>
+
+          {showEnergiaSeparator && <View style={styles.separator} />}
 
           <View style={styles.inputContainerEnergia}>
-            {/* Seção para a Calculadora de Energia */}
-            <Text>Potência do equipamento (W):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite a potência"
-              keyboardType="numeric"
-              onChangeText={(text) => setPotenciaEquipamento(text)}
-            />
+            {isEnabledEnergia && (
+              <>
+                {/* Seção para a Calculadora de Energia */}
+                <Text>Potência do equipamento (W):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite a potência"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPotenciaEquipamento(text)}
+                />
 
-            <Text>Duração da impreção (H):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o número de horas"
-              keyboardType="numeric"
-              onChangeText={(text) => setHorasImpressao(text)}
-            />
+                <Text>Duração da impreção (H):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o número de horas"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setHorasImpressao(text)}
+                />
 
-            <Text>Taxa de Energia (R$/kwh):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o valor do kWh"
-              keyboardType="numeric"
-              onChangeText={(text) => setValorKwh(text)}
-            />
-            <Button title="Calcular" onPress={calcularConsumoEnergia} />
+                <Text>Taxa de Energia (R$/kwh):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o valor do kWh"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setValorKwh(text)}
+                />
+                <Button title="Calcular" onPress={calcularConsumoEnergia} />
+              </>
+            )}
           </View>
+
+          {showAcabamentoSeparator && <View style={styles.separator} />}
+
           <View style={styles.inputContainerTrabalho}>
-            {/* Seção para a Calculadora de Preço de preparações da peça */}
-            <Text>Horas gastas no fatiador (h):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite as horas gastas no fatiador"
-              keyboardType="numeric"
-              onChangeText={(text) => setHoraFatiador(text)}
-            />
+            {isEnabledAcabamento && (
+              <>
+                {/* Seção para a Calculadora de Preço de preparações da peça */}
+                <Text>Horas gastas no fatiador (h):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite as horas gastas no fatiador"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setHoraFatiador(text)}
+                />
 
-            <View style={styles.separator} />
+                <View style={styles.separator} />
 
-            <Text>Horas gastas na preparação (h):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite as horas gastas na preparação da peça"
-              keyboardType="numeric"
-              onChangeText={(text) => setHoraPreparacao(text)}
-            />
+                <Text>Horas gastas na preparação (h):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite as horas gastas na preparação da peça"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setHoraPreparacao(text)}
+                />
 
-            <View style={styles.separator} />
+                <View style={styles.separator} />
 
-            <Text>Preço da hora de trabalho (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o valor da hora de trabalho"
-              keyboardType="numeric"
-              onChangeText={(text) => setValorHora(text)}
-            />
-            <Button title="Calcular" onPress={calcularCustoPreparacao} />
+                <Text>Preço da hora de trabalho (R$):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o valor da hora de trabalho"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setValorHora(text)}
+                />
+                <Button title="Calcular" onPress={calcularCustoPreparacao} />
+              </>
+            )}
           </View>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+          {showPaybackSeparator && <View style={styles.separator} />}
+          <View style={styles.inputContainerpayback}>
+            {isEnabledPayback && (
+              <>
+                {/* Seção para a Calculadora de Payback */}
+                <Text>Investimento inicial (R$):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o investimento"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setInvestimento(text)}
+                />
+
+                <View style={styles.separator} />
+
+                <Text>Tempo de recuperação (Dias):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o tempo de recuperação"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPeriodo(text)}
+                />
+                <Button title="Calcular" onPress={fazerpay} />
+              </>
+            )}
+          </View>
+
+          {showMargemFuncionarioSeparator && <View style={styles.separator} />}
+
+          <View style={styles.inputContainerCola}>
+            {isEnabledMargemFuncionario && (
+              <>
+                {/* Seção para a Calculadora do preço da hora dos funcionários */}
+                <Text style={{ marginTop: 20 }}>
+                  Calcule margem do funcionários:
+                </Text>
+                <Text>Valor da hora (R$):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite a porcentagem"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPorcentagemCola(text)}
+                />
+                <Button title="Calcular" onPress={calcularMargemCola} />
+              </>
+            )}
+          </View>
+
+          {showMargemLucroSeparator && <View style={styles.separator} />}
+
+          <View style={styles.inputContainerLucro}>
+            {isEnabledMargemLucro && (
+              <>
+                {/* Seção para a Calculadora de Margem de Lucro */}
+                <Text style={{ marginTop: 20 }}>
+                  Calculadora de Margem de Lucro:
+                </Text>
+                <Text>porcentagem do Lucro (R$):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite a porcentagem de lucro"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPorcentagemLucro(text)}
+                />
+                <Button title="Calcular" onPress={calcularMargemLucro} />
+              </>
+            )}
+          </View>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
           <View style={styles.inputContainerresultados}>
-            {/* Seção para a Calculadora de Total com Lucro */}
+            {/* Seção para exibir os resultados */}
             <Text style={{ marginTop: 10 }}>
               Valor Total Filamento: R$ {valorTotalFilamento}
             </Text>
@@ -420,61 +552,6 @@ const Orca3d = () => {
             <Text style={{ marginTop: 10 }}>
               Total do Orçamento: R$ {totalComLucro}
             </Text>
-          </View>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.inputContainerpayback}>
-            {/* Seção para a Calculadora de Payback */}
-            <Text>Investimento inicial (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o investimento"
-              keyboardType="numeric"
-              onChangeText={(text) => setInvestimento(text)}
-            />
-
-            <View style={styles.separator} />
-
-            <Text>Tempo de recuperação (Dias):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite o tempo de recuperação"
-              keyboardType="numeric"
-              onChangeText={(text) => setPeriodo(text)}
-            />
-            <Button title="Calcular" onPress={fazerpay} />
-          </View>
-          <View style={styles.inputContainerCola}>
-            {/* Seção para a Calculadora do preço da hora dos funcionários */}
-            <Text style={{ marginTop: 20 }}>
-              Calcule porcentagens para funcionários:
-            </Text>
-            <Text>Valor da hora (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite a porcentagem"
-              keyboardType="numeric"
-              onChangeText={(text) => setPorcentagemCola(text)}
-            />
-            <Button title="Calcular" onPress={calcularMargemCola} />
-          </View>
-
-          <View style={styles.inputContainerLucro}>
-            {/* Seção para a Calculadora de Margem de Lucro */}
-            <Text style={{ marginTop: 20 }}>
-              Calculadora de Margem de Lucro:
-            </Text>
-            <Text>porcentagem do Lucro (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite a porcentagem de lucro"
-              keyboardType="numeric"
-              onChangeText={(text) => setPorcentagemLucro(text)}
-            />
-            <Button title="Calcular" onPress={calcularMargemLucro} />
-          </View>
-          <View style={styles.inputContainerLucroFinal}>
             {/* Seção para a Calculadora de Total com Lucro */}
             <Text style={{ marginTop: 20 }}>
               Calculadora de Total com Lucro:
@@ -482,8 +559,6 @@ const Orca3d = () => {
             <Button title="Calcular" onPress={calcularTotalComLucro} />
           </View>
         </View>
-
-        <View style={{ flexDirection: "row" }}></View>
       </SafeAreaView>
     </ScrollView>
   );
@@ -499,8 +574,8 @@ const styles = StyleSheet.create({
   inputContainerFilamento: {
     alignItems: "center",
     justifyContent: "center",
-    width: 255,
-    height: 310,
+    width: 245,
+    height: 300,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
@@ -512,8 +587,8 @@ const styles = StyleSheet.create({
   inputContainerEnergia: {
     alignItems: "center",
     justifyContent: "center",
-    width: 255,
-    height: 310,
+    width: 245,
+    height: 300,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
@@ -525,8 +600,8 @@ const styles = StyleSheet.create({
   inputContainerLucro: {
     alignItems: "center",
     justifyContent: "center",
-    width: 255,
-    height: 310,
+    width: 245,
+    height: 300,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
@@ -551,8 +626,8 @@ const styles = StyleSheet.create({
   inputContainerCola: {
     alignItems: "center",
     justifyContent: "center",
-    width: 255,
-    height: 310,
+    width: 245,
+    height: 300,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
@@ -564,8 +639,8 @@ const styles = StyleSheet.create({
   inputContainerTrabalho: {
     alignItems: "center",
     justifyContent: "center",
-    width: 255,
-    height: 310,
+    width: 245,
+    height: 300,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
@@ -577,26 +652,26 @@ const styles = StyleSheet.create({
   inputContainerpayback: {
     alignItems: "center",
     justifyContent: "center",
-    width: 255,
-    height: 310,
+    width: 245,
+    height: 300,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
     marginBottom: 20,
-    marginLeft: 235,
+    marginLeft: 245,
     marginRight: 5,
   },
 
   inputContainerresultados: {
     alignItems: "center",
     justifyContent: "center",
-    width: 230,
+    width: 245,
     height: 300,
     backgroundColor: "lightgray",
     borderRadius: 20,
-    marginVertical: 50,
+    marginVertical: 10,
     marginBottom: 1,
-    marginLeft: 10,
+    marginLeft: 495,
     marginRight: 5,
   },
 
