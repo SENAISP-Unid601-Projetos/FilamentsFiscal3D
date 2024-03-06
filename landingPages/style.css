@@ -5,7 +5,9 @@
     padding: 0%;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
+    font-size: 30px;
 }
+
 
 body {
     background-color: black;
@@ -34,6 +36,8 @@ h2.titulo {
 
 h2.titulo span {
     color: #00FF08;
+    font-size: 40
+    px;
 }
 
 button:hover,
@@ -193,6 +197,7 @@ section.sobre .flex {
 .sobre .txt-sobre h2 span {
     color: #00FF08;
     display: block;
+    font-size: 30px;
 
 }
 
@@ -347,6 +352,7 @@ section.desenvolvedores .flex {
  }
  .sustentabilidade span{
     color: #00FF08;
+    font-size: 45px;
  }
  
 .txt-topo-site2 {
