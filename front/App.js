@@ -159,6 +159,7 @@ const Orca3d = () => {
     setMargemLucro(margemLucroCalculada.toFixed(2)); // Ajusta para duas casas decimais
   };
 
+  
   // Estado e função para a Calculadora do preço dos colaboradores
   const [porcentagemCola, setPorcentagemCola] = useState(0);
   const [margemCola, setMargemCola] = useState(0);
