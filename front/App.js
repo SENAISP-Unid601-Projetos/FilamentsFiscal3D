@@ -73,10 +73,7 @@ const Orca3d = () => {
     setIsEnabledMargemLucro((previousState) => !previousState);
     setShowMargemLucroSeparator((previousState) => !previousState);
   };
-
-
-  
-
+  //teste commit matheus
   // Estado para a Calculadora de Filamento
   const [pesoPeca, setPesoPeca] = useState(0);
   const [pesoFilamento, setPesoFilamento] = useState(0);
