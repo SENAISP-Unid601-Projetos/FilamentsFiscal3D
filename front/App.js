@@ -7,16 +7,44 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
+  FlatList,
   Image,
   Modal, // Importe o Modal
 } from "react-native";
 
+const HistoricoItem = ({ item, removerItem }) => (
+  <View style={styles.listItem}>
+    <Text style={styles.listText}>{item.title}{item.date}</Text>
+    <Text style={styles.listText}>{item.titleTotalValorFilamento}{item.totalValorFilamento}</Text>
+    <Text style={styles.listText}>{item.titleConsumoEnergia}{item.consumoEnergia}</Text>
+    <Text style={styles.listText}>{item.titleValorTrabalho}{item.valorTrabalho}</Text>
+    <Text style={styles.listText}>{item.titleFluxoCaixa}{item.fluxoCaixa}</Text>
+    <Text style={styles.listText}>{item.titleMargemCola}{item.margemCola}</Text>
+    <Text style={styles.listText}>{item.titleMargemLucro}{item.margemLucro}</Text>
+    
+    <Text style={styles.listText}>{item.titlevalorTotal}{item.valorTotal}</Text>
+    <Button title="Remover" onPress={() => removerItem(item.id)} />
+  </View>
+
+  //data em outro local \/
+  //<Text style={styles.listText}>{item.date}</Text>
+);
+
+const Historico = ({ historico, removerItem }) => (
+  <FlatList
+    data={historico}
+    renderItem={({ item }) => <HistoricoItem item={item} removerItem={removerItem} />}
+    keyExtractor={(item) => item.id.toString()}
+    style={{ width: '100%' }}
+  />
+);
 
 const Orca3d = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [modalVisible, setModalVisible] = useState(true); // Inicia o modal como visível
   const [errorMessage, setErrorMessage] = useState('');
+  const [historico, setHistorico] = useState([]);
 
 
   const handleLogin = () => {
@@ -149,6 +177,48 @@ const Orca3d = () => {
       parseFloat(fluxoCaixa);
     setTotalComLucro(totalCalculado.toFixed(2)); // Ajusta para duas casas decimais
   };
+
+
+//teste
+
+const adicionarAoHistorico = () => {
+  if (
+    valorTotalFilamento !== 0 ||
+    consumoEnergia !== 0 ||
+    valorTrabalho !== 0 ||
+    fluxoCaixa !== 0 ||
+    margemCola !== 0 ||
+    margemLucro !== 0
+  ) {
+    const novoItem = {
+      id: Date.now(),
+      title: 'Historico ',
+      titleTotalValorFilamento:'Valor Total Filamento: ',
+      titleConsumoEnergia:'Consumo Energia: ',
+      titleValorTrabalho:'Valor Trabalho: ',
+      titleFluxoCaixa:'Fluxo Caixa: ',
+      titleMargemCola:'Margem Cola: ',
+      titleMargemLucro:'Margem Lucro: ',
+      titlevalorTotal:'Total: ',
+      date: new Date().toLocaleString(),
+      totalValorFilamento: valorTotalFilamento,
+      consumoEnergia: consumoEnergia,
+      valorTrabalho: valorTrabalho,
+      fluxoCaixa: fluxoCaixa,
+      margemCola: margemCola,
+      margemLucro: margemLucro,
+      valorTotal: totalComLucro,
+    };
+    setHistorico([...historico, novoItem]);
+  }
+};
+
+  const removerDoHistorico = (id) => {
+    const novoHistorico = historico.filter((item) => item.id !== id);
+    setHistorico(novoHistorico);
+  };
+  
+  //teste
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -351,15 +421,20 @@ const Orca3d = () => {
           <Text style={{ marginTop: 20 }}>
             Calculadora de Total com Lucro:
           </Text>
-          <Button title="Calcular" onPress={calcularTotalComLucro} />
+          <Button title="Calcular" onPress={() => {calcularTotalComLucro();adicionarAoHistorico();}} />
         </View>
       </View>
 
       <View style={{ flexDirection: "row" }}>
 
       </View>
+      <View style={styles.container}>
+      <Text style={{ fontSize: 20, marginBottom: 20 }}>Histórico</Text>
+      <Historico historico={historico} removerItem={removerDoHistorico} />
+    </View>
     </SafeAreaView>
   </ScrollView>
+     //<Button title="Adicionar ao Histórico" onPress={adicionarAoHistorico} />
   );
 };
 
@@ -499,7 +574,31 @@ const styles = StyleSheet.create({
     height: 10,
     backgroundColor: "transparent",
   },
+  //teste
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  listItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  listText: {
+    fontSize: 16,
+  },
+  //teste
+
+
+
+
+
+
+
+
+
 });
 
 export default Orca3d;
-
