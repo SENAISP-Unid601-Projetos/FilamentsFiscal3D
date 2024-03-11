@@ -14,7 +14,8 @@ import {
 
 const HistoricoItem = ({ item, removerItem }) => (
   <View style={styles.listItem}>
-    <Text style={styles.listText}>{item.title}{item.date}</Text>
+    <Text style={styles.listText}>{item.title}</Text>
+    <Text style={styles.listText}>{item.date}</Text>
     <Text style={styles.listText}>{item.titleTotalValorFilamento}{item.totalValorFilamento}</Text>
     <Text style={styles.listText}>{item.titleConsumoEnergia}{item.consumoEnergia}</Text>
     <Text style={styles.listText}>{item.titleValorTrabalho}{item.valorTrabalho}</Text>
@@ -422,19 +423,21 @@ const adicionarAoHistorico = () => {
             Calculadora de Total com Lucro:
           </Text>
           <Button title="Calcular" onPress={() => {calcularTotalComLucro();adicionarAoHistorico();}} />
+          
         </View>
       </View>
 
       <View style={{ flexDirection: "row" }}>
 
       </View>
-      <View style={styles.container}>
+      <View style={styles.inputHistorico}>
       <Text style={{ fontSize: 20, marginBottom: 20 }}>Histórico</Text>
       <Historico historico={historico} removerItem={removerDoHistorico} />
     </View>
     </SafeAreaView>
   </ScrollView>
      //<Button title="Adicionar ao Histórico" onPress={adicionarAoHistorico} />
+     //consertarerro na 425 que quando aperta o botao pela primeira vez nao  aparece o total no historico
   );
 };
 
@@ -498,6 +501,18 @@ const styles = StyleSheet.create({
   },
 
   inputContainerCola: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 255,
+    height: 310,
+    backgroundColor: "lightgray",
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  inputHistorico: {
     alignItems: "center",
     justifyContent: "center",
     width: 255,
