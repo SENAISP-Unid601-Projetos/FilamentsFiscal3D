@@ -225,71 +225,36 @@ const Orca3d = () => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={styles.container}>
+        <View style={styles.inputContainercabeçalho}></View>
         <View style={{ flexDirection: "row" }}>
-          <View style={styles.inputContainercabeçalho}></View>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.inputContainerlateral}>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledFilamento ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchFilamento}
-                value={isEnabledFilamento}
-              />
-              <Text>Calcular gasto de filamento</Text>
-            </View>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledEnergia ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchEnergia}
-                value={isEnabledEnergia}
-              />
-              <Text>Calcular gasto de energia</Text>
-            </View>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledAcabamento ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchAcabamento}
-                value={isEnabledAcabamento}
-              />
-              <Text>Calcular gasto no acabamento</Text>
-            </View>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledPayback ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchPayback}
-                value={isEnabledPayback}
-              />
-              <Text>Calcular payback</Text>
-            </View>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledMargemFuncionario ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchMargemFuncionario}
-                value={isEnabledMargemFuncionario}
-              />
-              <Text>Calcular margem do funcionário</Text>
-            </View>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledMargemLucro ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchMargemLucro}
-                value={isEnabledMargemLucro}
-              />
-              <Text>Calcular margem de lucro</Text>
-            </View>
+          <View style={styles.inputContainerresultados}>
+            {/* Seção para a Calculadora de Total com Lucro */}
+            <Text style={{ marginTop: 10 }}>
+              Valor Total Filamento: R$ {valorTotalFilamento}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              Consumo Energia: R$ {consumoEnergia}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              Valor da preparação: R$ {valorTrabalho}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              Valor do Payback: R$ {fluxoCaixa}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              Margem do funcionário: R$ {margemCola}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              Margem de Lucro: R$ {margemLucro}
+            </Text>{" "}
+            <Text style={{ marginTop: 10 }}>
+              Total do Orçamento: R$ {totalComLucro}
+            </Text>
+            {/* Seção para a Calculadora de Total com Lucro */}
+            <Text style={{ marginTop: 20 }}>
+              Calculadora de Total com Lucro:
+            </Text>
+            <Button title="Calcular" onPress={calcularTotalComLucro} />
           </View>
           <View style={styles.inputContainerFilamento}>
             <View
@@ -415,7 +380,7 @@ const Orca3d = () => {
             <View
               style={
                 isEnabledAcabamento
-                  ? styles.inputContainerTrabalhoHighlighted
+                  ? styles.inputContainerPreparacaoHighlighted
                   : styles.inputContainerTrabalho
               }
             >
@@ -450,34 +415,80 @@ const Orca3d = () => {
               <Button title="Calcular" onPress={calcularCustoPreparacao} />
             </View>
           </View>
-          <View style={styles.inputContainerresultados}>
-            {/* Seção para a Calculadora de Total com Lucro */}
-            <Text style={{ marginTop: 10 }}>
-              Valor Total Filamento: R$ {valorTotalFilamento}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Consumo Energia: R$ {consumoEnergia}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Valor da preparação: R$ {valorTrabalho}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Valor do Payback: R$ {fluxoCaixa}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Margem do funcionário: R$ {margemCola}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Margem de Lucro: R$ {margemLucro}
-            </Text>{" "}
-            <Text style={{ marginTop: 10 }}>
-              Total do Orçamento: R$ {totalComLucro}
-            </Text>
+          <View style={styles.inputContainerlateral}>
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabledFilamento ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchFilamento}
+                value={isEnabledFilamento}
+              />
+              <Text>Calcular gasto de filamento</Text>
+            </View>
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabledEnergia ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchEnergia}
+                value={isEnabledEnergia}
+              />
+              <Text>Calcular gasto de energia</Text>
+            </View>
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabledAcabamento ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchAcabamento}
+                value={isEnabledAcabamento}
+              />
+              <Text>Calcular gasto no acabamento</Text>
+            </View>
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabledPayback ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchPayback}
+                value={isEnabledPayback}
+              />
+              <Text>Calcular payback</Text>
+            </View>
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabledMargemFuncionario ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchMargemFuncionario}
+                value={isEnabledMargemFuncionario}
+              />
+              <Text>Calcular margem do funcionário</Text>
+            </View>
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabledMargemLucro ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchMargemLucro}
+                value={isEnabledMargemLucro}
+              />
+              <Text>Calcular margem de lucro</Text>
+            </View>
           </View>
         </View>
+
         <View style={{ flexDirection: "row" }}>
+        <View style={styles.inputContainerresultados}></View>
           <View style={styles.inputContainerpayback}>
-  
+            <View
+              style={
+                isEnabledPayback
+                  ? styles.inputContainerPaybackHighlighted
+                  : styles.inputContainerpayback
+              }
+            >
               {/* Seção para a Calculadora de Payback */}
               <Text>Investimento inicial (R$):</Text>
               <TextInput
@@ -497,46 +508,55 @@ const Orca3d = () => {
                 onChangeText={(text) => setPeriodo(text)}
               />
               <Button title="Calcular" onPress={fazerpay} />
+            </View>
           </View>
-          <View style={styles.inputContainerCola}>
-            {/* Seção para a Calculadora do preço da hora dos funcionários */}
-            <Text style={{ marginTop: 20 }}>
-              Calcule margem do funcionários:
-            </Text>
-            <Text>Valor da hora (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite a porcentagem"
-              keyboardType="numeric"
-              onChangeText={(text) => setPorcentagemCola(text)}
-            />
-            <Button title="Calcular" onPress={calcularMargemCola} />
+
+          <View style={styles.inputContainerMargemFuncionario}>
+            <View
+              style={
+                isEnabledMargemFuncionario
+                  ? styles.inputContainerMargemFuncionarioHighlighted
+                  : styles.inputContainerMargemFuncionario
+              }
+            >
+              {/* Seção para a Calculadora do preço da hora dos funcionários */}
+              <Text style={{ marginTop: 20 }}>
+                Calcule margem do funcionários:
+              </Text>
+              <Text>Valor da hora (R$):</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite a porcentagem"
+                keyboardType="numeric"
+                onChangeText={(text) => setPorcentagemCola(text)}
+              />
+              <Button title="Calcular" onPress={calcularMargemCola} />
+            </View>
           </View>
 
           <View style={styles.inputContainerLucro}>
-            {/* Seção para a Calculadora de Margem de Lucro */}
-            <Text style={{ marginTop: 20 }}>
-              Calculadora de Margem de Lucro:
-            </Text>
-            <Text>porcentagem do Lucro (R$):</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite a porcentagem de lucro"
-              keyboardType="numeric"
-              onChangeText={(text) => setPorcentagemLucro(text)}
-            />
-            <Button title="Calcular" onPress={calcularMargemLucro} />
-          </View>
-          <View style={styles.inputContainerLucroFinal}>
-            {/* Seção para a Calculadora de Total com Lucro */}
-            <Text style={{ marginTop: 20 }}>
-              Calculadora de Total com Lucro:
-            </Text>
-            <Button title="Calcular" onPress={calcularTotalComLucro} />
+            <View
+              style={
+                isEnabledMargemLucro
+                  ? styles.inputContainerMargemLucroHighlighted
+                  : styles.inputContainerLucro
+              }
+            >
+              {/* Seção para a Calculadora de Margem de Lucro */}
+              <Text style={{ marginTop: 20 }}>
+                Calculadora de Margem de Lucro:
+              </Text>
+              <Text>porcentagem do Lucro (R$):</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite a porcentagem de lucro"
+                keyboardType="numeric"
+                onChangeText={(text) => setPorcentagemLucro(text)}
+              />
+              <Button title="Calcular" onPress={calcularMargemLucro} />
+            </View>
           </View>
         </View>
-
-        <View style={{ flexDirection: "row" }}></View>
       </SafeAreaView>
     </ScrollView>
   );
@@ -561,38 +581,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
-  inputContainerFilamentoHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 245,
-    height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada quando o switch estiver ativado
-    borderRadius: 10,
-    marginVertical: 10,
-    marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5,
-  },
 
   inputContainerEnergia: {
     alignItems: "center",
     justifyContent: "center",
     width: 245,
     height: 300,
-    backgroundColor: "lightgray", // cor de fundo padrão
-    borderRadius: 10,
-    marginVertical: 10,
-    marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-
-  inputContainerEnergiaHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 245,
-    height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada quando o switch estiver ativado
+    backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
     marginBottom: 20,
@@ -613,17 +608,129 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
 
-  inputContainerLucroHighlighted: {
+  inputContainerMargemFuncionario: {
     alignItems: "center",
     justifyContent: "center",
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada quando o switch estiver ativado
+    backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
     marginBottom: 20,
     marginLeft: 5,
-    marginRight: 5
+    marginRight: 5,
+  },
+
+  inputContainerTrabalho: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 245,
+    height: 300,
+    backgroundColor: "lightgray",
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+
+  inputContainerpayback: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 245,
+    height: 300,
+    backgroundColor: "lightgray",
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 5,
+  },
+
+  // Estilos destacados para as áreas de cálculo quando o switch estiver ativado
+  inputContainerFilamentoHighlighted: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 245,
+    height: 300,
+    backgroundColor: "lightgreen", // cor de fundo destacada
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  inputContainerEnergiaHighlighted: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 245,
+    height: 300,
+    backgroundColor: "lightgreen", // cor de fundo destacada
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  inputContainerAcabamentoHighlighted: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 245,
+    height: 300,
+    backgroundColor: "lightgreen", // cor de fundo destacada
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  inputContainerPaybackHighlighted: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 245,
+    height: 300,
+    backgroundColor: "lightgreen", // cor de fundo destacada
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 5,
+  },
+  inputContainerMargemFuncionarioHighlighted: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 245,
+    height: 300,
+    backgroundColor: "lightgreen", // cor de fundo destacada
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  inputContainerPreparacaoHighlighted: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 245,
+    height: 300,
+    backgroundColor: "lightgreen", // cor de fundo destacada
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  inputContainerMargemLucroHighlighted: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 245,
+    height: 300,
+    backgroundColor: "lightgreen", // cor de fundo destacada
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
   },
 
   inputContainerLucroFinal: {
@@ -635,85 +742,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 10,
     marginBottom: 20,
-    marginLeft: 10,
-    marginRight: 5,
-  },
-
-  inputContainerMargemFuncionario: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 245,
-    height: 300,
-    backgroundColor: "lightgray", // cor de fundo padrão
-    borderRadius: 10,
-    marginVertical: 10,
-    marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-
-  inputContainerColaHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 245,
-    height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada quando o switch estiver ativado
-    borderRadius: 10,
-    marginVertical: 10,
-    marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-
-  inputContainerPreparacao: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 245,
-    height: 300,
-    backgroundColor: "lightgray", // cor de fundo padrão
-    borderRadius: 10,
-    marginVertical: 10,
-    marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-
-  inputContainerTrabalhoHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 245,
-    height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada quando o switch estiver ativado
-    borderRadius: 10,
-    marginVertical: 10,
-    marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-
-  inputContainerPayback: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 245,
-    height: 300,
-    backgroundColor: "lightgray", // cor de fundo padrão
-    borderRadius: 10,
-    marginVertical: 10,
-    marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-  
-  inputContainerpaybackHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 245,
-    height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada quando o switch estiver ativado
-    borderRadius: 10,
-    marginVertical: 10,
-    marginBottom: 20,
-    marginLeft: 5,
+    marginLeft: 250,
     marginRight: 5,
   },
 
