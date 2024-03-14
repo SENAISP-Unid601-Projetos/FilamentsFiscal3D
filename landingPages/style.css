@@ -444,3 +444,18 @@ section.desenvolvedores .flex {
         font-size: 20px;
     }
 }
+.txt-intro-tec {
+    color: #fff ;
+    font-size: 40px;
+    line-height: 40px;
+    gap: 20px;
+    text-align: center;
+ }
+.lista-tec{
+    color: #fff ;
+    margin-left: 50px;
+}
+.txt-intro-tec span{
+    color: #00FF08;
+    font-size: 40px;
+}
