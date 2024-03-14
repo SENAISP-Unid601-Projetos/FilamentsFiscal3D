@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+ import React, { useState } from "react";
 import {
   View,
   Text,
@@ -69,16 +69,6 @@ const Orca3d = () => {
   const [valorTotalFilamento, setValorTotalFilamento] = useState(0);
 
   const calcularCustoFilamento = () => {
-    if (
-      !pesoPeca ||
-      !pesoFilamento ||
-      isNaN(parseFloat(pesoPeca)) ||
-      isNaN(parseFloat(pesoFilamento))
-    ) {
-      alert("Por favor, preencha todos os campos com valores numéricos.");
-      return;
-    }
-
     const custoTotalFilamento =
       parseFloat(pesoPeca) * parseFloat(pesoFilamento);
     setValorTotalFilamento(custoTotalFilamento.toFixed(2)); // Ajusta para duas casas decimais
@@ -91,15 +81,6 @@ const Orca3d = () => {
   const [valorKwh, setValorKwh] = useState(0);
 
   const calcularConsumoEnergia = () => {
-    if (
-      !potenciaEquipamento ||
-      !horasImpressao ||
-      isNaN(parseFloat(potenciaEquipamento)) ||
-      isNaN(parseFloat(horasImpressao))
-    ) {
-      alert("Por favor, preencha todos os campos com valores numéricos.");
-      return;
-    }
     const consumoCalculado =
       (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000;
     const consumoFinal = consumoCalculado * parseFloat(valorKwh);
@@ -108,15 +89,7 @@ const Orca3d = () => {
 
   // Função para calcular a taxa de lucro
   const calcularTaxaLucro = () => {
-    if (
-      !valorTotalFilamento ||
-      !consumoEnergia ||
-      isNaN(parseFloat(valorTotalFilamento)) ||
-      isNaN(parseFloat(consumoEnergia))
-    ) {
-      alert("Por favor, preencha todos os campos com valores numéricos.");
-      return;
-    }
+
     const taxaLucro =
       (parseFloat(valorTotalFilamento) +
         parseFloat(valorKwh) / parseFloat(consumoEnergia)) *
@@ -129,18 +102,10 @@ const Orca3d = () => {
   const [margemLucro, setMargemLucro] = useState(0);
 
   const calcularMargemLucro = () => {
-    if (
-      !valorTotalFilamento ||
-      !porcentagemLucro ||
-      isNaN(parseFloat(valorTotalFilamento)) ||
-      isNaN(parseFloat(porcentagemLucro))
-    ) {
-      alert("Por favor, preencha todos os campos com valores numéricos.");
-      return;
-    }
+
     const margemLucroCalculada =
       (parseFloat(valorTotalFilamento) +
-        parseFloat(valorKwh) * parseFloat(porcentagemLucro)) /
+        parseFloat(valorKwh)) * parseFloat(porcentagemLucro) /
       100;
     setMargemLucro(margemLucroCalculada.toFixed(2)); // Ajusta para duas casas decimais
   };
@@ -150,17 +115,10 @@ const Orca3d = () => {
   const [margemCola, setMargemCola] = useState(0);
 
   const calcularMargemCola = () => {
-    if (
-      !valorTotalFilamento ||
-      !porcentagemCola ||
-      isNaN(parseFloat(valorTotalFilamento)) ||
-      isNaN(parseFloat(porcentagemCola))
-    ) {
-      alert("Por favor, preencha todos os campos com valores numéricos.");
-      return;
-    }
+
     const margemColaCalculada =
-      (parseFloat(valorTotalFilamento) * parseFloat(porcentagemCola)) / 100;
+      (parseFloat(valorTotalFilamento) +
+      parseFloat(valorKwh)) * parseFloat(porcentagemCola) / 100;
     setMargemCola(margemColaCalculada.toFixed(2)); // Ajusta para duas casas decimais
   };
 
@@ -171,15 +129,6 @@ const Orca3d = () => {
   const [valorTrabalho, setValorTrabalho] = useState(0);
 
   const calcularCustoPreparacao = () => {
-    if (
-      !horaPreparacao ||
-      !horaFatiador ||
-      isNaN(parseFloat(horaPreparacao)) ||
-      isNaN(parseFloat(horaFatiador))
-    ) {
-      alert("Por favor, preencha todos os campos com valores numéricos.");
-      return;
-    }
     const custoPreparacao =
       parseFloat(valorHora) *
       (parseFloat(horaFatiador) + parseFloat(horaPreparacao));
@@ -192,15 +141,6 @@ const Orca3d = () => {
   const [periodo, setPeriodo] = useState(0);
 
   const fazerpay = () => {
-    if (
-      !investimento ||
-      !periodo ||
-      isNaN(parseFloat(investimento)) ||
-      isNaN(parseFloat(periodo))
-    ) {
-      alert("Por favor, preencha todos os campos com valores numéricos.");
-      return;
-    }
     const payback = parseFloat(investimento) / parseFloat(periodo);
     setFluxoCaixa(payback.toFixed(2));
   };
@@ -222,10 +162,23 @@ const Orca3d = () => {
     setTotalComLucro(totalCalculado.toFixed(2)); // Ajusta para duas casas decimais
   };
 
+  const handleAllCalculations = () => {
+    setErrorMessage("");
+  
+    calcularCustoFilamento();
+    calcularConsumoEnergia();
+    calcularTaxaLucro();
+    calcularMargemLucro();
+    calcularMargemCola(); // Corrigido o nome da função
+    calcularCustoPreparacao();
+    fazerpay();
+    calcularTotalComLucro();
+  };
+
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={styles.container}>
-        <View style={styles.inputContainercabeçalho}></View>
+        <View style={styles.inputContainercabeçalho}> </View>
         <View style={{ flexDirection: "row" }}>
           <View style={styles.inputContainerresultados}>
             {/* Seção para a Calculadora de Total com Lucro */}
@@ -251,10 +204,11 @@ const Orca3d = () => {
               Total do Orçamento: R$ {totalComLucro}
             </Text>
             {/* Seção para a Calculadora de Total com Lucro */}
-            <Text style={{ marginTop: 20 }}>
-              Calculadora de Total com Lucro:
-            </Text>
-            <Button title="Calcular" onPress={calcularTotalComLucro} />
+            <Button title="Calcular" onPress={handleAllCalculations} />
+
+            <View style={styles.separator} />
+            
+            <Button title="Calcular Orçamento " onPress={calcularTotalComLucro} />
           </View>
           <View style={styles.inputContainerFilamento}>
             <View
@@ -337,7 +291,6 @@ const Orca3d = () => {
                 keyboardType="numeric"
                 onChangeText={(text) => setPesoFilamento(text)}
               />
-              <Button title="Calcular" onPress={calcularCustoFilamento} />
             </View>
           </View>
 
@@ -373,7 +326,6 @@ const Orca3d = () => {
                 keyboardType="numeric"
                 onChangeText={(text) => setValorKwh(text)}
               />
-              <Button title="Calcular" onPress={calcularConsumoEnergia} />
             </View>
           </View>
           <View style={styles.inputContainerTrabalho}>
@@ -412,7 +364,6 @@ const Orca3d = () => {
                 keyboardType="numeric"
                 onChangeText={(text) => setValorHora(text)}
               />
-              <Button title="Calcular" onPress={calcularCustoPreparacao} />
             </View>
           </View>
           <View style={styles.inputContainerlateral}>
@@ -507,7 +458,6 @@ const Orca3d = () => {
                 keyboardType="numeric"
                 onChangeText={(text) => setPeriodo(text)}
               />
-              <Button title="Calcular" onPress={fazerpay} />
             </View>
           </View>
 
@@ -530,7 +480,6 @@ const Orca3d = () => {
                 keyboardType="numeric"
                 onChangeText={(text) => setPorcentagemCola(text)}
               />
-              <Button title="Calcular" onPress={calcularMargemCola} />
             </View>
           </View>
 
@@ -553,7 +502,6 @@ const Orca3d = () => {
                 keyboardType="numeric"
                 onChangeText={(text) => setPorcentagemLucro(text)}
               />
-              <Button title="Calcular" onPress={calcularMargemLucro} />
             </View>
           </View>
         </View>
