@@ -110,7 +110,7 @@ section .topo-do-site .flex {
 
 .topo-do-site .txt-topo-site h1 span {
     color: #00FF08;
-    font-size: 30px;
+    font-size: 40px;
 }
 
 .topo-do-site .txt-topo-site p {
@@ -346,7 +346,7 @@ section.desenvolvedores .flex {
     margin: 50px;
  }
  li{
-    font-size: 20px;
+    font-size: 30px;
  }
  .sustentabilidade{
     color: #fff ;
@@ -370,7 +370,7 @@ section.desenvolvedores .flex {
 
 .txt-topo-site2 h1 {
     color: #fff;
-    font-size: 30px;
+    font-size: 40px;
     line-height: 40px;
     gap: 20px;
     margin-left: 20px;
@@ -378,7 +378,7 @@ section.desenvolvedores .flex {
 
 .txt-topo-site2 span{
     color: #00FF08;
-    font-size: 30px;
+    font-size: 4    0px;
 }
 
 .txt-topo-site2 p {
@@ -388,8 +388,63 @@ section.desenvolvedores .flex {
     margin-left: 20px;
 }
 .txt-intro{
-    font-size: 30px;
+    font-size: 40px;
 }
 .img-ajuda{
     text-align: center;
+}
+.li1{
+ margin-bottom: 40px;
+
+}
+@media screen and (max-width: 768px) {
+    .flex {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .topo-do-site .flex {
+        flex-direction: column-reverse;
+    }
+
+    .topo-do-site .txt-topo-site,
+    .topo-do-site .img-topo-site {
+        width: 100%;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .img-topo-site img {
+        animation: none; /* Desativar animação em telas menores */
+    }
+
+    .lista-de-itens {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ODS8,
+    .ODS9,
+    .ODS12,
+    .ODS13 {
+        flex-direction: column;
+    }
+
+    .txt-topo-site2 h1,
+    .txt-topo-site2 p {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .sustentabilidade {
+        font-size: 40px;
+    }
+
+    .txt-topo-site2 span {
+        font-size: 30px;
+    }
+
+    li {
+        font-size: 20px;
+    }
 }
