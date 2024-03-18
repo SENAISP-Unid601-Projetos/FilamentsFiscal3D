@@ -7,15 +7,48 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
-  Modal,
+  FlatList,
+  Image,
   Switch,
+  Modal, // Importe o Modal
 } from "react-native";
+
+const HistoricoItem = ({ item, removerItem }) => (
+  <View style={styles.listItem}>
+    <Text style={styles.listText}>{item.title}</Text>
+    <Text style={styles.listText}>{item.date}</Text>
+    <Text style={styles.listText}>{item.titleTotalValorFilamento}{item.totalValorFilamento}</Text>
+    <Text style={styles.listText}>{item.titleConsumoEnergia}{item.consumoEnergia}</Text>
+    <Text style={styles.listText}>{item.titleValorTrabalho}{item.valorTrabalho}</Text>
+    <Text style={styles.listText}>{item.titleFluxoCaixa}{item.fluxoCaixa}</Text>
+    <Text style={styles.listText}>{item.titleMargemCola}{item.margemCola}</Text>
+    <Text style={styles.listText}>{item.titleMargemLucro}{item.margemLucro}</Text>
+    
+    <Text style={styles.listText}>{item.titlevalorTotal}{item.valorTotal}</Text>
+    <Button title="Remover" onPress={() => removerItem(item.id)} />
+  </View>
+
+  //data em outro local \/
+  //<Text style={styles.listText}>{item.date}</Text>
+);
+
+const Historico = ({ historico, removerItem }) => (
+  <FlatList
+    data={historico}
+    renderItem={({ item }) => <HistoricoItem item={item} removerItem={removerItem} />}
+    keyExtractor={(item) => item.id.toString()}
+    style={{ width: '100%' }}
+  />
+);
+
 
 const Orca3d = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [modalVisible, setModalVisible] = useState(true); // Inicia o modal como visível
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
+  const [historico, setHistorico] = useState([]);
+
 
   const handleLogin = () => {
     if (username === "admin" && password === "admin") {
@@ -162,6 +195,49 @@ const Orca3d = () => {
     setTotalComLucro(totalCalculado.toFixed(2)); // Ajusta para duas casas decimais
   };
 
+
+
+//teste
+
+const adicionarAoHistorico = () => {
+  if (
+    valorTotalFilamento !== 0 ||
+    consumoEnergia !== 0 ||
+    valorTrabalho !== 0 ||
+    fluxoCaixa !== 0 ||
+    margemCola !== 0 ||
+    margemLucro !== 0
+  ) {
+    const novoItem = {
+      id: Date.now(),
+      title: 'Historico ',
+      titleTotalValorFilamento:'Valor Total Filamento: ',
+      titleConsumoEnergia:'Consumo Energia: ',
+      titleValorTrabalho:'Valor Trabalho: ',
+      titleFluxoCaixa:'Fluxo Caixa: ',
+      titleMargemCola:'Margem Cola: ',
+      titleMargemLucro:'Margem Lucro: ',
+      titlevalorTotal:'Total: ',
+      date: new Date().toLocaleString(),
+      totalValorFilamento: valorTotalFilamento,
+      consumoEnergia: consumoEnergia,
+      valorTrabalho: valorTrabalho,
+      fluxoCaixa: fluxoCaixa,
+      margemCola: margemCola,
+      margemLucro: margemLucro,
+      valorTotal: totalComLucro,
+    };
+    setHistorico([...historico, novoItem]);
+  }
+};
+
+  const removerDoHistorico = (id) => {
+    const novoHistorico = historico.filter((item) => item.id !== id);
+    setHistorico(novoHistorico);
+  };
+  
+  //teste
+
   const handleAllCalculations = () => {
     setErrorMessage("");
   
@@ -174,6 +250,7 @@ const Orca3d = () => {
     fazerpay();
     calcularTotalComLucro();
   };
+
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -505,8 +582,42 @@ const Orca3d = () => {
             </View>
           </View>
         </View>
-      </SafeAreaView>
-    </ScrollView>
+
+        <View style={styles.inputContainerLucro}>
+          {/* Seção para a Calculadora de Margem de Lucro */}
+          <Text style={{ marginTop: 20 }}>
+            Calculadora de Margem de Lucro:
+          </Text>
+          <Text>porcentagem do Lucro (R$):</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite a porcentagem de lucro"
+            keyboardType="numeric"
+            onChangeText={(text) => setPorcentagemLucro(text)}
+          />
+          <Button title="Calcular" onPress={calcularMargemLucro} />
+        </View>
+        <View style={styles.inputContainerLucroFinal}>
+          {/* Seção para a Calculadora de Total com Lucro */}
+          <Text style={{ marginTop: 20 }}>
+            Calculadora de Total com Lucro:
+          </Text>
+          <Button title="Calcular" onPress={() => {calcularTotalComLucro();adicionarAoHistorico();}} />
+          
+        </View>
+      </View>
+
+      <View style={{ flexDirection: "row" }}>
+
+      </View>
+      <View style={styles.inputHistorico}>
+      <Text style={{ fontSize: 20, marginBottom: 20 }}>Histórico</Text>
+      <Historico historico={historico} removerItem={removerDoHistorico} />
+    </View>
+    </SafeAreaView>
+  </ScrollView>
+     //<Button title="Adicionar ao Histórico" onPress={adicionarAoHistorico} />
+     //consertarerro na 425 que quando aperta o botao pela primeira vez nao  aparece o total no historico
   );
 };
 
@@ -574,6 +685,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 245,
     height: 300,
+    backgroundColor: "lightgray",
+    borderRadius: 10,
+    marginVertical: 10,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  inputHistorico: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 255,
+    height: 310,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
@@ -745,6 +868,31 @@ const styles = StyleSheet.create({
     height: 10,
     backgroundColor: "transparent",
   },
+  //teste
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  listItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  listText: {
+    fontSize: 16,
+  },
+  //teste
+
+
+
+
+
+
+
+
+
 });
 
 export default Orca3d;
