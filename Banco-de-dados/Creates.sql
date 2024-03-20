@@ -3,21 +3,29 @@ CREATE DATABASE IF NOT EXISTS banco_orca3d;
 USE banco_orca3d;
 
 CREATE TABLE usuario (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT AUTO_INCREMENT PRIMARY KEY, 
     username VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL,
     tipo_usuario ENUM('professor','aluno', 'outro') DEFAULT 'outro'
 );
 
-CREATE TABLE pecas (
+CREATE TABLE peca (
     id_peca INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     peso FLOAT NOT NULL
 );
 
+CREATE TABLE registro_atividades (
+    id_registro BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT, 
+    atividade VARCHAR(255),
+    data_atividade TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario)
+);
+
 CREATE TABLE dados_calculadora (
     id_dados INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT,
+    id_usuario BIGINT,
     id_peca INT,
     peso_peca FLOAT NOT NULL,
     peso_filamento FLOAT NOT NULL,
@@ -39,12 +47,12 @@ CREATE TABLE dados_calculadora (
     margem_lucro FLOAT,
     total_com_lucro FLOAT,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_peca) REFERENCES pecas(id_peca)
+    FOREIGN KEY (id_peca) REFERENCES peca(id_peca)
 );
 
 CREATE TABLE historico_alteracoes (
     id_alteracao INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT,
+    id_usuario BIGINT,
     id_dados INT,
     data_alteracao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
