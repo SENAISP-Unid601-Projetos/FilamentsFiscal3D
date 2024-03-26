@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import {
   View,
   Text,
@@ -10,145 +10,172 @@ import {
   Modal,
   Switch,
   Pressable,
-} from "react-native";
+  Picker,
+} from 'react-native'
 
 const Orca3d = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [modalVisible, setModalVisible] = useState(true); // Inicia o modal como visível
-  const [errorMessage, setErrorMessage] = useState("");
+  const [selectedOption, setSelectedOption] = useState(null)
+
+  const handleOptionSelection = (option) => {
+    setSelectedOption(option)
+    // Chame a função apropriada com base na opção selecionada
+    switch (option) {
+      case 'filamento':
+        toggleSwitchFilamento()
+        break
+      case 'energia':
+        toggleSwitchEnergia()
+        break
+      case 'acabamento':
+        toggleSwitchAcabamento()
+        break
+      case 'payback':
+        toggleSwitchPayback()
+        break
+      case 'margemFuncionario':
+        toggleSwitchMargemFuncionario()
+        break
+      case 'margemLucro':
+        toggleSwitchMargemLucro()
+        break
+      default:
+        break
+    }
+  }
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [modalVisible, setModalVisible] = useState(true) // Inicia o modal como visível
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleLogin = () => {
-    if (username === "admin" && password === "admin") {
+    if (username === 'admin' && password === 'admin') {
       // Se o login for bem-sucedido, você pode fechar o modal
-      setModalVisible(false);
-      setErrorMessage("");
+      setModalVisible(false)
+      setErrorMessage('')
     } else {
       // Caso contrário, exiba uma mensagem de erro
       setErrorMessage(
-        "Usuário ou senha incorretos. Por favor, tente novamente."
-      );
+        'Usuário ou senha incorretos. Por favor, tente novamente.'
+      )
     }
-  };
+  }
 
-  const [isEnabledFilamento, setIsEnabledFilamento] = useState(false);
-  const toggleSwitchFilamento = () =>
-    setIsEnabledFilamento((previousState) => !previousState);
+  const [isEnabledFilamento, setIsEnabledFilamento] = useState(false)
+  const toggleSwitchFilamento = () => {
+    setIsEnabledFilamento((previousState) => !previousState)
+  }
 
-  const [isEnabledEnergia, setIsEnabledEnergia] = useState(false);
-  const toggleSwitchEnergia = () =>
-    setIsEnabledEnergia((previousState) => !previousState);
+  const [isEnabledEnergia, setIsEnabledEnergia] = useState(false)
+  const toggleSwitchEnergia = () => {
+    setIsEnabledEnergia((previousState) => !previousState)
+  }
 
-  const [isEnabledAcabamento, setIsEnabledAcabamento] = useState(false);
-  const toggleSwitchAcabamento = () =>
-    setIsEnabledAcabamento((previousState) => !previousState);
+  const [isEnabledAcabamento, setIsEnabledAcabamento] = useState(false)
+  const toggleSwitchAcabamento = () => {
+    setIsEnabledAcabamento((previousState) => !previousState)
+  }
 
-  const [isEnabledPayback, setIsEnabledPayback] = useState(false);
-  const toggleSwitchPayback = () =>
-    setIsEnabledPayback((previousState) => !previousState);
+  const [isEnabledPayback, setIsEnabledPayback] = useState(false)
+  const toggleSwitchPayback = () => {
+    setIsEnabledPayback((previousState) => !previousState)
+  }
 
   const [isEnabledMargemFuncionario, setIsEnabledMargemFuncionario] =
-    useState(false);
-  const toggleSwitchMargemFuncionario = () =>
-    setIsEnabledMargemFuncionario((previousState) => !previousState);
+    useState(false)
+  const toggleSwitchMargemFuncionario = () => {
+    setIsEnabledMargemFuncionario((previousState) => !previousState)
+  }
 
-  const [isEnabledMargemLucro, setIsEnabledMargemLucro] = useState(false);
-  const toggleSwitchMargemLucro = () =>
-    setIsEnabledMargemLucro((previousState) => !previousState);
-
-  const [isEnabledTotalLucro, setIsEnabledTotalLucro] = useState(false);
-  const toggleSwitchTotalLucro = () =>
-    setIsEnabledTotalLucro((previousState) => !previousState);
-
-  const [isEnabledPreparacao, setIsEnabledPreparacao] = useState(false);
-  const toggleSwitchPreparacao = () =>
-    setIsEnabledPreparacao((previousState) => !previousState);
+  const [isEnabledMargemLucro, setIsEnabledMargemLucro] = useState(false)
+  const toggleSwitchMargemLucro = () => {
+    setIsEnabledMargemLucro((previousState) => !previousState)
+  }
 
   // Estado para a Calculadora de Filamento
-  const [pesoPeca, setPesoPeca] = useState(0);
-  const [pesoFilamento, setPesoFilamento] = useState(0);
-  const [valorTotalFilamento, setValorTotalFilamento] = useState(0);
+  const [pesoPeca, setPesoPeca] = useState(0)
+  const [pesoFilamento, setPesoFilamento] = useState(0)
+  const [valorTotalFilamento, setValorTotalFilamento] = useState(0)
 
   const calcularCustoFilamento = () => {
-    const custoTotalFilamento =
-      parseFloat(pesoPeca) * parseFloat(pesoFilamento);
-    setValorTotalFilamento(custoTotalFilamento.toFixed(2)); // Ajusta para duas casas decimais
-  };
+    const custoTotalFilamento = parseFloat(pesoPeca) * parseFloat(pesoFilamento)
+    setValorTotalFilamento(custoTotalFilamento.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   // Estado para a Calculadora de Energia
-  const [potenciaEquipamento, setPotenciaEquipamento] = useState(0);
-  const [horasImpressao, setHorasImpressao] = useState(0);
-  const [consumoEnergia, setConsumoEnergia] = useState(0);
-  const [valorKwh, setValorKwh] = useState(0);
+  const [potenciaEquipamento, setPotenciaEquipamento] = useState(0)
+  const [horasImpressao, setHorasImpressao] = useState(0)
+  const [consumoEnergia, setConsumoEnergia] = useState(0)
+  const [valorKwh, setValorKwh] = useState(0)
 
   const calcularConsumoEnergia = () => {
     const consumoCalculado =
-      (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000;
-    const consumoFinal = consumoCalculado * parseFloat(valorKwh);
-    setConsumoEnergia(consumoFinal.toFixed(2)); // Ajusta para duas casas decimais
-  };
+      (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000
+    const consumoFinal = consumoCalculado * parseFloat(valorKwh)
+    setConsumoEnergia(consumoFinal.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   // Função para calcular a taxa de lucro
   const calcularTaxaLucro = () => {
     const taxaLucro =
       (parseFloat(valorTotalFilamento) +
         parseFloat(valorKwh) / parseFloat(consumoEnergia)) *
-      100;
-    return taxaLucro.toFixed(2);
-  };
+      100
+    return taxaLucro.toFixed(2)
+  }
 
   // Estado e função para a Calculadora de Margem de Lucro
-  const [porcentagemLucro, setPorcentagemLucro] = useState(0);
-  const [margemLucro, setMargemLucro] = useState(0);
+  const [porcentagemLucro, setPorcentagemLucro] = useState(0)
+  const [margemLucro, setMargemLucro] = useState(0)
 
   const calcularMargemLucro = () => {
     const margemLucroCalculada =
       ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) *
         parseFloat(porcentagemLucro)) /
-      100;
-    setMargemLucro(margemLucroCalculada.toFixed(2)); // Ajusta para duas casas decimais
-  };
+      100
+    setMargemLucro(margemLucroCalculada.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   // Estado e função para a Calculadora do preço dos colaboradores
-  const [porcentagemCola, setPorcentagemCola] = useState(0);
-  const [margemCola, setMargemCola] = useState(0);
+  const [porcentagemCola, setPorcentagemCola] = useState(0)
+  const [margemCola, setMargemCola] = useState(0)
 
   const calcularMargemCola = () => {
     const margemColaCalculada =
       ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) *
         parseFloat(porcentagemCola)) /
-      100;
-    setMargemCola(margemColaCalculada.toFixed(2)); // Ajusta para duas casas decimais
-  };
+      100
+    setMargemCola(margemColaCalculada.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   // Estado para a Calculadora de prossessos de preparação
-  const [horaPreparacao, setHoraPreparacao] = useState(0);
-  const [horaFatiador, setHoraFatiador] = useState(0);
-  const [valorHora, setValorHora] = useState(0);
-  const [valorTrabalho, setValorTrabalho] = useState(0);
+  const [horaPreparacao, setHoraPreparacao] = useState(0)
+  const [horaFatiador, setHoraFatiador] = useState(0)
+  const [valorHora, setValorHora] = useState(0)
+  const [valorTrabalho, setValorTrabalho] = useState(0)
 
   const calcularCustoPreparacao = () => {
     const custoPreparacao =
       parseFloat(valorHora) *
-      (parseFloat(horaFatiador) + parseFloat(horaPreparacao));
-    setValorTrabalho(custoPreparacao.toFixed(2)); // Ajusta para duas casas decimais
-  };
+      (parseFloat(horaFatiador) + parseFloat(horaPreparacao))
+    setValorTrabalho(custoPreparacao.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   // Estado para a Calculadora de payback
-  const [fluxoCaixa, setFluxoCaixa] = useState(0);
-  const [investimento, setInvestimento] = useState(0);
-  const [periodo, setPeriodo] = useState(0);
+  const [fluxoCaixa, setFluxoCaixa] = useState(0)
+  const [investimento, setInvestimento] = useState(0)
+  const [periodo, setPeriodo] = useState(0)
 
   const fazerpay = () => {
-    const payback = parseFloat(investimento) / parseFloat(periodo);
-    setFluxoCaixa(payback.toFixed(2));
-  };
+    const payback = parseFloat(investimento) / parseFloat(periodo)
+    setFluxoCaixa(payback.toFixed(2))
+  }
 
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const [isEnabled, setIsEnabled] = useState(false)
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
 
   // Estado e função para a Calculadora de Total com Lucro
-  const [totalComLucro, setTotalComLucro] = useState("");
+  const [totalComLucro, setTotalComLucro] = useState('')
 
   const calcularTotalComLucro = () => {
     const totalCalculado =
@@ -157,26 +184,55 @@ const Orca3d = () => {
       parseFloat(margemLucro) +
       parseFloat(margemCola) +
       parseFloat(valorTrabalho) +
-      parseFloat(fluxoCaixa);
-    setTotalComLucro(totalCalculado.toFixed(2)); // Ajusta para duas casas decimais
-  };
+      parseFloat(fluxoCaixa)
+    setTotalComLucro(totalCalculado.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   const handleAllCalculations = () => {
-    setErrorMessage("");
+    setErrorMessage('')
 
-    calcularCustoFilamento();
-    calcularConsumoEnergia();
-    calcularTaxaLucro();
-    calcularMargemLucro();
-    calcularMargemCola(); // Corrigido o nome da função
-    calcularCustoPreparacao();
-    fazerpay();
-    calcularTotalComLucro();
-  };
+    calcularCustoFilamento()
+    calcularConsumoEnergia()
+    calcularTaxaLucro()
+    calcularMargemLucro()
+    calcularMargemCola() // Corrigido o nome da função
+    calcularCustoPreparacao()
+    fazerpay()
+    calcularTotalComLucro()
+  }
 
   return (
+    // <ImageBackground
+    //   source={require('FilamentsFiscal3D\front\assets')}
+    //   style={{ flex: 1 }}
+    // >
     <ScrollView style={{ flex: 1 }}>
-      <View style={styles.inputContainercabeçalho}> </View>
+      <View style={styles.inputContainercabeçalho}>
+        <View style={styles.container}>
+        <Picker
+          selectedValue={selectedOption}
+          onValueChange={(itemValue) => handleOptionSelection(itemValue)}
+          style={styles.picker}
+        >
+            <Picker.Item label="Selecione uma opção" value={null} />
+            <Picker.Item
+              label="Calcular gasto de filamento"
+              value="filamento"
+            />
+            <Picker.Item label="Calcular gasto de energia" value="energia" />
+            <Picker.Item
+              label="Calcular gasto no acabamento"
+              value="acabamento"
+            />
+            <Picker.Item label="Calcular payback" value="payback" />
+            <Picker.Item
+              label="Calcular margem do funcionário"
+              value="margemFuncionario"
+            />
+            <Picker.Item label="Calcular margem de lucro" value="margemLucro" />
+          </Picker>
+        </View>
+      </View>
       <SafeAreaView style={styles.container}>
         <Modal
           animationType="slide"
@@ -184,20 +240,20 @@ const Orca3d = () => {
           visible={modalVisible}
           onRequestClose={() => {
             // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
-            handleClose();
+            handleClose()
           }}
         >
           <View
             style={{
               flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
             }}
           >
             <View
               style={{
-                backgroundColor: "lightgray",
+                backgroundColor: 'lightgray',
                 padding: 30,
                 width: 400,
                 right: 0,
@@ -211,7 +267,7 @@ const Orca3d = () => {
                 style={{
                   marginBottom: 20,
                   borderBottomWidth: 1,
-                  borderBottomColor: "black",
+                  borderBottomColor: 'black',
                   width: 340,
                 }}
               />
@@ -223,11 +279,11 @@ const Orca3d = () => {
                 style={{
                   marginBottom: 20,
                   borderBottomWidth: 1,
-                  borderBottomColor: "black",
+                  borderBottomColor: 'black',
                 }}
               />
               {errorMessage ? (
-                <Text style={{ color: "red", marginBottom: 10 }}>
+                <Text style={{ color: 'red', marginBottom: 10 }}>
                   {errorMessage}
                 </Text>
               ) : null}
@@ -242,7 +298,7 @@ const Orca3d = () => {
         </Modal>
 
         <View style={[styles.leftPane, { flex: 1 }]}>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.inputContainerlateral}>
               <View style={styles.container}>
                 <Pressable
@@ -313,7 +369,7 @@ const Orca3d = () => {
           </View>
         </View>
         <View style={[styles.rightPane, { flex: 2 }]}>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.inputContainerFilamento}>
               <View
                 style={
@@ -377,7 +433,7 @@ const Orca3d = () => {
               </View>
             </View>
           </View>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.inputContainerTrabalho}>
               <View
                 style={
@@ -445,7 +501,7 @@ const Orca3d = () => {
               </View>
             </View>
           </View>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.inputContainerMargemFuncionario}>
               <View
                 style={
@@ -492,7 +548,7 @@ const Orca3d = () => {
           </View>
         </View>
         <View style={[styles.rightPane, { flex: 2 }]}>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.inputContainerresultados}>
               {/* Seção para a Calculadora de Total com Lucro */}
               <Text style={{ marginTop: 10 }}>
@@ -512,7 +568,7 @@ const Orca3d = () => {
               </Text>
               <Text style={{ marginTop: 10 }}>
                 Margem de Lucro: R$ {margemLucro}
-              </Text>{" "}
+              </Text>{' '}
               <Text style={{ marginTop: 10 }}>
                 Total do Orçamento: R$ {totalComLucro}
               </Text>
@@ -522,7 +578,7 @@ const Orca3d = () => {
           </View>
 
           <View style={styles.inputContainerCaixaDBotoes}>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: 'row' }}>
               <Pressable style={styles.button} onPress={handleAllCalculations}>
                 <Text style={styles.buttonText}>Calcular</Text>
               </Pressable>
@@ -534,34 +590,48 @@ const Orca3d = () => {
         </View>
       </SafeAreaView>
     </ScrollView>
-  );
-};
+    // </ImageBackground>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
+    marginBottom: 10,
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     paddingHorizontal: 10,
+  },
+  picker: {
+    width: 160,
+    height: 40,
+    backgroundColor: "#f0f0f0",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginVertical: 40,
+    marginLeft: 110,
+    marginRight: 0,
+    borderColor: "white",
+  },
+  itemStyle: {
+    textAlign: 'center',
+    fontSize: 18,
   },
   leftPane: {
     height: 1000,
-    backgroundColor: "black",
   },
   centerPane: {
     height: 1000,
-    backgroundColor: "black",
   },
   rightPane: {
     height: 1000,
-    backgroundColor: "black",
   },
 
   button: {
     width: 160,
     height: 40,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 10,
     margin: 5,
     borderRadius: 5,
@@ -570,35 +640,34 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: 100,
     height: 90,
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "lime",
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'lime',
     padding: 10,
     borderRadius: 10,
-    marginBottom: 0, 
     marginVertical: 0,
     marginLeft: 0,
     marginRight: 0,
   },
 
   buttonText: {
-    alignItems: "center",
+    alignItems: 'center',
     marginLeft: 10,
-    color: "white",
+    color: 'white',
     fontSize: 16,
   },
 
   buttonText: {
-    color: "black",
-    textAlign: "center",
+    color: 'black',
+    textAlign: 'center',
     fontSize: 16,
   },
   inputContainerFilamento: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: 'lightgray',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -607,11 +676,11 @@ const styles = StyleSheet.create({
   },
 
   inputContainerEnergia: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: 'lightgray',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -620,11 +689,11 @@ const styles = StyleSheet.create({
   },
 
   inputContainerLucro: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: 'lightgray',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -633,11 +702,11 @@ const styles = StyleSheet.create({
   },
 
   inputContainerMargemFuncionario: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: 'lightgray',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -646,11 +715,11 @@ const styles = StyleSheet.create({
   },
 
   inputContainerTrabalho: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: 'lightgray',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -659,11 +728,11 @@ const styles = StyleSheet.create({
   },
 
   inputContainerpayback: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: 'lightgray',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -673,11 +742,11 @@ const styles = StyleSheet.create({
 
   // Estilos destacados para as áreas de cálculo quando o switch estiver ativado
   inputContainerFilamentoHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: 'lime',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -685,11 +754,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   inputContainerEnergiaHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: 'lime',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -697,11 +766,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   inputContainerAcabamentoHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: 'lime',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -709,11 +778,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   inputContainerPaybackHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: 'lime',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -721,11 +790,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   inputContainerMargemFuncionarioHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: 'lime',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -733,11 +802,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   inputContainerPreparacaoHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: 'lime',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -745,11 +814,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   inputContainerMargemLucroHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: 'lime',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -758,11 +827,11 @@ const styles = StyleSheet.create({
   },
 
   inputContainerCaixaDBotoes: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 470,
     height: 90,
-    backgroundColor: "lightgray",
+    backgroundColor: 'lime',
     borderRadius: 10,
     marginVertical: 1,
     marginBottom: 20,
@@ -771,11 +840,11 @@ const styles = StyleSheet.create({
   },
 
   inputContainerresultados: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 230,
     height: 400,
-    backgroundColor: "lightgray",
+    backgroundColor: 'lightgray',
     borderRadius: 20,
     marginVertical: 20,
     marginBottom: 10,
@@ -784,11 +853,11 @@ const styles = StyleSheet.create({
   },
 
   inputContainercabeçalho: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'flex-start',
+    justifyContent: 'center',
     width: 1264,
     height: 90,
-    backgroundColor: "lightgray",
+    backgroundColor: 'lightgray',
     borderRadius: 0,
     marginVertical: 0,
     marginBottom: 0,
@@ -797,11 +866,11 @@ const styles = StyleSheet.create({
   },
 
   inputContainerlateral: {
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
     width: 120,
     height: 1000,
-    backgroundColor: "lightgray",
+    backgroundColor: 'lightgray',
     borderRadius: 0,
     marginVertical: 0,
     marginBottom: 0,
@@ -810,17 +879,17 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    width: "80%",
+    width: '80%',
     height: 40,
     marginVertical: 10,
     padding: 10,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   separator: {
-    width: "100%",
+    width: '100%',
     height: 10,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
-});
+})
 
-export default Orca3d;
+export default Orca3d
