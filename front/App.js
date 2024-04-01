@@ -298,75 +298,6 @@ const Orca3d = () => {
         </Modal>
 
         <View style={[styles.leftPane, { flex: 1 }]}>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={styles.inputContainerlateral}>
-              <View style={styles.container}>
-                <Pressable
-                  style={({ pressed }) => [styles.buttonContainer]}
-                  onPress={toggleSwitchFilamento}
-                >
-                  <Text selectable={false} style={styles.buttonText}>
-                    Calcular gasto de filamento
-                  </Text>
-                </Pressable>
-              </View>
-
-              <View style={styles.container}>
-                <Pressable
-                  style={({ pressed }) => [styles.buttonContainer]}
-                  onPress={toggleSwitchEnergia}
-                >
-                  <Text selectable={false} style={styles.buttonText}>
-                    Calcular gasto de energia
-                  </Text>
-                </Pressable>
-              </View>
-
-              <View style={styles.container}>
-                <Pressable
-                  style={({ pressed }) => [styles.buttonContainer]}
-                  onPress={toggleSwitchAcabamento}
-                >
-                  <Text selectable={false} style={styles.buttonText}>
-                    Calcular gasto no acabamento
-                  </Text>
-                </Pressable>
-              </View>
-
-              <View style={styles.container}>
-                <Pressable
-                  style={({ pressed }) => [styles.buttonContainer]}
-                  onPress={toggleSwitchPayback}
-                >
-                  <Text selectable={false} style={styles.buttonText}>
-                    Calcular payback
-                  </Text>
-                </Pressable>
-              </View>
-
-              <View style={styles.container}>
-                <Pressable
-                  style={({ pressed }) => [styles.buttonContainer]}
-                  onPress={toggleSwitchMargemFuncionario}
-                >
-                  <Text selectable={false} style={styles.buttonText}>
-                    Calcular margem do funcionário
-                  </Text>
-                </Pressable>
-              </View>
-
-              <View style={styles.container}>
-                <Pressable
-                  style={({ pressed }) => [styles.buttonContainer]}
-                  onPress={toggleSwitchMargemLucro}
-                >
-                  <Text selectable={false} style={styles.buttonText}>
-                    Calcular margem de lucro
-                  </Text>
-                </Pressable>
-              </View>
-            </View>
-          </View>
         </View>
         <View style={[styles.rightPane, { flex: 2 }]}>
           <View style={{ flexDirection: 'row' }}>
@@ -604,13 +535,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   picker: {
-    width: 160,
+    width: 250,
     height: 40,
     backgroundColor: "#f0f0f0",
     borderWidth: 1,
     borderRadius: 5,
     marginVertical: 40,
-    marginLeft: 110,
+    marginLeft: 15,
     marginRight: 0,
     borderColor: "white",
   },
