@@ -8,13 +8,62 @@ import {
   StyleSheet,
   SafeAreaView,
   Modal,
+  FlatList,
   Switch,
   Pressable,
   Picker,
+  ImageBackground,
+  Image,
 } from 'react-native'
+
+
+const HistoricoItem = ({ item, removerItem }) => (
+  <View style={styles.listItem}>
+    <Text style={styles.listText}>{item.title}</Text>
+    <Text style={styles.listText}>{item.date}</Text>
+    <Text
+      style={styles.listText}
+    >{`${item.titleTotalValorFilamento}: ${item.totalValorFilamento}`}</Text>
+    <Text
+      style={styles.listText}
+    >{`${item.titleConsumoEnergia}: ${item.consumoEnergia}`}</Text>
+    <Text
+      style={styles.listText}
+    >{`${item.titleValorTrabalho}: ${item.valorTrabalho}`}</Text>
+    <Text
+      style={styles.listText}
+    >{`${item.titleFluxoCaixa}: ${item.fluxoCaixa}`}</Text>
+    <Text
+      style={styles.listText}
+    >{`${item.titleMargemCola}: ${item.margemCola}`}</Text>
+    <Text
+      style={styles.listText}
+    >{`${item.titleMargemLucro}: ${item.margemLucro}`}</Text>
+    <Text
+      style={styles.listText}
+    >{`${item.titlevalorTotal}: ${item.valorTotal}`}</Text>
+    <Pressable style={styles.button} onPress={() => removerItem(item.id)}>
+      <Text style={styles.buttonText}>Remover</Text>
+    </Pressable>
+  </View>
+)
+
+const Historico = ({ historico, removerItem }) => (
+  <FlatList
+    data={historico}
+    renderItem={({ item }) => (
+      <HistoricoItem item={item} removerItem={removerItem} />
+    )}
+    keyExtractor={(item) => item.id.toString()}
+    style={{ width: '100%' }}
+  />
+)
+
+export { Historico }
 
 const Orca3d = () => {
   const [selectedOption, setSelectedOption] = useState(null)
+  const [historico, setHistorico] = useState([])
 
   const handleOptionSelection = (option) => {
     setSelectedOption(option)
@@ -201,19 +250,64 @@ const Orca3d = () => {
     calcularTotalComLucro()
   }
 
+  //historico
+  const adicionarAoHistorico = () => {
+    if (
+      valorTotalFilamento !== 0 ||
+      consumoEnergia !== 0 ||
+      valorTrabalho !== 0 ||
+      fluxoCaixa !== 0 ||
+      margemCola !== 0 ||
+      margemLucro !== 0
+    ) {
+      const novoItem = {
+        id: Date.now(),
+        title: 'Historico ',
+        titleTotalValorFilamento: 'Valor Total Filamento: ',
+        titleConsumoEnergia: 'Consumo Energia: ',
+        titleValorTrabalho: 'Valor Trabalho: ',
+        titleFluxoCaixa: 'Fluxo Caixa: ',
+        titleMargemCola: 'Margem Cola: ',
+        titleMargemLucro: 'Margem Lucro: ',
+        titlevalorTotal: 'Total: ',
+        date: new Date().toLocaleString(),
+        totalValorFilamento: valorTotalFilamento,
+        consumoEnergia: consumoEnergia,
+        valorTrabalho: valorTrabalho,
+        fluxoCaixa: fluxoCaixa,
+        margemCola: margemCola,
+        margemLucro: margemLucro,
+        valorTotal: totalComLucro,
+      }
+      setHistorico([...historico, novoItem])
+    }
+  }
+
+  const removerDoHistorico = (id) => {
+    const novoHistorico = historico.filter((item) => item.id !== id)
+    setHistorico(novoHistorico)
+  }
+  //historico
+
   return (
-    // <ImageBackground
-    //   source={require('FilamentsFiscal3D\front\assets')}
-    //   style={{ flex: 1 }}
-    // >
     <ScrollView style={{ flex: 1 }}>
+      <View>
+        <Image
+          source={require('../front/assets/fundo.png')}
+          style={{
+            width: '1280px',
+            height: '1110px',
+            position: 'absolute',
+          }}
+        />
+      </View>
       <View style={styles.inputContainercabeçalho}>
         <View style={styles.container}>
-        <Picker
-          selectedValue={selectedOption}
-          onValueChange={(itemValue) => handleOptionSelection(itemValue)}
-          style={styles.picker}
-        >
+          <Picker
+            selectedValue={selectedOption}
+            onValueChange={(itemValue) => handleOptionSelection(itemValue)}
+            style={styles.picker}
+          >
             <Picker.Item label="Selecione uma opção" value={null} />
             <Picker.Item
               label="Calcular gasto de filamento"
@@ -287,18 +381,26 @@ const Orca3d = () => {
                   {errorMessage}
                 </Text>
               ) : null}
-              <Pressable
-                style={({ pressed }) => [styles.button]}
-                onPress={handleLogin}
-              >
-                <Text style={styles.buttonText}>Login</Text>
-              </Pressable>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.button]}
+                  onPress={handleLogin}
+                >
+                  <Text style={styles.buttonText}>Login</Text>
+                </Pressable>
+
+                <Pressable
+                  style={({ pressed }) => [styles.button]}
+                  onPress={handleLogin}
+                >
+                  <Text style={styles.buttonText}>Cadastrar-se</Text>
+                </Pressable>
+              </View>
             </View>
           </View>
         </Modal>
 
-        <View style={[styles.leftPane, { flex: 1 }]}>
-        </View>
+        <View style={[styles.leftPane, { flex: 1 }]}></View>
         <View style={[styles.rightPane, { flex: 2 }]}>
           <View style={{ flexDirection: 'row' }}>
             <View style={styles.inputContainerFilamento}>
@@ -505,7 +607,13 @@ const Orca3d = () => {
               </Text>
               {/* Seção para a Calculadora de Total com Lucro */}
             </View>
-            <View style={styles.inputContainerresultados}></View>
+            <View style={styles.inputHistorico}>
+              <Text style={{ fontSize: 20, marginBottom: 20 }}>Histórico</Text>
+              <Historico
+                historico={historico}
+                removerItem={removerDoHistorico}
+              />
+            </View>
           </View>
 
           <View style={styles.inputContainerCaixaDBotoes}>
@@ -513,7 +621,7 @@ const Orca3d = () => {
               <Pressable style={styles.button} onPress={handleAllCalculations}>
                 <Text style={styles.buttonText}>Calcular</Text>
               </Pressable>
-              <Pressable style={styles.button} onPress={calcularTotalComLucro}>
+              <Pressable style={styles.button} onPress={adicionarAoHistorico}>
                 <Text style={styles.buttonText}>Calcular Orçamento</Text>
               </Pressable>
             </View>
@@ -521,7 +629,6 @@ const Orca3d = () => {
         </View>
       </SafeAreaView>
     </ScrollView>
-    // </ImageBackground>
   )
 }
 
@@ -537,13 +644,13 @@ const styles = StyleSheet.create({
   picker: {
     width: 250,
     height: 40,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: '#f0f0f0',
     borderWidth: 1,
     borderRadius: 5,
     marginVertical: 40,
     marginLeft: 15,
     marginRight: 0,
-    borderColor: "white",
+    borderColor: 'white',
   },
   itemStyle: {
     textAlign: 'center',
@@ -551,12 +658,15 @@ const styles = StyleSheet.create({
   },
   leftPane: {
     height: 1000,
+    backgroundColor: '0',
   },
   centerPane: {
     height: 1000,
+    backgroundColor: '0',
   },
   rightPane: {
     height: 1000,
+    backgroundColor: '0',
   },
 
   button: {
@@ -762,7 +872,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 470,
     height: 90,
-    backgroundColor: 'lime',
+    backgroundColor: '#3B9D6F',
     borderRadius: 10,
     marginVertical: 1,
     marginBottom: 20,
@@ -771,6 +881,18 @@ const styles = StyleSheet.create({
   },
 
   inputContainerresultados: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 230,
+    height: 400,
+    backgroundColor: 'lightgray',
+    borderRadius: 20,
+    marginVertical: 20,
+    marginBottom: 10,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  inputHistorico: {
     alignItems: 'center',
     justifyContent: 'center',
     width: 230,
