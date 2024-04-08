@@ -16,31 +16,30 @@ import {
   Image,
 } from 'react-native'
 
-
 const HistoricoItem = ({ item, removerItem }) => (
   <View style={styles.listItem}>
-    <Text style={styles.listText}>{item.title}</Text>
-    <Text style={styles.listText}>{item.date}</Text>
+    <Text style={[styles.colorText]}>{item.title}</Text>
+    <Text style={[styles.colorText]}>{item.date}</Text>
     <Text
-      style={styles.listText}
+      style={[styles.colorText]}
     >{`${item.titleTotalValorFilamento}: ${item.totalValorFilamento}`}</Text>
     <Text
-      style={styles.listText}
+      style={[styles.colorText]}
     >{`${item.titleConsumoEnergia}: ${item.consumoEnergia}`}</Text>
     <Text
-      style={styles.listText}
+      style={[styles.colorText]}
     >{`${item.titleValorTrabalho}: ${item.valorTrabalho}`}</Text>
     <Text
-      style={styles.listText}
+      style={[styles.colorText]}
     >{`${item.titleFluxoCaixa}: ${item.fluxoCaixa}`}</Text>
     <Text
-      style={styles.listText}
+      style={[styles.colorText]}
     >{`${item.titleMargemCola}: ${item.margemCola}`}</Text>
     <Text
-      style={styles.listText}
+      style={[styles.colorText]}
     >{`${item.titleMargemLucro}: ${item.margemLucro}`}</Text>
     <Text
-      style={styles.listText}
+      style={[styles.colorText]}
     >{`${item.titlevalorTotal}: ${item.valorTotal}`}</Text>
     <Pressable style={styles.button} onPress={() => removerItem(item.id)}>
       <Text style={styles.buttonText}>Remover</Text>
@@ -291,7 +290,7 @@ const Orca3d = () => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <View>
+      {/* <View>
         <Image
           source={require('../front/assets/fundo.png')}
           style={{
@@ -300,13 +299,13 @@ const Orca3d = () => {
             position: 'absolute',
           }}
         />
-      </View>
+      </View> */}
       <View style={styles.inputContainercabeçalho}>
         <View style={styles.container}>
           <Picker
             selectedValue={selectedOption}
             onValueChange={(itemValue) => handleOptionSelection(itemValue)}
-            style={styles.picker}
+            style={[styles.picker,styles.colorText]}
           >
             <Picker.Item label="Selecione uma opção" value={null} />
             <Picker.Item
@@ -400,7 +399,6 @@ const Orca3d = () => {
           </View>
         </Modal>
 
-        <View style={[styles.leftPane, { flex: 1 }]}></View>
         <View style={[styles.rightPane, { flex: 2 }]}>
           <View style={{ flexDirection: 'row' }}>
             <View style={styles.inputContainerFilamento}>
@@ -412,7 +410,9 @@ const Orca3d = () => {
                 }
               >
                 {/* Seção para a Calculadora de Filamento */}
-                <Text>Peso da peça impressa (g):</Text>
+                <Text style={[styles.colorText]}>
+                  Peso da peça impressa (g):
+                </Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite o peso da peça"
@@ -421,7 +421,7 @@ const Orca3d = () => {
                 />
 
                 <View style={styles.separator} />
-                <Text>Preço do filamento (g):</Text>
+                <Text style={[styles.colorText]}>Preço do filamento (g):</Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite o preço do filamento"
@@ -440,15 +440,16 @@ const Orca3d = () => {
                 }
               >
                 {/* Seção para a Calculadora de Energia */}
-                <Text>Potência do equipamento (W):</Text>
+                <Text style={[styles.colorText]}>
+                  Potência do equipamento (W):
+                </Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite a potência"
                   keyboardType="numeric"
                   onChangeText={(text) => setPotenciaEquipamento(text)}
                 />
-
-                <Text>Duração da impreção (H):</Text>
+                <Text style={[styles.colorText]}>Duração da impreção (H):</Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite o número de horas"
@@ -456,7 +457,9 @@ const Orca3d = () => {
                   onChangeText={(text) => setHorasImpressao(text)}
                 />
 
-                <Text>Taxa de Energia (R$/kwh):</Text>
+                <Text style={[styles.colorText]}>
+                  Taxa de Energia (R$/kwh):
+                </Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite o valor do kWh"
@@ -476,7 +479,9 @@ const Orca3d = () => {
                 }
               >
                 {/* Seção para a Calculadora de Preço de preparações da peça */}
-                <Text>Horas gastas no fatiador (h):</Text>
+                <Text style={[styles.colorText]}>
+                  Horas gastas no fatiador (h):
+                </Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite as horas gastas no fatiador"
@@ -486,7 +491,9 @@ const Orca3d = () => {
 
                 <View style={styles.separator} />
 
-                <Text>Horas gastas na preparação (h):</Text>
+                <Text style={[styles.colorText]}>
+                  Horas gastas na preparação (h):
+                </Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite as horas gastas na preparação da peça"
@@ -496,7 +503,9 @@ const Orca3d = () => {
 
                 <View style={styles.separator} />
 
-                <Text>Preço da hora de trabalho (R$):</Text>
+                <Text style={[styles.colorText]}>
+                  Preço da hora de trabalho (R$):
+                </Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite o valor da hora de trabalho"
@@ -514,7 +523,9 @@ const Orca3d = () => {
                 }
               >
                 {/* Seção para a Calculadora de Payback */}
-                <Text>Investimento inicial (R$):</Text>
+                <Text style={[styles.colorText]}>
+                  Investimento inicial (R$):
+                </Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite o investimento"
@@ -524,7 +535,9 @@ const Orca3d = () => {
 
                 <View style={styles.separator} />
 
-                <Text>Tempo de recuperação (Dias):</Text>
+                <Text style={[styles.colorText]}>
+                  Tempo de recuperação (Dias):
+                </Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite o tempo de recuperação"
@@ -544,10 +557,7 @@ const Orca3d = () => {
                 }
               >
                 {/* Seção para a Calculadora do preço da hora dos funcionários */}
-                <Text style={{ marginTop: 20 }}>
-                  Calcule margem do funcionários:
-                </Text>
-                <Text>Valor da hora (R$):</Text>
+                <Text style={[styles.colorText]}>Valor da hora (R$):</Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite a porcentagem"
@@ -566,10 +576,9 @@ const Orca3d = () => {
                 }
               >
                 {/* Seção para a Calculadora de Margem de Lucro */}
-                <Text style={{ marginTop: 20 }}>
-                  Calculadora de Margem de Lucro:
+                <Text style={[styles.colorText]}>
+                  porcentagem do Lucro (R$):
                 </Text>
-                <Text>porcentagem do Lucro (R$):</Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite a porcentagem de lucro"
@@ -584,31 +593,32 @@ const Orca3d = () => {
           <View style={{ flexDirection: 'row' }}>
             <View style={styles.inputContainerresultados}>
               {/* Seção para a Calculadora de Total com Lucro */}
-              <Text style={{ marginTop: 10 }}>
+              <Text style={[styles.colorText]}>
                 Valor Total Filamento: R$ {valorTotalFilamento}
               </Text>
-              <Text style={{ marginTop: 10 }}>
+              <Text style={[styles.colorText]}>
                 Consumo Energia: R$ {consumoEnergia}
               </Text>
-              <Text style={{ marginTop: 10 }}>
+              <Text style={[styles.colorText]}>
                 Valor da preparação: R$ {valorTrabalho}
               </Text>
-              <Text style={{ marginTop: 10 }}>
+
+              <Text style={[styles.colorText]}>
                 Valor do Payback: R$ {fluxoCaixa}
               </Text>
-              <Text style={{ marginTop: 10 }}>
+              
+              <Text style={[styles.colorText]}>
                 Margem do funcionário: R$ {margemCola}
               </Text>
-              <Text style={{ marginTop: 10 }}>
+              <Text style={[styles.colorText]}>
                 Margem de Lucro: R$ {margemLucro}
               </Text>{' '}
-              <Text style={{ marginTop: 10 }}>
+              <Text style={[styles.colorText]}>
                 Total do Orçamento: R$ {totalComLucro}
               </Text>
               {/* Seção para a Calculadora de Total com Lucro */}
             </View>
             <View style={styles.inputHistorico}>
-              <Text style={{ fontSize: 20, marginBottom: 20 }}>Histórico</Text>
               <Historico
                 historico={historico}
                 removerItem={removerDoHistorico}
@@ -644,8 +654,8 @@ const styles = StyleSheet.create({
   picker: {
     width: 250,
     height: 40,
-    backgroundColor: '#f0f0f0',
-    borderWidth: 1,
+    backgroundColor: '#33a574',
+    borderWidth: 0,
     borderRadius: 5,
     marginVertical: 40,
     marginLeft: 15,
@@ -678,19 +688,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 
-  buttonContainer: {
-    width: 100,
-    height: 90,
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: 'lime',
-    padding: 10,
-    borderRadius: 10,
-    marginVertical: 0,
-    marginLeft: 0,
-    marginRight: 0,
-  },
-
   buttonText: {
     alignItems: 'center',
     marginLeft: 10,
@@ -708,7 +705,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#1e4b3a',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -721,7 +718,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#1e4b3a',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -734,7 +731,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#1e4b3a',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -747,7 +744,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#1e4b3a',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -760,7 +757,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#1e4b3a',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -773,7 +770,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#1e4b3a',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -787,7 +784,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lime',
+    backgroundColor: '#33a574',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -799,7 +796,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lime',
+    backgroundColor: '#33a574',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -811,7 +808,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lime',
+    backgroundColor: '#33a574',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -823,7 +820,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lime',
+    backgroundColor: '#33a574',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -835,7 +832,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lime',
+    backgroundColor: '#33a574',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -847,7 +844,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lime',
+    backgroundColor: '#33a574',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -859,7 +856,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: 'lime',
+    backgroundColor: '#33a574',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -872,7 +869,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 470,
     height: 90,
-    backgroundColor: '#3B9D6F',
+    backgroundColor: '#1e4b3a',
     borderRadius: 10,
     marginVertical: 1,
     marginBottom: 20,
@@ -883,22 +880,31 @@ const styles = StyleSheet.create({
   inputContainerresultados: {
     alignItems: 'center',
     justifyContent: 'center',
+    color: 'white',
     width: 230,
     height: 400,
-    backgroundColor: 'lightgray',
-    borderRadius: 20,
+    backgroundColor: '#1e4b3a',
+    borderRadius: 10,
     marginVertical: 20,
     marginBottom: 10,
     marginLeft: 5,
     marginRight: 5,
   },
+
+  colorText: {
+    alignItems: 'center',
+    marginLeft: 0,
+    color: '#f2f5ed',
+    fontSize: 16,
+  },
+
   inputHistorico: {
     alignItems: 'center',
     justifyContent: 'center',
     width: 230,
     height: 400,
-    backgroundColor: 'lightgray',
-    borderRadius: 20,
+    backgroundColor: '#1e4b3a',
+    borderRadius: 10,
     marginVertical: 20,
     marginBottom: 10,
     marginLeft: 5,
@@ -910,7 +916,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 1264,
     height: 90,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#1e4b3a',
     borderRadius: 0,
     marginVertical: 0,
     marginBottom: 0,
@@ -918,24 +924,18 @@ const styles = StyleSheet.create({
     marginRight: 0,
   },
 
-  inputContainerlateral: {
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    width: 120,
-    height: 1000,
-    backgroundColor: 'lightgray',
-    borderRadius: 0,
-    marginVertical: 0,
-    marginBottom: 0,
-    marginLeft: 0,
-    marginRight: 0,
+  listItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 75,
   },
-
   input: {
     width: '80%',
-    height: 40,
+    width: 200,
+    height: 55,
     marginVertical: 10,
     padding: 10,
+    borderRadius: 10,
     backgroundColor: 'white',
   },
   separator: {
