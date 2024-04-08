@@ -290,7 +290,7 @@ const Orca3d = () => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      {/* <View>
+      <View>
         <Image
           source={require('../front/assets/fundo.png')}
           style={{
@@ -299,7 +299,7 @@ const Orca3d = () => {
             position: 'absolute',
           }}
         />
-      </View> */}
+      </View> 
       <View style={styles.inputContainercabeçalho}>
         <View style={styles.container}>
           <Picker
@@ -654,7 +654,7 @@ const styles = StyleSheet.create({
   picker: {
     width: 250,
     height: 40,
-    backgroundColor: '#33a574',
+    backgroundColor: '#33A561',
     borderWidth: 0,
     borderRadius: 5,
     marginVertical: 40,
@@ -705,7 +705,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: '#1e4b3a',
+    backgroundColor: '#1B6739',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -718,7 +718,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: '#1e4b3a',
+    backgroundColor: '#1B6739',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -731,7 +731,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: '#1e4b3a',
+    backgroundColor: '#1B6739',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -744,7 +744,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: '#1e4b3a',
+    backgroundColor: '#1B6739',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -757,7 +757,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: '#1e4b3a',
+    backgroundColor: '#1B6739',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -770,7 +770,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: '#1e4b3a',
+    backgroundColor: '#1B6739',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 20,
@@ -869,7 +869,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 470,
     height: 90,
-    backgroundColor: '#1e4b3a',
+    backgroundColor: '#1B6739',
     borderRadius: 10,
     marginVertical: 1,
     marginBottom: 20,
@@ -883,7 +883,7 @@ const styles = StyleSheet.create({
     color: 'white',
     width: 230,
     height: 400,
-    backgroundColor: '#1e4b3a',
+    backgroundColor: '#1B6739',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 10,
@@ -903,7 +903,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 230,
     height: 400,
-    backgroundColor: '#1e4b3a',
+    backgroundColor: '#1B6739',
     borderRadius: 10,
     marginVertical: 20,
     marginBottom: 10,
@@ -916,7 +916,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 1264,
     height: 90,
-    backgroundColor: '#1e4b3a',
+    backgroundColor: '#1B6739',
     borderRadius: 0,
     marginVertical: 0,
     marginBottom: 0,
