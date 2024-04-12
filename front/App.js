@@ -3,16 +3,13 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   ScrollView,
   StyleSheet,
   SafeAreaView,
   Modal,
   FlatList,
-  Switch,
   Pressable,
   Picker,
-  ImageBackground,
   Image,
 } from 'react-native'
 
@@ -325,6 +322,15 @@ const Orca3d = () => {
             <Picker.Item label="Calcular margem de lucro" value="margemLucro" />
           </Picker>
         </View>
+        <Image
+          source={require('../front/assets/logo.png')}
+          style={{
+            width: '100px',
+            height: '100px',
+            marginLeft: '590px',
+            marginBottom: '20px'
+          }} 
+        />
       </View>
       <SafeAreaView style={styles.container}>
         <Modal
@@ -632,10 +638,19 @@ const Orca3d = () => {
                 <Text style={styles.buttonText}>Calcular</Text>
               </Pressable>
               <Pressable style={styles.button} onPress={adicionarAoHistorico}>
-                <Text style={styles.buttonText}>Calcular Orçamento</Text>
+                <Text style={styles.buttonText}>Gravar Historico</Text>
               </Pressable>
             </View>
           </View>
+          <Pressable style={styles.buttonhe} onPress={adicionarAoHistorico}>
+          <Image
+          source={require('../front/assets/ajuda.png')}
+          style={{
+            width: 80,
+            height: 80,
+          }} 
+        />
+          </Pressable>
         </View>
       </SafeAreaView>
     </ScrollView>
@@ -686,6 +701,20 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5,
     borderRadius: 5,
+  },
+
+  buttonhe: {
+    width: 95,
+    height: 95,
+    backgroundColor: '#1B6739',
+    padding: 10,
+    margin: 0,
+    borderRadius: 50,
+    marginLeft: 520,
+    marginRight: 0,
+    marginVertical: 369,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   buttonText: {
