@@ -1,188 +1,349 @@
- import React, { useState } from "react";
+import React, { useState } from 'react'
 import {
   View,
   Text,
   TextInput,
-  Button,
   ScrollView,
   StyleSheet,
   SafeAreaView,
+  Modal,
   FlatList,
+  Pressable,
+  TouchableOpacity,
+  Picker,
   Image,
-  Switch,
-  Modal, // Importe o Modal
-} from "react-native";
+} from 'react-native'
 
 const HistoricoItem = ({ item, removerItem }) => (
   <View style={styles.listItem}>
-    <Text style={styles.listText}>{item.title}</Text>
-    <Text style={styles.listText}>{item.date}</Text>
-    <Text style={styles.listText}>{item.titleTotalValorFilamento}{item.totalValorFilamento}</Text>
-    <Text style={styles.listText}>{item.titleConsumoEnergia}{item.consumoEnergia}</Text>
-    <Text style={styles.listText}>{item.titleValorTrabalho}{item.valorTrabalho}</Text>
-    <Text style={styles.listText}>{item.titleFluxoCaixa}{item.fluxoCaixa}</Text>
-    <Text style={styles.listText}>{item.titleMargemCola}{item.margemCola}</Text>
-    <Text style={styles.listText}>{item.titleMargemLucro}{item.margemLucro}</Text>
-    
-    <Text style={styles.listText}>{item.titlevalorTotal}{item.valorTotal}</Text>
-    <Button title="Remover" onPress={() => removerItem(item.id)} />
+    <Text style={[styles.colorText]}>{item.title}</Text>
+    <Text style={[styles.colorText]}>{item.date}</Text>
+    <Text
+      style={[styles.colorText]}
+    >{`${item.titleTotalValorFilamento}: ${item.totalValorFilamento}`}</Text>
+    <Text
+      style={[styles.colorText]}
+    >{`${item.titleConsumoEnergia}: ${item.consumoEnergia}`}</Text>
+    <Text
+      style={[styles.colorText]}
+    >{`${item.titleValorTrabalho}: ${item.valorTrabalho}`}</Text>
+    <Text
+      style={[styles.colorText]}
+    >{`${item.titleFluxoCaixa}: ${item.fluxoCaixa}`}</Text>
+    <Text
+      style={[styles.colorText]}
+    >{`${item.titleMargemCola}: ${item.margemCola}`}</Text>
+    <Text
+      style={[styles.colorText]}
+    >{`${item.titleMargemLucro}: ${item.margemLucro}`}</Text>
+    <Text
+      style={[styles.colorText]}
+    >{`${item.titlevalorTotal}: ${item.valorTotal}`}</Text>
+    <Pressable style={styles.button} onPress={() => removerItem(item.id)}>
+      <Text style={styles.buttonText}>Remover</Text>
+    </Pressable>
   </View>
-
-  //data em outro local \/
-  //<Text style={styles.listText}>{item.date}</Text>
-);
+)
 
 const Historico = ({ historico, removerItem }) => (
   <FlatList
     data={historico}
-    renderItem={({ item }) => <HistoricoItem item={item} removerItem={removerItem} />}
+    renderItem={({ item }) => (
+      <HistoricoItem item={item} removerItem={removerItem} />
+    )}
     keyExtractor={(item) => item.id.toString()}
     style={{ width: '100%' }}
   />
-);
+)
 
+export { Historico }
 
 const Orca3d = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [modalVisible, setModalVisible] = useState(true); // Inicia o modal como visível
-  const [errorMessage, setErrorMessage] = useState('');
-  const [historico, setHistorico] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null)
+  const [historico, setHistorico] = useState([])
 
-
-  const handleLogin = () => {
-    if (username === "admin" && password === "admin") {
-      // Se o login for bem-sucedido, você pode fechar o modal
-      setModalVisible(false);
-      setErrorMessage("");
+  const handleLogoPress = () => {
+    // Verificar se o ambiente é web
+    if (typeof window !== 'undefined' && window.location && window.location.href) {
+      // Se estiver no ambiente web, redirecionar para o site em uma nova aba
+      window.open('https://ssancash-projetos.github.io/FilamentsFiscal3D/landingPages/', '_blank');
     } else {
-      // Caso contrário, exiba uma mensagem de erro
-      setErrorMessage(
-        "Usuário ou senha incorretos. Por favor, tente novamente."
-      );
+      // Se estiver no ambiente React Native, usar Linking para abrir o site
+      Linking.openURL('https://ssancash-projetos.github.io/FilamentsFiscal3D/landingPages/');
     }
   };
 
-  const [isEnabledFilamento, setIsEnabledFilamento] = useState(false);
-  const toggleSwitchFilamento = () =>
-    setIsEnabledFilamento((previousState) => !previousState);
+  const handleOptionSelection = (option) => {
+    setSelectedOption(option)
+    // Chame a função apropriada com base na opção selecionada
+    switch (option) {
+      case 'filamento':
+        toggleSwitchFilamento()
+        break
+      case 'energia':
+        toggleSwitchEnergia()
+        break
+      case 'acabamento':
+        toggleSwitchAcabamento()
+        break
+      case 'payback':
+        toggleSwitchPayback()
+        break
+      case 'margemFuncionario':
+        toggleSwitchMargemFuncionario()
+        break
+      case 'margemLucro':
+        toggleSwitchMargemLucro()
+        break
+      default:
+        break
+    }
+  }
 
-  const [isEnabledEnergia, setIsEnabledEnergia] = useState(false);
-  const toggleSwitchEnergia = () =>
-    setIsEnabledEnergia((previousState) => !previousState);
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [modalVisible, setModalVisible] = useState(true) // Inicia o modal como visível
+  const [errorMessage, setErrorMessage] = useState('')
+  const [modalCadastroVisible, setModalCadastroVisible] = useState(false)
+  const [modalTutorial1, setModalTutorial1Visible] = useState(false)
+  const [modalTutorial2, setModalTutorial2Visible] = useState(false)
+  const [modalTutorial3, setModalTutorial3Visible] = useState(false)
+  const [modalTutorial4, setModalTutorial4Visible] = useState(false)
+  const [modalTutorial5, setModalTutorial5Visible] = useState(false)
+  const [modalTutorial6, setModalTutorial6Visible] = useState(false)
+  const [modalTutorial7, setModalTutorial7Visible] = useState(false)
+  const [modalTutorial8, setModalTutorial8Visible] = useState(false)
+  const [modalTutorial9, setModalTutorial9Visible] = useState(false)
+  const [modalTutorial10, setModalTutorial10Visible] = useState(false)
 
-  const [isEnabledAcabamento, setIsEnabledAcabamento] = useState(false);
-  const toggleSwitchAcabamento = () =>
-    setIsEnabledAcabamento((previousState) => !previousState);
 
-  const [isEnabledPayback, setIsEnabledPayback] = useState(false);
-  const toggleSwitchPayback = () =>
-    setIsEnabledPayback((previousState) => !previousState);
+  const handleLogin = () => {
+    if (username === 'admin' && password === 'admin') {
+      // Se o login for bem-sucedido, você pode fechar o modal
+      setModalVisible(false)
+      setErrorMessage('')
+    } else {
+      // Caso contrário, exiba uma mensagem de erro
+      setErrorMessage(
+        'Usuário ou senha incorretos. Por favor, tente novamente.'
+      )
+    }
+  }
+
+  const handleCadastro = () => {
+    if (modalCadastroVisible == false){
+      setModalCadastroVisible(true);
+    }else {
+      setModalCadastroVisible(false);
+      handleLogin();
+      handletutorial1();
+    };
+  }
+
+  const handletutorial1 = () => {
+    if (modalTutorial1 == false){
+      setModalTutorial1Visible(true);
+    }else {
+      setModalTutorial1Visible(false);
+    }
+  }
+
+  const handletutorial2 = () => {
+    if (modalTutorial2 == false){
+      setModalTutorial2Visible(true);
+    }else {
+      setModalTutorial2Visible(false);
+      handletutorial1();
+    }
+  }
+
+  const handletutorial3 = () => {
+    if (modalTutorial3 == false){
+      setModalTutorial3Visible(true);
+    }else {
+      setModalTutorial3Visible(false);
+      handletutorial2();
+    }
+  }
+
+  const handletutorial4 = () => {
+    if (modalTutorial4 == false){
+      setModalTutorial4Visible(true);
+    }else {
+      setModalTutorial4Visible(false);
+      handletutorial3();
+    }
+  }
+
+  const handletutorial5 = () => {
+    if (modalTutorial5 == false){
+      setModalTutorial5Visible(true);
+    }else {
+      setModalTutorial5Visible(false);
+      handletutorial4();
+    }
+  }
+
+  const handletutorial6 = () => {
+    if (modalTutorial6 == false){
+      setModalTutorial6Visible(true);
+    }else {
+      setModalTutorial6Visible(false);
+      handletutorial5();
+    }
+  }
+
+  const handletutorial7 = () => {
+    if (modalTutorial7 == false){
+      setModalTutorial7Visible(true);
+    }else {
+      setModalTutorial7Visible(false);
+      handletutorial6();
+    }
+  }
+
+  const handletutorial8 = () => {
+    if (modalTutorial8 == false){
+      setModalTutorial8Visible(true);
+    }else {
+      setModalTutorial8Visible(false);
+      handletutorial7();
+    }
+  }
+
+  const handletutorial9 = () => {
+    if (modalTutorial9 == false){
+      setModalTutorial9Visible(true);
+    }else {
+      setModalTutorial9Visible(false);
+      handletutorial8();
+    }
+  }
+
+  const handletutorial10 = () => {
+    if (modalTutorial10 == false){
+      setModalTutorial10Visible(true);
+    }else {
+      setModalTutorial10Visible(false);
+      handletutorial9();
+    }
+  }
+
+  const [isEnabledFilamento, setIsEnabledFilamento] = useState(false)
+  const toggleSwitchFilamento = () => {
+    setIsEnabledFilamento((previousState) => !previousState)
+  }
+
+  const [isEnabledEnergia, setIsEnabledEnergia] = useState(false)
+  const toggleSwitchEnergia = () => {
+    setIsEnabledEnergia((previousState) => !previousState)
+  }
+
+  const [isEnabledAcabamento, setIsEnabledAcabamento] = useState(false)
+  const toggleSwitchAcabamento = () => {
+    setIsEnabledAcabamento((previousState) => !previousState)
+  }
+
+  const [isEnabledPayback, setIsEnabledPayback] = useState(false)
+  const toggleSwitchPayback = () => {
+    setIsEnabledPayback((previousState) => !previousState)
+  }
 
   const [isEnabledMargemFuncionario, setIsEnabledMargemFuncionario] =
-    useState(false);
-  const toggleSwitchMargemFuncionario = () =>
-    setIsEnabledMargemFuncionario((previousState) => !previousState);
+    useState(false)
+  const toggleSwitchMargemFuncionario = () => {
+    setIsEnabledMargemFuncionario((previousState) => !previousState)
+  }
 
-  const [isEnabledMargemLucro, setIsEnabledMargemLucro] = useState(false);
-  const toggleSwitchMargemLucro = () =>
-    setIsEnabledMargemLucro((previousState) => !previousState);
-
-  const [isEnabledTotalLucro, setIsEnabledTotalLucro] = useState(false);
-  const toggleSwitchTotalLucro = () =>
-    setIsEnabledTotalLucro((previousState) => !previousState);
-
-  const [isEnabledPreparacao, setIsEnabledPreparacao] = useState(false);
-  const toggleSwitchPreparacao = () =>
-    setIsEnabledPreparacao((previousState) => !previousState);
+  const [isEnabledMargemLucro, setIsEnabledMargemLucro] = useState(false)
+  const toggleSwitchMargemLucro = () => {
+    setIsEnabledMargemLucro((previousState) => !previousState)
+  }
 
   // Estado para a Calculadora de Filamento
-  const [pesoPeca, setPesoPeca] = useState(0);
-  const [pesoFilamento, setPesoFilamento] = useState(0);
-  const [valorTotalFilamento, setValorTotalFilamento] = useState(0);
+  const [pesoPeca, setPesoPeca] = useState(0)
+  const [pesoFilamento, setPesoFilamento] = useState(0)
+  const [valorTotalFilamento, setValorTotalFilamento] = useState(0)
 
   const calcularCustoFilamento = () => {
-    const custoTotalFilamento =
-      parseFloat(pesoPeca) * parseFloat(pesoFilamento);
-    setValorTotalFilamento(custoTotalFilamento.toFixed(2)); // Ajusta para duas casas decimais
-  };
+    const custoTotalFilamento = parseFloat(pesoPeca) * parseFloat(pesoFilamento)
+    setValorTotalFilamento(custoTotalFilamento.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   // Estado para a Calculadora de Energia
-  const [potenciaEquipamento, setPotenciaEquipamento] = useState(0);
-  const [horasImpressao, setHorasImpressao] = useState(0);
-  const [consumoEnergia, setConsumoEnergia] = useState(0);
-  const [valorKwh, setValorKwh] = useState(0);
+  const [potenciaEquipamento, setPotenciaEquipamento] = useState(0)
+  const [horasImpressao, setHorasImpressao] = useState(0)
+  const [consumoEnergia, setConsumoEnergia] = useState(0)
+  const [valorKwh, setValorKwh] = useState(0)
 
   const calcularConsumoEnergia = () => {
     const consumoCalculado =
-      (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000;
-    const consumoFinal = consumoCalculado * parseFloat(valorKwh);
-    setConsumoEnergia(consumoFinal.toFixed(2)); // Ajusta para duas casas decimais
-  };
+      (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000
+    const consumoFinal = consumoCalculado * parseFloat(valorKwh)
+    setConsumoEnergia(consumoFinal.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   // Função para calcular a taxa de lucro
   const calcularTaxaLucro = () => {
-
     const taxaLucro =
       (parseFloat(valorTotalFilamento) +
         parseFloat(valorKwh) / parseFloat(consumoEnergia)) *
-      100;
-    return taxaLucro.toFixed(2);
-  };
+      100
+    return taxaLucro.toFixed(2)
+  }
 
   // Estado e função para a Calculadora de Margem de Lucro
-  const [porcentagemLucro, setPorcentagemLucro] = useState(0);
-  const [margemLucro, setMargemLucro] = useState(0);
+  const [porcentagemLucro, setPorcentagemLucro] = useState(0)
+  const [margemLucro, setMargemLucro] = useState(0)
 
   const calcularMargemLucro = () => {
-
     const margemLucroCalculada =
-      (parseFloat(valorTotalFilamento) +
-        parseFloat(valorKwh)) * parseFloat(porcentagemLucro) /
-      100;
-    setMargemLucro(margemLucroCalculada.toFixed(2)); // Ajusta para duas casas decimais
-  };
+      ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) *
+        parseFloat(porcentagemLucro)) /
+      100
+    setMargemLucro(margemLucroCalculada.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   // Estado e função para a Calculadora do preço dos colaboradores
-  const [porcentagemCola, setPorcentagemCola] = useState(0);
-  const [margemCola, setMargemCola] = useState(0);
+  const [porcentagemCola, setPorcentagemCola] = useState(0)
+  const [margemCola, setMargemCola] = useState(0)
 
   const calcularMargemCola = () => {
-
     const margemColaCalculada =
-      (parseFloat(valorTotalFilamento) +
-      parseFloat(valorKwh)) * parseFloat(porcentagemCola) / 100;
-    setMargemCola(margemColaCalculada.toFixed(2)); // Ajusta para duas casas decimais
-  };
+      ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) *
+        parseFloat(porcentagemCola)) /
+      100
+    setMargemCola(margemColaCalculada.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   // Estado para a Calculadora de prossessos de preparação
-  const [horaPreparacao, setHoraPreparacao] = useState(0);
-  const [horaFatiador, setHoraFatiador] = useState(0);
-  const [valorHora, setValorHora] = useState(0);
-  const [valorTrabalho, setValorTrabalho] = useState(0);
+  const [horaPreparacao, setHoraPreparacao] = useState(0)
+  const [horaFatiador, setHoraFatiador] = useState(0)
+  const [valorHora, setValorHora] = useState(0)
+  const [valorTrabalho, setValorTrabalho] = useState(0)
 
   const calcularCustoPreparacao = () => {
     const custoPreparacao =
       parseFloat(valorHora) *
-      (parseFloat(horaFatiador) + parseFloat(horaPreparacao));
-    setValorTrabalho(custoPreparacao.toFixed(2)); // Ajusta para duas casas decimais
-  };
+      (parseFloat(horaFatiador) + parseFloat(horaPreparacao))
+    setValorTrabalho(custoPreparacao.toFixed(2)) // Ajusta para duas casas decimais
+  }
 
   // Estado para a Calculadora de payback
-  const [fluxoCaixa, setFluxoCaixa] = useState(0);
-  const [investimento, setInvestimento] = useState(0);
-  const [periodo, setPeriodo] = useState(0);
+  const [fluxoCaixa, setFluxoCaixa] = useState(0)
+  const [investimento, setInvestimento] = useState(0)
+  const [periodo, setPeriodo] = useState(0)
 
   const fazerpay = () => {
-    const payback = parseFloat(investimento) / parseFloat(periodo);
-    setFluxoCaixa(payback.toFixed(2));
-  };
+    const payback = parseFloat(investimento) / parseFloat(periodo)
+    setFluxoCaixa(payback.toFixed(2))
+  }
 
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const [isEnabled, setIsEnabled] = useState(false)
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
 
   // Estado e função para a Calculadora de Total com Lucro
-  const [totalComLucro, setTotalComLucro] = useState("");
+  const [totalComLucro, setTotalComLucro] = useState('')
 
   const calcularTotalComLucro = () => {
     const totalCalculado =
@@ -191,708 +352,1227 @@ const Orca3d = () => {
       parseFloat(margemLucro) +
       parseFloat(margemCola) +
       parseFloat(valorTrabalho) +
-      parseFloat(fluxoCaixa);
-    setTotalComLucro(totalCalculado.toFixed(2)); // Ajusta para duas casas decimais
-  };
-
-
-
-//teste
-
-const adicionarAoHistorico = () => {
-  if (
-    valorTotalFilamento !== 0 ||
-    consumoEnergia !== 0 ||
-    valorTrabalho !== 0 ||
-    fluxoCaixa !== 0 ||
-    margemCola !== 0 ||
-    margemLucro !== 0
-  ) {
-    const novoItem = {
-      id: Date.now(),
-      title: 'Historico ',
-      titleTotalValorFilamento:'Valor Total Filamento: ',
-      titleConsumoEnergia:'Consumo Energia: ',
-      titleValorTrabalho:'Valor Trabalho: ',
-      titleFluxoCaixa:'Fluxo Caixa: ',
-      titleMargemCola:'Margem Cola: ',
-      titleMargemLucro:'Margem Lucro: ',
-      titlevalorTotal:'Total: ',
-      date: new Date().toLocaleString(),
-      totalValorFilamento: valorTotalFilamento,
-      consumoEnergia: consumoEnergia,
-      valorTrabalho: valorTrabalho,
-      fluxoCaixa: fluxoCaixa,
-      margemCola: margemCola,
-      margemLucro: margemLucro,
-      valorTotal: totalComLucro,
-    };
-    setHistorico([...historico, novoItem]);
+      parseFloat(fluxoCaixa)
+    setTotalComLucro(totalCalculado.toFixed(2)) // Ajusta para duas casas decimais
   }
-};
-
-  const removerDoHistorico = (id) => {
-    const novoHistorico = historico.filter((item) => item.id !== id);
-    setHistorico(novoHistorico);
-  };
-  
-  //teste
 
   const handleAllCalculations = () => {
-    setErrorMessage("");
-  
-    calcularCustoFilamento();
-    calcularConsumoEnergia();
-    calcularTaxaLucro();
-    calcularMargemLucro();
-    calcularMargemCola(); // Corrigido o nome da função
-    calcularCustoPreparacao();
-    fazerpay();
-    calcularTotalComLucro();
-  };
+    setErrorMessage('')
 
+    calcularCustoFilamento()
+    calcularConsumoEnergia()
+    calcularTaxaLucro()
+    calcularMargemLucro()
+    calcularMargemCola() // Corrigido o nome da função
+    calcularCustoPreparacao()
+    fazerpay()
+    calcularTotalComLucro()
+  }
+
+  //historico
+  const adicionarAoHistorico = () => {
+    if (
+      valorTotalFilamento !== 0 ||
+      consumoEnergia !== 0 ||
+      valorTrabalho !== 0 ||
+      fluxoCaixa !== 0 ||
+      margemCola !== 0 ||
+      margemLucro !== 0
+    ) {
+      const novoItem = {
+        id: Date.now(),
+        title: 'Historico ',
+        titleTotalValorFilamento: 'Valor Total Filamento: ',
+        titleConsumoEnergia: 'Consumo Energia: ',
+        titleValorTrabalho: 'Valor Trabalho: ',
+        titleFluxoCaixa: 'Fluxo Caixa: ',
+        titleMargemCola: 'Margem Cola: ',
+        titleMargemLucro: 'Margem Lucro: ',
+        titlevalorTotal: 'Total: ',
+        date: new Date().toLocaleString(),
+        totalValorFilamento: valorTotalFilamento,
+        consumoEnergia: consumoEnergia,
+        valorTrabalho: valorTrabalho,
+        fluxoCaixa: fluxoCaixa,
+        margemCola: margemCola,
+        margemLucro: margemLucro,
+        valorTotal: totalComLucro,
+      }
+      setHistorico([...historico, novoItem])
+    }
+  }
+
+  const removerDoHistorico = (id) => {
+    const novoHistorico = historico.filter((item) => item.id !== id)
+    setHistorico(novoHistorico)
+  }
+  //historico
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.inputContainercabeçalho}> </View>
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.inputContainerresultados}>
-            {/* Seção para a Calculadora de Total com Lucro */}
-            <Text style={{ marginTop: 10 }}>
-              Valor Total Filamento: R$ {valorTotalFilamento}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Consumo Energia: R$ {consumoEnergia}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Valor da preparação: R$ {valorTrabalho}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Valor do Payback: R$ {fluxoCaixa}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Margem do funcionário: R$ {margemCola}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Margem de Lucro: R$ {margemLucro}
-            </Text>{" "}
-            <Text style={{ marginTop: 10 }}>
-              Total do Orçamento: R$ {totalComLucro}
-            </Text>
-            {/* Seção para a Calculadora de Total com Lucro */}
-            <Button title="Calcular" onPress={handleAllCalculations} />
-
-            <View style={styles.separator} />
-            
-            <Button title="Calcular Orçamento " onPress={calcularTotalComLucro} />
-          </View>
-          <View style={styles.inputContainerFilamento}>
-            <View
-              style={
-                isEnabledFilamento
-                  ? styles.inputContainerFilamentoHighlighted
-                  : styles.inputContainerFilamento
-              }
-            >
-              {/* Seção para a Calculadora de Filamento */}
-              <Text>Peso da peça impressa (g):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite o peso da peça"
-                keyboardType="numeric"
-                onChangeText={(text) => setPesoPeca(text)}
-              />
-              <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                  // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
-                  handleClose();
-                }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      padding: 30,
-                      width: 400,
-                      right: 0,
-                      borderRadius: 10,
-                    }}
-                  >
-                    <TextInput
-                      placeholder="Usuario"
-                      value={username}
-                      onChangeText={(text) => setUsername(text)}
-                      style={{
-                        marginBottom: 20,
-                        borderBottomWidth: 1,
-                        borderBottomColor: "black",
-                        width: 340,
-                      }}
-                    />
-                    <TextInput
-                      placeholder="Senha"
-                      value={password}
-                      onChangeText={(text) => setPassword(text)}
-                      secureTextEntry={true}
-                      style={{
-                        marginBottom: 20,
-                        borderBottomWidth: 1,
-                        borderBottomColor: "black",
-                      }}
-                    />
-                    {errorMessage ? (
-                      <Text style={{ color: "red", marginBottom: 10 }}>
-                        {errorMessage}
-                      </Text>
-                    ) : null}
-                    <Button title="Login" onPress={handleLogin} />
-                  </View>
-                </View>
-              </Modal>
-              <View style={styles.separator} />
-              <Text>Preço do filamento (g):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite o preço do filamento"
-                keyboardType="numeric"
-                onChangeText={(text) => setPesoFilamento(text)}
-              />
-            </View>
-          </View>
-
-          <View style={styles.inputContainerEnergia}>
-            <View
-              style={
-                isEnabledEnergia
-                  ? styles.inputContainerEnergiaHighlighted
-                  : styles.inputContainerEnergia
-              }
-            >
-              {/* Seção para a Calculadora de Energia */}
-              <Text>Potência do equipamento (W):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite a potência"
-                keyboardType="numeric"
-                onChangeText={(text) => setPotenciaEquipamento(text)}
-              />
-
-              <Text>Duração da impreção (H):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite o número de horas"
-                keyboardType="numeric"
-                onChangeText={(text) => setHorasImpressao(text)}
-              />
-
-              <Text>Taxa de Energia (R$/kwh):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite o valor do kWh"
-                keyboardType="numeric"
-                onChangeText={(text) => setValorKwh(text)}
-              />
-            </View>
-          </View>
-          <View style={styles.inputContainerTrabalho}>
-            <View
-              style={
-                isEnabledAcabamento
-                  ? styles.inputContainerPreparacaoHighlighted
-                  : styles.inputContainerTrabalho
-              }
-            >
-              {/* Seção para a Calculadora de Preço de preparações da peça */}
-              <Text>Horas gastas no fatiador (h):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite as horas gastas no fatiador"
-                keyboardType="numeric"
-                onChangeText={(text) => setHoraFatiador(text)}
-              />
-
-              <View style={styles.separator} />
-
-              <Text>Horas gastas na preparação (h):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite as horas gastas na preparação da peça"
-                keyboardType="numeric"
-                onChangeText={(text) => setHoraPreparacao(text)}
-              />
-
-              <View style={styles.separator} />
-
-              <Text>Preço da hora de trabalho (R$):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite o valor da hora de trabalho"
-                keyboardType="numeric"
-                onChangeText={(text) => setValorHora(text)}
-              />
-            </View>
-          </View>
-          <View style={styles.inputContainerlateral}>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledFilamento ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchFilamento}
-                value={isEnabledFilamento}
-              />
-              <Text>Calcular gasto de filamento</Text>
-            </View>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledEnergia ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchEnergia}
-                value={isEnabledEnergia}
-              />
-              <Text>Calcular gasto de energia</Text>
-            </View>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledAcabamento ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchAcabamento}
-                value={isEnabledAcabamento}
-              />
-              <Text>Calcular gasto no acabamento</Text>
-            </View>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledPayback ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchPayback}
-                value={isEnabledPayback}
-              />
-              <Text>Calcular payback</Text>
-            </View>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledMargemFuncionario ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchMargemFuncionario}
-                value={isEnabledMargemFuncionario}
-              />
-              <Text>Calcular margem do funcionário</Text>
-            </View>
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabledMargemLucro ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchMargemLucro}
-                value={isEnabledMargemLucro}
-              />
-              <Text>Calcular margem de lucro</Text>
-            </View>
-          </View>
+      <View>
+        <Image
+          source={require('../front/assets/fundo.png')}
+          style={{
+            width: '1280px',
+            height: '1110px',
+            position: 'absolute',
+          }}
+        />
+      </View>
+      <View style={styles.inputContainercabeçalho}>
+        <View style={styles.container}>
+          <Picker
+            selectedValue={selectedOption}
+            onValueChange={(itemValue) => handleOptionSelection(itemValue)}
+            style={[styles.picker, styles.colorText]}
+          >
+            <Picker.Item label="Selecione uma opção" value={null} />
+            <Picker.Item
+              label="Calcular gasto de filamento"
+              value="filamento"
+            />
+            <Picker.Item label="Calcular gasto de energia" value="energia" />
+            <Picker.Item
+              label="Calcular gasto no acabamento"
+              value="acabamento"
+            />
+            <Picker.Item label="Calcular payback" value="payback" />
+            <Picker.Item
+              label="Calcular margem do funcionário"
+              value="margemFuncionario"
+            />
+            <Picker.Item label="Calcular margem de lucro" value="margemLucro" />
+          </Picker>
         </View>
-
-        <View style={{ flexDirection: "row" }}>
-        <View style={styles.inputContainerresultados}></View>
-          <View style={styles.inputContainerpayback}>
-            <View
-              style={
-                isEnabledPayback
-                  ? styles.inputContainerPaybackHighlighted
-                  : styles.inputContainerpayback
-              }
-            >
-              {/* Seção para a Calculadora de Payback */}
-              <Text>Investimento inicial (R$):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite o investimento"
-                keyboardType="numeric"
-                onChangeText={(text) => setInvestimento(text)}
-              />
-
-              <View style={styles.separator} />
-
-              <Text>Tempo de recuperação (Dias):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite o tempo de recuperação"
-                keyboardType="numeric"
-                onChangeText={(text) => setPeriodo(text)}
-              />
-            </View>
-          </View>
-
-          <View style={styles.inputContainerMargemFuncionario}>
-            <View
-              style={
-                isEnabledMargemFuncionario
-                  ? styles.inputContainerMargemFuncionarioHighlighted
-                  : styles.inputContainerMargemFuncionario
-              }
-            >
-              {/* Seção para a Calculadora do preço da hora dos funcionários */}
-              <Text style={{ marginTop: 20 }}>
-                Calcule margem do funcionários:
-              </Text>
-              <Text>Valor da hora (R$):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite a porcentagem"
-                keyboardType="numeric"
-                onChangeText={(text) => setPorcentagemCola(text)}
-              />
-            </View>
-          </View>
-
-          <View style={styles.inputContainerLucro}>
-            <View
-              style={
-                isEnabledMargemLucro
-                  ? styles.inputContainerMargemLucroHighlighted
-                  : styles.inputContainerLucro
-              }
-            >
-              {/* Seção para a Calculadora de Margem de Lucro */}
-              <Text style={{ marginTop: 20 }}>
-                Calculadora de Margem de Lucro:
-              </Text>
-              <Text>porcentagem do Lucro (R$):</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite a porcentagem de lucro"
-                keyboardType="numeric"
-                onChangeText={(text) => setPorcentagemLucro(text)}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.inputContainerLucro}>
-          {/* Seção para a Calculadora de Margem de Lucro */}
-          <Text style={{ marginTop: 20 }}>
-            Calculadora de Margem de Lucro:
-          </Text>
-          <Text>porcentagem do Lucro (R$):</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite a porcentagem de lucro"
-            keyboardType="numeric"
-            onChangeText={(text) => setPorcentagemLucro(text)}
+        <TouchableOpacity onPress={handleLogoPress}>
+          <Image
+            source={require("../front/assets/logo.png")}
+            style={{
+              width: "100px",
+              height: "100px",
+              marginLeft: "590px",
+              marginBottom: "20px",
+            }} // ajuste o tamanho conforme necessário
           />
-          <Button title="Calcular" onPress={calcularMargemLucro} />
-        </View>
-        <View style={styles.inputContainerLucroFinal}>
-          {/* Seção para a Calculadora de Total com Lucro */}
-          <Text style={{ marginTop: 20 }}>
-            Calculadora de Total com Lucro:
-          </Text>
-          <Button title="Calcular" onPress={() => {calcularTotalComLucro();adicionarAoHistorico();}} />
-          
-        </View>
+        </TouchableOpacity>
       </View>
+      <SafeAreaView style={styles.container}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+              <TextInput
+                placeholder="Usuario"
+                value={username}
+                onChangeText={(text) => setUsername(text)}
+                style={{
+                  marginBottom: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'black',
+                  width: 340,
+                }}
+              />
+              <TextInput
+                placeholder="Senha"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry={true}
+                style={{
+                  marginBottom: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'black',
+                }}
+              />
+              {errorMessage ? (
+                <Text style={{ color: 'red', marginBottom: 10 }}>
+                  {errorMessage}
+                </Text>
+              ) : null}
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.button]}
+                  onPress={handleLogin}
+                >
+                  <Text style={styles.buttonText}>Login</Text>
+                </Pressable>
 
-      <View style={{ flexDirection: "row" }}>
+                <Pressable
+                  style={({ pressed }) => [styles.button]}
+                  onPress={handleCadastro}
+                >
+                  <Text style={styles.buttonText}>Cadastrar-se</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
 
-      </View>
-      <View style={styles.inputHistorico}>
-      <Text style={{ fontSize: 20, marginBottom: 20 }}>Histórico</Text>
-      <Historico historico={historico} removerItem={removerDoHistorico} />
-    </View>
-    </SafeAreaView>
-  </ScrollView>
-     //<Button title="Adicionar ao Histórico" onPress={adicionarAoHistorico} />
-     //consertarerro na 425 que quando aperta o botao pela primeira vez nao  aparece o total no historico
-  );
-};
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalCadastroVisible}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+              <TextInput
+                placeholder="Nome de Usuario"
+                value={username}
+                onChangeText={(text) => setUsername(text)}
+                style={{
+                  marginBottom: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'black',
+                  width: 340,
+                }}
+              />
+              <TextInput
+                placeholder="Senha"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry={true}
+                style={{
+                  marginBottom: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'black',
+                }}
+              />
+
+              <TextInput
+                placeholder="Confirmar Senha"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry={true}
+                style={{
+                  marginBottom: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'black',
+                }}
+              />
+              {errorMessage ? (
+                <Text style={{ color: 'red', marginBottom: 10 }}>
+                  {errorMessage}
+                </Text>
+              ) : null}
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.button]}
+                  onPress={handleCadastro}
+                >
+                  <Text style={styles.buttonText}>Criar Conta</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial1}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>1</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial2}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial2}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+              <Text>2</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial3}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial3}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>3</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial4}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial4}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>4</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial5}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial5}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>5</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial6}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial6}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>6</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial7}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial7}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>7</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial8}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial8}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>8</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial9}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial9}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>9</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial10}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial10}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>10</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial10}
+                >
+                  <Text style={styles.buttonText}>✖</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <View style={[styles.rightPane, { flex: 2 }]}>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={styles.inputContainerFilamento}>
+              <View
+                style={
+                  isEnabledFilamento
+                    ? styles.inputContainerFilamentoHighlighted
+                    : styles.inputContainerFilamento
+                }
+              >
+                {/* Seção para a Calculadora de Filamento */}
+                <Text style={[styles.colorText]}>
+                  Peso da peça impressa (g):
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o peso da peça"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPesoPeca(text)}
+                />
+
+                <View style={styles.separator} />
+                <Text style={[styles.colorText]}>Preço do filamento (g):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o preço do filamento"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPesoFilamento(text)}
+                />
+              </View>
+            </View>
+
+            <View style={styles.inputContainerEnergia}>
+              <View
+                style={
+                  isEnabledEnergia
+                    ? styles.inputContainerEnergiaHighlighted
+                    : styles.inputContainerEnergia
+                }
+              >
+                {/* Seção para a Calculadora de Energia */}
+                <Text style={[styles.colorText]}>
+                  Potência do equipamento (W):
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite a potência"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPotenciaEquipamento(text)}
+                />
+                <Text style={[styles.colorText]}>Duração da impreção (H):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o número de horas"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setHorasImpressao(text)}
+                />
+
+                <Text style={[styles.colorText]}>
+                  Taxa de Energia (R$/kwh):
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o valor do kWh"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setValorKwh(text)}
+                />
+              </View>
+            </View>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={styles.inputContainerTrabalho}>
+              <View
+                style={
+                  isEnabledAcabamento
+                    ? styles.inputContainerPreparacaoHighlighted
+                    : styles.inputContainerTrabalho
+                }
+              >
+                {/* Seção para a Calculadora de Preço de preparações da peça */}
+                <Text style={[styles.colorText]}>
+                  Horas gastas no fatiador (h):
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite as horas gastas no fatiador"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setHoraFatiador(text)}
+                />
+
+                <View style={styles.separator} />
+
+                <Text style={[styles.colorText]}>
+                  Horas gastas na preparação (h):
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite as horas gastas na preparação da peça"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setHoraPreparacao(text)}
+                />
+
+                <View style={styles.separator} />
+
+                <Text style={[styles.colorText]}>
+                  Preço da hora de trabalho (R$):
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o valor da hora de trabalho"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setValorHora(text)}
+                />
+              </View>
+            </View>
+            <View style={styles.inputContainerpayback}>
+              <View
+                style={
+                  isEnabledPayback
+                    ? styles.inputContainerPaybackHighlighted
+                    : styles.inputContainerpayback
+                }
+              >
+                {/* Seção para a Calculadora de Payback */}
+                <Text style={[styles.colorText]}>
+                  Investimento inicial (R$):
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o investimento"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setInvestimento(text)}
+                />
+
+                <View style={styles.separator} />
+
+                <Text style={[styles.colorText]}>
+                  Tempo de recuperação (Dias):
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite o tempo de recuperação"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPeriodo(text)}
+                />
+              </View>
+            </View>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={styles.inputContainerMargemFuncionario}>
+              <View
+                style={
+                  isEnabledMargemFuncionario
+                    ? styles.inputContainerMargemFuncionarioHighlighted
+                    : styles.inputContainerMargemFuncionario
+                }
+              >
+                {/* Seção para a Calculadora do preço da hora dos funcionários */}
+                <Text style={[styles.colorText]}>Valor da hora (R$):</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite a porcentagem"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPorcentagemCola(text)}
+                />
+              </View>
+            </View>
+
+            <View style={styles.inputContainerLucro}>
+              <View
+                style={
+                  isEnabledMargemLucro
+                    ? styles.inputContainerMargemLucroHighlighted
+                    : styles.inputContainerLucro
+                }
+              >
+                {/* Seção para a Calculadora de Margem de Lucro */}
+                <Text style={[styles.colorText]}>
+                  porcentagem do Lucro (R$):
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite a porcentagem de lucro"
+                  keyboardType="numeric"
+                  onChangeText={(text) => setPorcentagemLucro(text)}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={[styles.rightPane, { flex: 2 }]}>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={styles.inputContainerresultados}>
+              {/* Seção para a Calculadora de Total com Lucro */}
+              <Text style={[styles.colorText]}>
+                Valor Total Filamento: R$ {valorTotalFilamento}
+              </Text>
+              <Text style={[styles.colorText]}>
+                Consumo Energia: R$ {consumoEnergia}
+              </Text>
+              <Text style={[styles.colorText]}>
+                Valor da preparação: R$ {valorTrabalho}
+              </Text>
+              <Text style={[styles.colorText]}>
+                Valor do Payback: R$ {fluxoCaixa}
+              </Text>
+              <Text style={[styles.colorText]}>
+                Margem do funcionário: R$ {margemCola}
+              </Text>
+              <Text style={[styles.colorText]}>
+                Margem de Lucro: R$ {margemLucro}
+              </Text>{' '}
+              <Text style={[styles.colorText]}>
+                Total do Orçamento: R$ {totalComLucro}
+              </Text>
+              {/* Seção para a Calculadora de Total com Lucro */}
+            </View>
+            <View style={styles.inputHistorico}>
+              <Historico
+                historico={historico}
+                removerItem={removerDoHistorico}
+              />
+            </View>
+          </View>
+
+          <View style={styles.inputContainerCaixaDBotoes}>
+            <View style={{ flexDirection: 'row' }}>
+              <Pressable style={styles.button} onPress={handleAllCalculations}>
+                <Text style={styles.buttonText}>Calcular</Text>
+              </Pressable>
+              <Pressable style={styles.button} onPress={adicionarAoHistorico}>
+                <Text style={styles.buttonText}>Gravar Historico</Text>
+              </Pressable>
+            </View>
+          </View>
+          <Pressable style={styles.buttonhe}  onPress={handletutorial1}>
+            <Image
+              source={require('../front/assets/ajuda.png')}
+              style={{
+                width: 80,
+                height: 80,
+              }}
+            />
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    </ScrollView>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
+    marginBottom: 10,
     flex: 1,
-    justifyContent: "center",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     paddingHorizontal: 10,
   },
+  picker: {
+    width: 250,
+    height: 40,
+    backgroundColor: '#33A561',
+    borderWidth: 0,
+    borderRadius: 5,
+    marginVertical: 40,
+    marginLeft: 15,
+    marginRight: 0,
+    borderColor: 'white',
+  },
+  itemStyle: {
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  leftPane: {
+    height: 1000,
+    backgroundColor: '0',
+  },
+  centerPane: {
+    height: 1000,
+    backgroundColor: '0',
+  },
+  rightPane: {
+    height: 1000,
+    backgroundColor: '0',
+  },
+
+  button: {
+    width: 160,
+    height: 40,
+    backgroundColor: 'white',
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
+  },
+
+  buttonfrente: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'white',
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
+    marginLeft: 300
+  },
+
+  buttonhe: {
+    width: 95,
+    height: 95,
+    backgroundColor: '#1B6739',
+    padding: 10,
+    margin: 0,
+    borderRadius: 50,
+    marginLeft: 520,
+    marginRight: 0,
+    marginVertical: 369,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  buttonText: {
+    alignItems: 'center',
+    marginLeft: 10,
+    color: 'white',
+    fontSize: 16,
+  },
+
+  buttonText: {
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 16,
+  },
   inputContainerFilamento: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: '#1B6739',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
 
   inputContainerEnergia: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: '#1B6739',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
 
   inputContainerLucro: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: '#1B6739',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
 
   inputContainerMargemFuncionario: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: '#1B6739',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
 
   inputContainerTrabalho: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: '#1B6739',
     borderRadius: 10,
-    marginVertical: 10,
-    marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-  inputHistorico: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 255,
-    height: 310,
-    backgroundColor: "lightgray",
-    borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
 
   inputContainerpayback: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgray",
+    backgroundColor: '#1B6739',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
-    marginLeft: 10,
+    marginLeft: 5,
     marginRight: 5,
   },
 
   // Estilos destacados para as áreas de cálculo quando o switch estiver ativado
   inputContainerFilamentoHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: '#33a574',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
   inputContainerEnergiaHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: '#33a574',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
   inputContainerAcabamentoHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: '#33a574',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
   inputContainerPaybackHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: '#33a574',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
-    marginLeft: 10,
+    marginLeft: 5,
     marginRight: 5,
   },
   inputContainerMargemFuncionarioHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: '#33a574',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
   inputContainerPreparacaoHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: '#33a574',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
   inputContainerMargemLucroHighlighted: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 245,
     height: 300,
-    backgroundColor: "lightgreen", // cor de fundo destacada
+    backgroundColor: '#33a574',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 20,
     marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
   },
 
-  inputContainerLucroFinal: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 230,
-    height: 120,
-    backgroundColor: "lightgray",
+  inputContainerCaixaDBotoes: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 470,
+    height: 90,
+    backgroundColor: '#1B6739',
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 1,
     marginBottom: 20,
-    marginLeft: 250,
+    marginLeft: 5,
     marginRight: 5,
   },
 
   inputContainerresultados: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white',
     width: 230,
-    height: 300,
-    backgroundColor: "lightgray",
-    borderRadius: 20,
-    marginVertical: 10,
-    marginBottom: 1,
-    marginLeft: 10,
-    marginRight: 5,
-  },
-
-  inputContainercabeçalho: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 1264,
-    height: 90,
-    backgroundColor: "lightgray",
-    borderRadius: 20,
-    marginVertical: 10,
-    marginBottom: 10,
-    marginLeft: 0,
-    marginRight: 5,
-  },
-
-  inputContainerlateral: {
-    alignItems: "flex-start",
-    justifyContent: "center",
-    width: 230,
-    height: 300,
-    backgroundColor: "lightgray",
-    borderRadius: 20,
-    marginVertical: 10,
+    height: 400,
+    backgroundColor: '#1B6739',
+    borderRadius: 10,
+    marginVertical: 20,
     marginBottom: 10,
     marginLeft: 5,
     marginRight: 5,
   },
 
-  input: {
-    width: "80%",
-    height: 40,
-    marginVertical: 10,
-    padding: 10,
-    backgroundColor: "white",
-  },
-  separator: {
-    width: "100%",
-    height: 10,
-    backgroundColor: "transparent",
-  },
-  //teste
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  colorText: {
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  listItem: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  listText: {
+    marginLeft: 0,
+    color: '#f2f5ed',
     fontSize: 16,
   },
-  //teste
 
+  inputHistorico: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 230,
+    height: 400,
+    backgroundColor: '#1B6739',
+    borderRadius: 10,
+    marginVertical: 20,
+    marginBottom: 10,
+    marginLeft: 5,
+    marginRight: 5,
+  },
 
+  inputContainercabeçalho: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    width: 1264,
+    height: 90,
+    backgroundColor: '#1B6739',
+    borderRadius: 0,
+    marginVertical: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+  },
 
+  listItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 75,
+  },
+  input: {
+    width: '80%',
+    width: 200,
+    height: 55,
+    marginVertical: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'white',
+  },
+  separator: {
+    width: '100%',
+    height: 10,
+    backgroundColor: 'transparent',
+  },
+})
 
-
-
-
-
-
-});
-
-export default Orca3d;
+export default Orca3d
