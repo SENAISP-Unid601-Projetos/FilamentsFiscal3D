@@ -9,6 +9,7 @@ import {
   Modal,
   FlatList,
   Pressable,
+  TouchableOpacity,
   Picker,
   Image,
 } from 'react-native'
@@ -61,6 +62,17 @@ const Orca3d = () => {
   const [selectedOption, setSelectedOption] = useState(null)
   const [historico, setHistorico] = useState([])
 
+  const handleLogoPress = () => {
+    // Verificar se o ambiente é web
+    if (typeof window !== 'undefined' && window.location && window.location.href) {
+      // Se estiver no ambiente web, redirecionar para o site em uma nova aba
+      window.open('https://ssancash-projetos.github.io/FilamentsFiscal3D/landingPages/', '_blank');
+    } else {
+      // Se estiver no ambiente React Native, usar Linking para abrir o site
+      Linking.openURL('https://ssancash-projetos.github.io/FilamentsFiscal3D/landingPages/');
+    }
+  };
+
   const handleOptionSelection = (option) => {
     setSelectedOption(option)
     // Chame a função apropriada com base na opção selecionada
@@ -92,6 +104,18 @@ const Orca3d = () => {
   const [password, setPassword] = useState('')
   const [modalVisible, setModalVisible] = useState(true) // Inicia o modal como visível
   const [errorMessage, setErrorMessage] = useState('')
+  const [modalCadastroVisible, setModalCadastroVisible] = useState(false)
+  const [modalTutorial1, setModalTutorial1Visible] = useState(false)
+  const [modalTutorial2, setModalTutorial2Visible] = useState(false)
+  const [modalTutorial3, setModalTutorial3Visible] = useState(false)
+  const [modalTutorial4, setModalTutorial4Visible] = useState(false)
+  const [modalTutorial5, setModalTutorial5Visible] = useState(false)
+  const [modalTutorial6, setModalTutorial6Visible] = useState(false)
+  const [modalTutorial7, setModalTutorial7Visible] = useState(false)
+  const [modalTutorial8, setModalTutorial8Visible] = useState(false)
+  const [modalTutorial9, setModalTutorial9Visible] = useState(false)
+  const [modalTutorial10, setModalTutorial10Visible] = useState(false)
+
 
   const handleLogin = () => {
     if (username === 'admin' && password === 'admin') {
@@ -103,6 +127,105 @@ const Orca3d = () => {
       setErrorMessage(
         'Usuário ou senha incorretos. Por favor, tente novamente.'
       )
+    }
+  }
+
+  const handleCadastro = () => {
+    if (modalCadastroVisible == false){
+      setModalCadastroVisible(true);
+    }else {
+      setModalCadastroVisible(false);
+      handleLogin();
+      handletutorial1();
+    };
+  }
+
+  const handletutorial1 = () => {
+    if (modalTutorial1 == false){
+      setModalTutorial1Visible(true);
+    }else {
+      setModalTutorial1Visible(false);
+    }
+  }
+
+  const handletutorial2 = () => {
+    if (modalTutorial2 == false){
+      setModalTutorial2Visible(true);
+    }else {
+      setModalTutorial2Visible(false);
+      handletutorial1();
+    }
+  }
+
+  const handletutorial3 = () => {
+    if (modalTutorial3 == false){
+      setModalTutorial3Visible(true);
+    }else {
+      setModalTutorial3Visible(false);
+      handletutorial2();
+    }
+  }
+
+  const handletutorial4 = () => {
+    if (modalTutorial4 == false){
+      setModalTutorial4Visible(true);
+    }else {
+      setModalTutorial4Visible(false);
+      handletutorial3();
+    }
+  }
+
+  const handletutorial5 = () => {
+    if (modalTutorial5 == false){
+      setModalTutorial5Visible(true);
+    }else {
+      setModalTutorial5Visible(false);
+      handletutorial4();
+    }
+  }
+
+  const handletutorial6 = () => {
+    if (modalTutorial6 == false){
+      setModalTutorial6Visible(true);
+    }else {
+      setModalTutorial6Visible(false);
+      handletutorial5();
+    }
+  }
+
+  const handletutorial7 = () => {
+    if (modalTutorial7 == false){
+      setModalTutorial7Visible(true);
+    }else {
+      setModalTutorial7Visible(false);
+      handletutorial6();
+    }
+  }
+
+  const handletutorial8 = () => {
+    if (modalTutorial8 == false){
+      setModalTutorial8Visible(true);
+    }else {
+      setModalTutorial8Visible(false);
+      handletutorial7();
+    }
+  }
+
+  const handletutorial9 = () => {
+    if (modalTutorial9 == false){
+      setModalTutorial9Visible(true);
+    }else {
+      setModalTutorial9Visible(false);
+      handletutorial8();
+    }
+  }
+
+  const handletutorial10 = () => {
+    if (modalTutorial10 == false){
+      setModalTutorial10Visible(true);
+    }else {
+      setModalTutorial10Visible(false);
+      handletutorial9();
     }
   }
 
@@ -296,13 +419,13 @@ const Orca3d = () => {
             position: 'absolute',
           }}
         />
-      </View> 
+      </View>
       <View style={styles.inputContainercabeçalho}>
         <View style={styles.container}>
           <Picker
             selectedValue={selectedOption}
             onValueChange={(itemValue) => handleOptionSelection(itemValue)}
-            style={[styles.picker,styles.colorText]}
+            style={[styles.picker, styles.colorText]}
           >
             <Picker.Item label="Selecione uma opção" value={null} />
             <Picker.Item
@@ -322,15 +445,17 @@ const Orca3d = () => {
             <Picker.Item label="Calcular margem de lucro" value="margemLucro" />
           </Picker>
         </View>
-        <Image
-          source={require('../front/assets/logo.png')}
-          style={{
-            width: '100px',
-            height: '100px',
-            marginLeft: '590px',
-            marginBottom: '20px'
-          }} 
-        />
+        <TouchableOpacity onPress={handleLogoPress}>
+          <Image
+            source={require("../front/assets/logo.png")}
+            style={{
+              width: "100px",
+              height: "100px",
+              marginLeft: "590px",
+              marginBottom: "20px",
+            }} // ajuste o tamanho conforme necessário
+          />
+        </TouchableOpacity>
       </View>
       <SafeAreaView style={styles.container}>
         <Modal
@@ -396,9 +521,477 @@ const Orca3d = () => {
 
                 <Pressable
                   style={({ pressed }) => [styles.button]}
-                  onPress={handleLogin}
+                  onPress={handleCadastro}
                 >
                   <Text style={styles.buttonText}>Cadastrar-se</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalCadastroVisible}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+              <TextInput
+                placeholder="Nome de Usuario"
+                value={username}
+                onChangeText={(text) => setUsername(text)}
+                style={{
+                  marginBottom: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'black',
+                  width: 340,
+                }}
+              />
+              <TextInput
+                placeholder="Senha"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry={true}
+                style={{
+                  marginBottom: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'black',
+                }}
+              />
+
+              <TextInput
+                placeholder="Confirmar Senha"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry={true}
+                style={{
+                  marginBottom: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'black',
+                }}
+              />
+              {errorMessage ? (
+                <Text style={{ color: 'red', marginBottom: 10 }}>
+                  {errorMessage}
+                </Text>
+              ) : null}
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.button]}
+                  onPress={handleCadastro}
+                >
+                  <Text style={styles.buttonText}>Criar Conta</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial1}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>1</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial2}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial2}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+              <Text>2</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial3}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial3}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>3</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial4}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial4}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>4</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial5}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial5}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>5</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial6}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial6}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>6</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial7}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial7}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>7</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial8}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial8}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>8</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial9}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial9}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>9</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial10}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalTutorial10}
+          onRequestClose={() => {
+            // Se o usuário pressionar o botão de voltar, impeça o fechamento do modal
+            handleClose()
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: 'lightgray',
+                padding: 30,
+                width: 400,
+                right: 0,
+                borderRadius: 10,
+              }}
+            >
+                            <Text>10</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial10}
+                >
+                  <Text style={styles.buttonText}>✖</Text>
                 </Pressable>
               </View>
             </View>
@@ -608,11 +1201,9 @@ const Orca3d = () => {
               <Text style={[styles.colorText]}>
                 Valor da preparação: R$ {valorTrabalho}
               </Text>
-
               <Text style={[styles.colorText]}>
                 Valor do Payback: R$ {fluxoCaixa}
               </Text>
-              
               <Text style={[styles.colorText]}>
                 Margem do funcionário: R$ {margemCola}
               </Text>
@@ -642,14 +1233,14 @@ const Orca3d = () => {
               </Pressable>
             </View>
           </View>
-          <Pressable style={styles.buttonhe} onPress={adicionarAoHistorico}>
-          <Image
-          source={require('../front/assets/ajuda.png')}
-          style={{
-            width: 80,
-            height: 80,
-          }} 
-        />
+          <Pressable style={styles.buttonhe}  onPress={handletutorial1}>
+            <Image
+              source={require('../front/assets/ajuda.png')}
+              style={{
+                width: 80,
+                height: 80,
+              }}
+            />
           </Pressable>
         </View>
       </SafeAreaView>
@@ -701,6 +1292,16 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5,
     borderRadius: 5,
+  },
+
+  buttonfrente: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'white',
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
+    marginLeft: 300
   },
 
   buttonhe: {
