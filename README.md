@@ -3,7 +3,7 @@
 
 # Problema: Custeamento de Peças em 3D
 ## Área: TI
-## Responsáveis: João Paulo, Matheus Henrique, Vinicius Chalch , Wylgner
+## Responsáveis: João Paulo, Matheus Henrique, Vinicius Chalch, Wylgner
 
 ## 1. Escopo
 O projeto visa desenvolver um sistema para custear peças em 3D, proporcionando otimização nos cálculos. Este sistema será implementado através de um website, proporcionando aos professores uma ferramenta fácil e eficiente para reportar e registrar as atividades. Um dos objetivos principais é o rápido cálculo das peças e gastos do equipamento.
