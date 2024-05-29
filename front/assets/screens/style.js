@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
 
   tutorialText: {
     textAlign: 'left',
-    fontSize: 15,
+    fontSize: 17,
   },
 
   button: {
@@ -138,77 +138,20 @@ const styles = StyleSheet.create({
   buttonfrente: {
     width: 50,
     height: 50,
-    backgroundColor: 'white',
+    backgroundColor: 'lightgray',
     padding: 10,
     margin: 5,
     borderRadius: 5,
-    marginLeft: 440,
   },
 
   buttonfrente1: {
     width: 50,
     height: 50,
-    backgroundColor: 'white',
+    backgroundColor: 'lightgray',
     padding: 10,
     margin: 5,
     borderRadius: 5,
-    marginLeft: 470,
-    marginVertical: 45,
-  },
 
-  buttonfrente2: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'white',
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    marginLeft: 469,
-    marginVertical: 45,
-  },
-
-  buttonfrente3: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'white',
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    marginLeft: 470,
-    marginVertical: 45,
-  },
-
-  buttonfrente4: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'white',
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    marginLeft: 470,
-    marginVertical: 45,
-  },
-
-  buttonfrente5: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'white',
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    marginLeft: 470,
-    marginVertical: 45,
-  },
-
-  buttonfrente6: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'white',
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    marginLeft: 470,
-    marginVertical: 45,
   },
 
   buttonconectar:{
@@ -216,38 +159,14 @@ const styles = StyleSheet.create({
     marginBottom:"40px"
 
   },
-
-  buttonfrente7: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'white',
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    marginLeft: 470,
-    marginVertical: 175,
-  },
-
-  buttonfrente8: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'white',
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    marginLeft: 470,
-    marginVertical: 75,
-  },
-
   buttonfecha: {
     width: 50,
     height: 50,
-    backgroundColor: 'red',
+    backgroundColor: 'lightgray',
     padding: 10,
     margin: 5,
     borderRadius: 5,
-    marginRight: 500,
-    marginBottom: 100,
+    marginBottom: 1000,
   },
 
   buttonhe: {
@@ -280,14 +199,14 @@ const styles = StyleSheet.create({
 
   fala1: {
     width: 400,
-    height: 150,
+    height: 200,
     borderRadius: 10,
     backgroundColor: 'lightgray',
   },
 
-  fala2: {
-    width: 150,
-    height: 250,
+  fala9: {
+    width: 440,
+    height: 320,
     borderRadius: 10,
     backgroundColor: 'lightgray',
   },
@@ -300,8 +219,8 @@ const styles = StyleSheet.create({
   },
 
   fala2: {
-    width: 150,
-    height: 250,
+    width: 400,
+    height: 270,
     borderRadius: 10,
     backgroundColor: 'lightgray',
   },

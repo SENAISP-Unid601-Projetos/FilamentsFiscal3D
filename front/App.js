@@ -245,9 +245,8 @@ const Orca3d = () => {
   const [pesoFilamento, setPesoFilamento] = useState(0);
   const [valorTotalFilamento, setValorTotalFilamento] = useState(0);
 
-  const calcularCustoFilamento = () => {
-    const custoTotalFilamento =
-      parseFloat(pesoPeca) * parseFloat(pesoFilamento);
+  const calcularCustoFilamento = async () => {
+    const custoTotalFilamento = parseFloat(pesoPeca) * parseFloat(pesoFilamento);
     setValorTotalFilamento(custoTotalFilamento.toFixed(2)); // Ajusta para duas casas decimais
   };
 
@@ -257,19 +256,15 @@ const Orca3d = () => {
   const [consumoEnergia, setConsumoEnergia] = useState(0);
   const [valorKwh, setValorKwh] = useState(0);
 
-  const calcularConsumoEnergia = () => {
-    const consumoCalculado =
-      (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000;
+  const calcularConsumoEnergia = async () => {
+    const consumoCalculado = (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000;
     const consumoFinal = consumoCalculado * parseFloat(valorKwh);
     setConsumoEnergia(consumoFinal.toFixed(2)); // Ajusta para duas casas decimais
   };
 
   // Função para calcular a taxa de lucro
-  const calcularTaxaLucro = () => {
-    const taxaLucro =
-      (parseFloat(valorTotalFilamento) +
-        parseFloat(valorKwh) / parseFloat(consumoEnergia)) *
-      100;
+  const calcularTaxaLucro = async () => {
+    const taxaLucro = (parseFloat(valorTotalFilamento) + parseFloat(valorKwh) / parseFloat(consumoEnergia)) * 100;
     return taxaLucro.toFixed(2);
   };
 
@@ -277,11 +272,8 @@ const Orca3d = () => {
   const [porcentagemLucro, setPorcentagemLucro] = useState(0);
   const [margemLucro, setMargemLucro] = useState(0);
 
-  const calcularMargemLucro = () => {
-    const margemLucroCalculada =
-      ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) *
-        parseFloat(porcentagemLucro)) /
-      100;
+  const calcularMargemLucro = async () => {
+    const margemLucroCalculada = ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) * parseFloat(porcentagemLucro)) / 100;
     setMargemLucro(margemLucroCalculada.toFixed(2)); // Ajusta para duas casas decimais
   };
 
@@ -289,24 +281,18 @@ const Orca3d = () => {
   const [porcentagemCola, setPorcentagemCola] = useState(0);
   const [margemCola, setMargemCola] = useState(0);
 
-  const calcularMargemCola = () => {
-    const margemColaCalculada =
-      ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) *
-        parseFloat(porcentagemCola)) /
-      100;
+  const calcularMargemCola = async () => {
+    const margemColaCalculada = ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) * parseFloat(porcentagemCola)) / 100;
     setMargemCola(margemColaCalculada.toFixed(2)); // Ajusta para duas casas decimais
   };
-
   // Estado para a Calculadora de prossessos de preparação
   const [horaPreparacao, setHoraPreparacao] = useState(0);
   const [horaFatiador, setHoraFatiador] = useState(0);
   const [valorHora, setValorHora] = useState(0);
   const [valorTrabalho, setValorTrabalho] = useState(0);
 
-  const calcularCustoPreparacao = () => {
-    const custoPreparacao =
-      parseFloat(valorHora) *
-      (parseFloat(horaFatiador) + parseFloat(horaPreparacao));
+  const calcularCustoPreparacao = async () => {
+    const custoPreparacao = parseFloat(valorHora) * (parseFloat(horaFatiador) + parseFloat(horaPreparacao));
     setValorTrabalho(custoPreparacao.toFixed(2)); // Ajusta para duas casas decimais
   };
 
@@ -315,7 +301,7 @@ const Orca3d = () => {
   const [investimento, setInvestimento] = useState(0);
   const [periodo, setPeriodo] = useState(0);
 
-  const fazerpay = () => {
+  const fazerpay = async () => {
     const payback = parseFloat(investimento) / parseFloat(periodo);
     setFluxoCaixa(payback.toFixed(2));
   };
@@ -326,9 +312,8 @@ const Orca3d = () => {
   // Estado e função para a Calculadora de Total com Lucro
   const [totalComLucro, setTotalComLucro] = useState("");
 
-  const calcularTotalComLucro = () => {
-    const totalCalculado =
-      parseFloat(valorTotalFilamento) +
+  const calcularTotalComLucro = async () => {
+    const totalCalculado = parseFloat(valorTotalFilamento) +
       parseFloat(consumoEnergia) +
       parseFloat(margemLucro) +
       parseFloat(margemCola) +
@@ -337,19 +322,21 @@ const Orca3d = () => {
     setTotalComLucro(totalCalculado.toFixed(2)); // Ajusta para duas casas decimais
   };
 
-  const handleAllCalculations = () => {
+  const handleAllCalculations = async () => {
     setErrorMessage("");
-
-    calcularCustoFilamento();
-    calcularConsumoEnergia();
-    calcularTaxaLucro();
-    calcularMargemLucro();
-    calcularMargemCola(); // Corrigido o nome da função
-    calcularCustoPreparacao();
-    fazerpay();
-    calcularTotalComLucro();
-
-    setCalculado(true);
+    try {
+      await calcularCustoFilamento();
+      await calcularConsumoEnergia();
+      await calcularTaxaLucro();
+      await calcularMargemLucro();
+      await calcularMargemCola();
+      await calcularCustoPreparacao();
+      await fazerpay();
+      await calcularTotalComLucro();
+      setCalculado(true);
+    } catch (error) {
+      setErrorMessage("Erro ao realizar os cálculos: " + error.message);
+    }
   };
 
   //historico
@@ -573,12 +560,11 @@ const Orca3d = () => {
               <View style={{ flexDirection: 'row' }}>
                 <View style={[styles.fala1]}>
                   <Text style={styles.tutorialText}>
-                    O meu ta afim de um negocio do bom, o Orça3D é uma
-                    ferramenta de impressão 3D que simplifica e otimiza todas as
-                    etapas, desde a concepção até a materialização,
-                    impulsionando a criatividade e a produtividade. Com Orça3D,
-                    as limitações são superadas, permitindo uma jornada de
-                    inovação mais fluida e eficiente.
+                    Orça3D é uma ferramenta de impressão 3D que torna fácil
+                    e rápida a criação de objetos 3D, desde a ideia até a sua
+                    concretização, e ajuda você a ser mais criativo e produtivo.
+                    Com o Orça3D não há mais limitações, então você pode inovar
+                    com mais facilidade e rapidez.
                   </Text>
                 </View>
 
@@ -588,19 +574,21 @@ const Orca3d = () => {
                 />
               </View>
 
-              <Pressable
-                style={({ pressed }) => [styles.buttonfrente]}
-                onPress={handletutorial2}
-              >
-                <Text style={styles.buttonText}>➡</Text>
-              </Pressable>
+              <View style={{ flexDirection: 'row-reverse', marginBottom: 0 }}>
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfrente]}
+                  onPress={handletutorial2}
+                >
+                  <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
 
-              <Pressable
+                <Pressable
                   style={({ pressed }) => [styles.buttonfecha]}
                   onPress={handletutorial1}
                 >
                   <Text style={styles.buttonText}>✖</Text>
                 </Pressable>
+              </View>
             </View>
           </View>
         </Modal>
@@ -621,26 +609,35 @@ const Orca3d = () => {
             }}
           >
             <View style={[styles.tutorial1]}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={[styles.fala2]}>
-                  <Text style={[styles.tutorialText]}>
-                    Para começar iremos considerar a quantidade de filamento
-                    utilizada, multiplicando-a pelo preço do material por grama.
-                    Esse cálculo nos fornece o custo do filamento necessário
-                    para a produção.
-                  </Text>
+              <View style={[styles.fala2]}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ width: 150, height: 170, marginRight: 10 }}>
+                    <Text style={[styles.tutorialText]}>
+                      Primeiro, vamos falar sobre quanto filamento temos.
+                      Este cálculo nos diz quanto filamento precisamos para
+                      fabricar o produto e quanto custará.
+                    </Text>
+                  </View>
+
+                  <Image
+                    source={{ uri: 'assets/img/1-unscreen.gif' }}
+                    style={{ width: 185, height: 265, borderRadius: 10, marginLeft: 55 }}
+                  />
                 </View>
-                <Image
-                  source={{ uri: 'assets/img/1-unscreen.gif' }} 
-                  style={{ width: 280, height: 280 }}
-                />
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30 }}>
                 <Pressable
                   style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial3}
                 >
                   <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfecha]}
+                  onPress={handletutorial2}
+                >
+                  <Text style={styles.buttonText}>✖</Text>
                 </Pressable>
               </View>
             </View>
@@ -663,26 +660,36 @@ const Orca3d = () => {
             }}
           >
             <View style={[styles.tutorial2]}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={[styles.fala2]}>
-                  <Text style={[styles.tutorialText]}>
-                    Para calcular o custo de energia de uma impressão 3D,
-                    multiplique o consumo da impressora pela duração da
-                    impressão e pelo preço da energia. Isso fornecerá o custo
-                    total de energia para a impressão.
-                  </Text>
+              <View style={[styles.fala2]}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ width: 190, height: 190, marginRight: 10 }}>
+                    <Text style={[styles.tutorialText]}>
+                      Para calcular o custo de energia de uma impressão 3D,
+                      multiplique o consumo da impressora pela duração da
+                      impressão e pelo preço da energia. Isso fornecerá o custo
+                      total de energia para a impressão.
+                    </Text>
+                  </View>
+
+                  <Image
+                    source={{ uri: 'assets/img/2-unscreen.gif' }}
+                    style={{ width: 185, height: 265, borderRadius: 10, marginLeft: 15 }}
+                  />
                 </View>
-                <Image
-                  source={{ uri: 'assets/img/2-unscreen.gif' }} 
-                  style={{ width: 280, height: 280 }}
-                />
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30}}>
                 <Pressable
-                  style={({ pressed }) => [styles.buttonfrente2]}
+                  style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial4}
                 >
                   <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfecha]}
+                  onPress={handletutorial3}
+                >
+                  <Text style={styles.buttonText}>✖</Text>
                 </Pressable>
               </View>
             </View>
@@ -705,26 +712,35 @@ const Orca3d = () => {
             }}
           >
             <View style={[styles.tutorial3]}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={[styles.fala2]}>
-                  <Text style={[styles.tutorialText]}>
-                    Para calcular os custos de mão de obra na produção de uma
-                    peça, multiplique o tempo gasto no fatiador e preparação
-                    pelo preço da hora de trabalho. Isso determinará o custo
-                    total da mão de obra.
-                  </Text>
+              <View style={[styles.fala2]}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ width: 170, height: 190, marginRight: 10 }}>
+                    <Text style={[styles.tutorialText]}>
+                      Para calcular os custos de mão de obra na produção de uma
+                      peça, multiplique o tempo gasto no fatiador e preparação
+                      pelo preço da hora de trabalho. Isso determinará o custo
+                      total da mão de obra.
+                    </Text>
+                  </View>
+                  <Image
+                    source={{ uri: 'assets/img/3-unscreen.gif' }}
+                    style={{ width: 185, height: 265, borderRadius: 10, marginLeft: 35 }}
+                  />
                 </View>
-                <Image
-                  source={{ uri: 'assets/img/3-unscreen.gif' }} 
-                  style={{ width: 280, height: 280 }}
-                />
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30}}>
                 <Pressable
-                  style={({ pressed }) => [styles.buttonfrente3]}
+                  style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial5}
                 >
                   <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfecha]}
+                  onPress={handletutorial4}
+                >
+                  <Text style={styles.buttonText}>✖</Text>
                 </Pressable>
               </View>
             </View>
@@ -747,26 +763,36 @@ const Orca3d = () => {
             }}
           >
             <View style={[styles.tutorial4]}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={[styles.fala2]}>
-                  <Text style={[styles.tutorialText]}>
-                    Para calcular o payback do investimento inicial, divida o
-                    investimento inicial pelo lucro diário esperado. Isso
-                    determina o número de dias necessários para recuperar o
-                    investimento inicial.
-                  </Text>
+              <View style={[styles.fala2]}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ width: 150, height: 170, marginRight: 10 }}>
+                    <Text style={[styles.tutorialText]}>
+                      Para calcular o payback do investimento inicial, divida o
+                      investimento inicial pelo lucro diário esperado. Isso
+                      determina o número de dias necessários para recuperar o
+                      investimento inicial.
+                    </Text>
+                  </View>
+
+                  <Image
+                    source={{ uri: 'assets/img/4-unscreen.gif' }}
+                    style={{ width: 185, height: 265, borderRadius: 10, marginLeft: 35 }}
+                  />
                 </View>
-                <Image
-                  source={{ uri: 'assets/img/4-unscreen.gif' }}
-                  style={{ width: 280, height: 280 }}
-                />
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30}}>
                 <Pressable
-                  style={({ pressed }) => [styles.buttonfrente4]}
+                  style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial6}
                 >
                   <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfecha]}
+                  onPress={handletutorial5}
+                >
+                  <Text style={styles.buttonText}>✖</Text>
                 </Pressable>
               </View>
             </View>
@@ -789,26 +815,36 @@ const Orca3d = () => {
             }}
           >
             <View style={[styles.tutorial5]}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={[styles.fala2]}>
-                  <Text style={[styles.tutorialText]}>
-                    Para calcular a margem do funcionário, some os custos de
-                    filamento e energia e aplique a porcentagem destinada ao
-                    funcionário. Isso determinará a margem repassada após
-                    dedução dos custos.
-                  </Text>
+              <View style={[styles.fala2]}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ width: 170, height: 190, marginRight: 10 }}>
+                    <Text style={[styles.tutorialText]}>
+                      Para calcular a margem do funcionário, some os custos de
+                      filamento e energia e aplique a porcentagem destinada ao
+                      funcionário. Isso determinará a margem repassada após
+                      dedução dos custos.
+                    </Text>
+                  </View>
+
+                  <Image
+                    source={{ uri: 'assets/img/5-unscreen.gif' }}
+                    style={{ width: 185, height: 265, borderRadius: 10, marginLeft: 35 }}
+                  />
                 </View>
-                <Image
-                  source={{ uri: 'assets/img/5-unscreen.gif' }}
-                  style={{ width: 280, height: 280 }}
-                />
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30 }}>
                 <Pressable
-                  style={({ pressed }) => [styles.buttonfrente5]}
+                  style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial7}
                 >
                   <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfecha]}
+                  onPress={handletutorial6}
+                >
+                  <Text style={styles.buttonText}>✖</Text>
                 </Pressable>
               </View>
             </View>
@@ -831,26 +867,36 @@ const Orca3d = () => {
             }}
           >
             <View style={[styles.tutorial6]}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={[styles.fala2]}>
-                  <Text style={[styles.tutorialText]}>
-                    Para calcular a margem de lucro, some os custos de filamento
-                    e energia, e aplique a porcentagem pré-definida destinada ao
-                    lucro. Isso determinará a margem destinada ao lucro após
-                    dedução dos custos.
-                  </Text>
+              <View style={[styles.fala2]}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ width: 170, height: 190, marginRight: 10 }}>
+                    <Text style={[styles.tutorialText]}>
+                      Para calcular a margem de lucro, some os custos de filamento
+                      e energia, e aplique a porcentagem pré-definida destinada ao
+                      lucro. Isso determinará a margem destinada ao lucro após
+                      dedução dos custos.
+                    </Text>
+                  </View>
+
+                  <Image
+                    source={{ uri: 'assets/img/6-unscreen.gif' }}
+                    style={{ width: 185, height: 265, borderRadius: 10, marginLeft: 35 }}
+                  />
                 </View>
-                <Image
-                  source={{ uri: 'assets/img/6-unscreen.gif' }}
-                  style={{ width: 280, height: 280 }}
-                />
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30 }}>
                 <Pressable
-                  style={({ pressed }) => [styles.buttonfrente6]}
+                  style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial8}
                 >
                   <Text style={styles.buttonText}>➡</Text>
+                </Pressable>
+
+                <Pressable
+                  style={({ pressed }) => [styles.buttonfecha]}
+                  onPress={handletutorial7}
+                >
+                  <Text style={styles.buttonText}>✖</Text>
                 </Pressable>
               </View>
             </View>
@@ -873,23 +919,40 @@ const Orca3d = () => {
             }}
           >
             <View style={[styles.tutorial7]}>
-              <View style={[styles.fala1]}>
-                <Text style={[styles.tutorialText]}>
-                  O histórico de um software de cálculos é como um registro que
-                  mostra sua evolução ao longo do tempo. Ele é útil para
-                  entender as melhorias feitas, adição de funcionalidades e
-                  confiabilidade em diferentes versões. Permite tomar decisões
-                  informadas sobre sua utilização e oferece uma visão panorâmica
-                  da jornada do software.
-                </Text>
+              <View style={[styles.fala9]}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ width: 220, height: 190, marginRight: 10 }}>
+                    <Text style={[styles.tutorialText]}>
+                      O histórico de um software de cálculos é como um registro que
+                      mostra sua evolução ao longo do tempo. Ele é útil para
+                      entender as melhorias feitas, adição de funcionalidades e
+                      confiabilidade em diferentes versões. Permite tomar decisões
+                      informadas sobre sua utilização e oferece uma visão panorâmica
+                      da jornada do software.
+                    </Text>
+                  </View>
+
+                  <Image
+                    source={{ uri: 'assets/img/Calculo.png' }}
+                    style={{ width: 100, height: 180, borderRadius: 10, }}
+                  />
+
+                  <Image
+                    source={{ uri: 'assets/img/Historico.png' }}
+                    style={{ width: 100, height: 180, borderRadius: 10, marginLeft: 5 }}
+                  />
+                </View>
               </View>
+
               <View style={{ flexDirection: 'row' }}>
+              <View style={{marginVertical: 10, marginLeft: 330 }}>
                 <Pressable
-                  style={({ pressed }) => [styles.buttonfrente7]}
+                  style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial9}
                 >
                   <Text style={styles.buttonText}>➡</Text>
                 </Pressable>
+                </View>
               </View>
             </View>
           </View>
@@ -912,21 +975,23 @@ const Orca3d = () => {
           >
             <View style={[styles.tutorial8]}>
               <View style={[styles.fala10]}>
-                <Text style={[styles.tutorialText]}>
-                  Chegamos ao fim deste tutorial sobre o uso eficaz desta
-                  ferramenta. Esperamos que as informações compartilhadas tenham
-                  sido claras e úteis para você. Lembre-se de explorar todas as
-                  funcionalidades disponíveis, pois elas podem facilitar
-                  significativamente suas tarefas diárias. Se surgirem dúvidas
-                  ou questões adicionais, não hesite em nos contatar para obter
-                  suporte adicional. Desejamos a você muito sucesso em suas
-                  atividades e que esta ferramenta contribua positivamente para
-                  alcançar seus objetivos. Até logo e boas explorações!
-                </Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={[styles.tutorialText]}>
+                    Chegamos ao fim deste tutorial sobre o uso eficaz desta
+                    ferramenta. Esperamos que as informações compartilhadas tenham
+                    sido claras e úteis para você. Lembre-se de explorar todas as
+                    funcionalidades disponíveis, pois elas podem facilitar
+                    significativamente suas tarefas diárias. Se surgirem dúvidas
+                    ou questões adicionais, não hesite em nos contatar para obter
+                    suporte adicional. Desejamos a você muito sucesso em suas
+                    atividades e que esta ferramenta contribua positivamente para
+                    alcançar seus objetivos. Até logo e boas explorações!
+                  </Text>
+                </View>
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{marginVertical: 80, marginLeft: 330 }}>
                 <Pressable
-                  style={({ pressed }) => [styles.buttonfrente8]}
+                  style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial9}
                 >
                   <Text style={styles.buttonText}>✖</Text>
@@ -1157,7 +1222,7 @@ const Orca3d = () => {
               )}
             </View>
           </View>
-          <Pressable style={styles.buttonhe} onPress={{ handletutorial1 }}>
+          <Pressable style={styles.buttonhe} onPress={handletutorial1}>
             <Image
               source={require("../front/assets/ajuda.png")}
               style={{
