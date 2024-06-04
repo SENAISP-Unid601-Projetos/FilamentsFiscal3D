@@ -91,7 +91,6 @@ const Orca3d = () => {
 
   const handleLoginSuccess = () => {
     setIsAuthenticated(true);
-    setModalTutorial1Visible(true);
   };
 
   const handleLogout = async () => {
@@ -156,7 +155,6 @@ const Orca3d = () => {
       setModalCadastroVisible(true);
     } else {
       setModalCadastroVisible(false);
-      handleTesteLogin();
     }
   };
 
@@ -263,17 +261,19 @@ const Orca3d = () => {
   };
 
   // Função para calcular a taxa de lucro
+  /*
   const calcularTaxaLucro = async () => {
     const taxaLucro = (parseFloat(valorTotalFilamento) + parseFloat(valorKwh) / parseFloat(consumoEnergia)) * 100;
     return taxaLucro.toFixed(2);
   };
+  */
 
   // Estado e função para a Calculadora de Margem de Lucro
   const [porcentagemLucro, setPorcentagemLucro] = useState(0);
   const [margemLucro, setMargemLucro] = useState(0);
 
   const calcularMargemLucro = async () => {
-    const margemLucroCalculada = ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) * parseFloat(porcentagemLucro)) / 100;
+    const margemLucroCalculada = ((parseFloat(valorTotalFilamento) + parseFloat(  )) * parseFloat(porcentagemLucro)) / 100;
     setMargemLucro(margemLucroCalculada.toFixed(2)); // Ajusta para duas casas decimais
   };
 
@@ -281,7 +281,7 @@ const Orca3d = () => {
   const [porcentagemCola, setPorcentagemCola] = useState(0);
   const [margemCola, setMargemCola] = useState(0);
 
-  const calcularMargemCola = async () => {
+  const calcularMargemCola = async (calcu) => {
     const margemColaCalculada = ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) * parseFloat(porcentagemCola)) / 100;
     setMargemCola(margemColaCalculada.toFixed(2)); // Ajusta para duas casas decimais
   };
@@ -321,23 +321,35 @@ const Orca3d = () => {
       parseFloat(fluxoCaixa);
     setTotalComLucro(totalCalculado.toFixed(2)); // Ajusta para duas casas decimais
   };
-
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   const handleAllCalculations = async () => {
     setErrorMessage("");
     try {
-      await calcularCustoFilamento();
-      await calcularConsumoEnergia();
-      await calcularTaxaLucro();
-      await calcularMargemLucro();
+      let i = 0;
+      // Primeiro grupo de funções
+      await Promise.all([
+        calcularCustoFilamento(),
+        calcularConsumoEnergia(),
+        calcularCustoPreparacao(),
+        fazerpay()
+      ]);;
+      await delay(1000); // Delay de 1 segundo (1000ms)
+
+      // Segundo grupo de funções
       await calcularMargemCola();
-      await calcularCustoPreparacao();
-      await fazerpay();
+      await calcularMargemLucro();
+      await delay(1000); // Delay de 1 segundo (1000ms
+
+      // Última função
       await calcularTotalComLucro();
+
+      // Definir como calculado
       setCalculado(true);
     } catch (error) {
       setErrorMessage("Erro ao realizar os cálculos: " + error.message);
     }
   };
+
 
   //historico
   const adicionarAoHistorico = () => {
@@ -677,7 +689,7 @@ const Orca3d = () => {
                   />
                 </View>
               </View>
-              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30}}>
+              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30 }}>
                 <Pressable
                   style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial4}
@@ -728,7 +740,7 @@ const Orca3d = () => {
                   />
                 </View>
               </View>
-              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30}}>
+              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30 }}>
                 <Pressable
                   style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial5}
@@ -780,7 +792,7 @@ const Orca3d = () => {
                   />
                 </View>
               </View>
-              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30}}>
+              <View style={{ flexDirection: 'row-reverse', marginVertical: 55, marginRight: 30 }}>
                 <Pressable
                   style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial6}
@@ -945,13 +957,13 @@ const Orca3d = () => {
               </View>
 
               <View style={{ flexDirection: 'row' }}>
-              <View style={{marginVertical: 10, marginLeft: 330 }}>
-                <Pressable
-                  style={({ pressed }) => [styles.buttonfrente1]}
-                  onPress={handletutorial9}
-                >
-                  <Text style={styles.buttonText}>➡</Text>
-                </Pressable>
+                <View style={{ marginVertical: 10, marginLeft: 330 }}>
+                  <Pressable
+                    style={({ pressed }) => [styles.buttonfrente1]}
+                    onPress={handletutorial9}
+                  >
+                    <Text style={styles.buttonText}>➡</Text>
+                  </Pressable>
                 </View>
               </View>
             </View>
@@ -989,7 +1001,7 @@ const Orca3d = () => {
                   </Text>
                 </View>
               </View>
-              <View style={{marginVertical: 80, marginLeft: 330 }}>
+              <View style={{ marginVertical: 80, marginLeft: 330 }}>
                 <Pressable
                   style={({ pressed }) => [styles.buttonfrente1]}
                   onPress={handletutorial9}
@@ -1159,6 +1171,15 @@ const Orca3d = () => {
           </View>
         </View>
         <View style={[styles.rightPane, { flex: 2 }]}>
+          <Pressable style={styles.buttonhe} onPress={handletutorial1}>
+            <Image
+              source={require("../front/assets/ajuda.png")}
+              style={{
+                width: 70,
+                height: 70,
+              }}
+            />
+          </Pressable>
           <View style={{ flexDirection: "row" }}>
             <View style={styles.inputContainerresultados}>
               {/* Seção para a Calculadora de Total com Lucro */}
@@ -1222,15 +1243,7 @@ const Orca3d = () => {
               )}
             </View>
           </View>
-          <Pressable style={styles.buttonhe} onPress={handletutorial1}>
-            <Image
-              source={require("../front/assets/ajuda.png")}
-              style={{
-                width: 80,
-                height: 80,
-              }}
-            />
-          </Pressable>
+
         </View>
       </SafeAreaView>
     </ScrollView>

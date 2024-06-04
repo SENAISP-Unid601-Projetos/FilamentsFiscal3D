@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, Modal, Picker, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, StyleSheet, Modal, Picker, TouchableOpacity, Pressable } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginModal = ({ visible, onClose, onLoginSuccess }) => {
+const LoginModal = ({ visible, onClose, onLoginSuccess, setModalTutorial1Visible }) => {
   const [isLoginView, setIsLoginView] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -40,9 +40,26 @@ const LoginModal = ({ visible, onClose, onLoginSuccess }) => {
         tipoUsuario,
       });
 
-      setMessage(response.data);
       if (response.data === 'Usuário cadastrado com sucesso') {
-        setIsLoginView(true); // Switch to login view after successful registration
+        setMessage('Usuário cadastrado com sucesso');
+        // Login immediately after successful registration
+        const loginResponse = await axios.post('http://10.110.12.37:8080/usuarios/login', {
+          username,
+          password,
+        });
+
+        if (loginResponse.data === 'Credenciais inválidas') {
+          setMessage('Erro ao fazer login após cadastro');
+        } else {
+          const token = loginResponse.data;
+          await AsyncStorage.setItem('authToken', token);
+          setMessage('Cadastro e login bem-sucedidos!');
+          onLoginSuccess();
+          onClose();
+          setModalTutorial1Visible(true); // Open the tutorial modal
+        }
+      } else {
+        setMessage(response.data);
       }
     } catch (error) {
       setMessage('Erro ao fazer cadastro');
@@ -74,7 +91,9 @@ const LoginModal = ({ visible, onClose, onLoginSuccess }) => {
                 onChangeText={setPassword}
                 secureTextEntry
               />
-              <Button title="Login" onPress={handleLogin} />
+              <Pressable style={styles.button} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Login</Text>
+              </Pressable>
               {message ? <Text>{message}</Text> : null}
               <TouchableOpacity onPress={() => setIsLoginView(false)}>
                 <Text style={styles.switchText}>Não tem uma conta? Cadastre-se</Text>
@@ -102,14 +121,18 @@ const LoginModal = ({ visible, onClose, onLoginSuccess }) => {
                 <Picker.Item label="Aluno" value="aluno" />
                 <Picker.Item label="Professor" value="professor" />
               </Picker>
-              <Button title="Cadastrar" onPress={handleCadastro} />
+              <Pressable style={styles.button} onPress={handleCadastro}>
+                <Text style={styles.buttonText}>Cadastrar</Text>
+              </Pressable>
               {message ? <Text>{message}</Text> : null}
               <TouchableOpacity onPress={() => setIsLoginView(true)}>
                 <Text style={styles.switchText}>Já tem uma conta? Faça login</Text>
               </TouchableOpacity>
             </>
           )}
-          <Button title="Close" onPress={onClose} />
+          <Pressable style={styles.button} onPress={onClose}>
+            <Text style={styles.buttonText}>Close</Text>
+          </Pressable>
         </View>
       </View>
     </Modal>
@@ -140,6 +163,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: 'blue',
     textAlign: 'center',
+  },
+  button: {
+    backgroundColor: 'gray',
+    padding: 10,
+    marginVertical: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 
