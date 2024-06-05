@@ -238,14 +238,13 @@ const Orca3d = () => {
     }
   }
 
-  // Estado para a Calculadora de Filamento
   const [pesoPeca, setPesoPeca] = useState(0);
   const [pesoFilamento, setPesoFilamento] = useState(0);
   const [valorTotalFilamento, setValorTotalFilamento] = useState(0);
 
   const calcularCustoFilamento = async () => {
     const custoTotalFilamento = parseFloat(pesoPeca) * parseFloat(pesoFilamento);
-    setValorTotalFilamento(custoTotalFilamento.toFixed(2)); // Ajusta para duas casas decimais
+    await setValorTotalFilamento(custoTotalFilamento.toFixed(2));
   };
 
   // Estado para a Calculadora de Energia
@@ -257,35 +256,28 @@ const Orca3d = () => {
   const calcularConsumoEnergia = async () => {
     const consumoCalculado = (parseFloat(potenciaEquipamento) * parseFloat(horasImpressao)) / 1000;
     const consumoFinal = consumoCalculado * parseFloat(valorKwh);
-    setConsumoEnergia(consumoFinal.toFixed(2)); // Ajusta para duas casas decimais
+    setConsumoEnergia(consumoFinal.toFixed(2));
   };
-
-  // Função para calcular a taxa de lucro
-  /*
-  const calcularTaxaLucro = async () => {
-    const taxaLucro = (parseFloat(valorTotalFilamento) + parseFloat(valorKwh) / parseFloat(consumoEnergia)) * 100;
-    return taxaLucro.toFixed(2);
-  };
-  */
 
   // Estado e função para a Calculadora de Margem de Lucro
   const [porcentagemLucro, setPorcentagemLucro] = useState(0);
   const [margemLucro, setMargemLucro] = useState(0);
 
   const calcularMargemLucro = async () => {
-    const margemLucroCalculada = ((parseFloat(valorTotalFilamento) + parseFloat(  )) * parseFloat(porcentagemLucro)) / 100;
-    setMargemLucro(margemLucroCalculada.toFixed(2)); // Ajusta para duas casas decimais
+    const margemLucroCalculada = ((parseFloat(valorTotalFilamento) + parseFloat(consumoEnergia)) * parseFloat(porcentagemLucro)) / 100;
+    setMargemLucro(margemLucroCalculada.toFixed(2));
   };
 
   // Estado e função para a Calculadora do preço dos colaboradores
   const [porcentagemCola, setPorcentagemCola] = useState(0);
   const [margemCola, setMargemCola] = useState(0);
 
-  const calcularMargemCola = async (calcu) => {
-    const margemColaCalculada = ((parseFloat(valorTotalFilamento) + parseFloat(valorKwh)) * parseFloat(porcentagemCola)) / 100;
-    setMargemCola(margemColaCalculada.toFixed(2)); // Ajusta para duas casas decimais
+  const calcularMargemCola = async () => {
+    const margemColaCalculada = ((parseFloat(valorTotalFilamento) + parseFloat(consumoEnergia)) * parseFloat(porcentagemCola)) / 100;
+    setMargemCola(margemColaCalculada.toFixed(2));
   };
-  // Estado para a Calculadora de prossessos de preparação
+
+  // Estado para a Calculadora de processos de preparação
   const [horaPreparacao, setHoraPreparacao] = useState(0);
   const [horaFatiador, setHoraFatiador] = useState(0);
   const [valorHora, setValorHora] = useState(0);
@@ -293,7 +285,7 @@ const Orca3d = () => {
 
   const calcularCustoPreparacao = async () => {
     const custoPreparacao = parseFloat(valorHora) * (parseFloat(horaFatiador) + parseFloat(horaPreparacao));
-    setValorTrabalho(custoPreparacao.toFixed(2)); // Ajusta para duas casas decimais
+    setValorTrabalho(custoPreparacao.toFixed(2));
   };
 
   // Estado para a Calculadora de payback
@@ -319,29 +311,33 @@ const Orca3d = () => {
       parseFloat(margemCola) +
       parseFloat(valorTrabalho) +
       parseFloat(fluxoCaixa);
-    setTotalComLucro(totalCalculado.toFixed(2)); // Ajusta para duas casas decimais
+    setTotalComLucro(totalCalculado.toFixed(2));
   };
-  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+  // UseEffect para acionar as funções calcularMargemCola e calcularMargemLucro quando os estados estiverem atualizados
+  useEffect(() => {
+    if (valorTotalFilamento && consumoEnergia && valorTrabalho && fluxoCaixa) {
+      calcularMargemCola();
+      calcularMargemLucro();
+    }
+  }, [valorTotalFilamento, consumoEnergia, valorTrabalho, fluxoCaixa]);
+
+  // UseEffect para acionar a função calcularTotalComLucro quando os estados estiverem atualizados
+  useEffect(() => {
+    if (valorTotalFilamento && consumoEnergia && margemLucro && margemCola && valorTrabalho && fluxoCaixa) {
+      calcularTotalComLucro();
+    }
+  }, [valorTotalFilamento, consumoEnergia, margemLucro, margemCola, valorTrabalho, fluxoCaixa]);
+
   const handleAllCalculations = async () => {
     setErrorMessage("");
     try {
-      let i = 0;
       // Primeiro grupo de funções
-      await Promise.all([
-        calcularCustoFilamento(),
-        calcularConsumoEnergia(),
-        calcularCustoPreparacao(),
-        fazerpay()
-      ]);;
-      await delay(1000); // Delay de 1 segundo (1000ms)
+      await calcularCustoFilamento();
+      await calcularConsumoEnergia();
+      await calcularCustoPreparacao();
+      await fazerpay();
 
-      // Segundo grupo de funções
-      await calcularMargemCola();
-      await calcularMargemLucro();
-      await delay(1000); // Delay de 1 segundo (1000ms
-
-      // Última função
-      await calcularTotalComLucro();
 
       // Definir como calculado
       setCalculado(true);
@@ -349,7 +345,6 @@ const Orca3d = () => {
       setErrorMessage("Erro ao realizar os cálculos: " + error.message);
     }
   };
-
 
   //historico
   const adicionarAoHistorico = () => {
@@ -516,42 +511,40 @@ const Orca3d = () => {
         />
       </View>
       <View style={styles.inputContainercabeçalho}>
-        <View>
-          <TouchableOpacity onPress={handleLogoPress}>
+      <TouchableOpacity onPress={handleLogoPress}>
             <Image
-              source={require("../front/assets/logo.png")}
+              source={require("../front/assets/favicon.png")}
               style={{
                 width: "100px",
                 height: "100px",
-                marginLeft: "590px",
+                marginLeft: "580px",
                 marginBottom: "-80px",
               }} // ajuste o tamanho conforme necessário
             />
           </TouchableOpacity>
-        </View>
 
-        <View style={styles.buttonconectar}>
-          {isAuthenticated ? (
-            <View>
+          <View style={styles.buttonconectar}>
+            {isAuthenticated ? (
               <Pressable
                 style={({ pressed }) => [
                   { backgroundColor: pressed ? 'darkred' : 'red' }, styles.button]} onPress={handleLogout}>
                 <Text style={styles.buttonText}>Logout</Text>
               </Pressable>
-            </View>
-          ) : (
-            <Pressable
-              style={({ pressed }) => [
-                { backgroundColor: pressed ? 'darkblue' : 'blue' }, styles.button,]} onPress={() => setIsModalVisible(true)}>
-              <Text style={styles.buttonText}>Login / Cadastro</Text>
-            </Pressable>
-          )}
-          <LoginModal
-            visible={isModalVisible}
-            onClose={() => setIsModalVisible(false)}
-            onLoginSuccess={handleLoginSuccess}
-          />
-        </View>
+            ) : (
+              <Pressable
+                style={({ pressed }) => [
+                  { backgroundColor: pressed ? 'darkblue' : 'blue' }, styles.button,]} onPress={() => setIsModalVisible(true)}>
+                <Text style={styles.buttonText}>Login / Cadastro</Text>
+              </Pressable>
+            )}
+          </View>
+
+        <LoginModal
+          visible={isModalVisible}
+          onClose={() => setIsModalVisible(false)}
+          onLoginSuccess={handleLoginSuccess}
+        />
+
         <Modal
           animationType="slide"
           transparent={true}
@@ -1171,16 +1164,8 @@ const Orca3d = () => {
           </View>
         </View>
         <View style={[styles.rightPane, { flex: 2 }]}>
-          <Pressable style={styles.buttonhe} onPress={handletutorial1}>
-            <Image
-              source={require("../front/assets/ajuda.png")}
-              style={{
-                width: 70,
-                height: 70,
-              }}
-            />
-          </Pressable>
           <View style={{ flexDirection: "row" }}>
+
             <View style={styles.inputContainerresultados}>
               {/* Seção para a Calculadora de Total com Lucro */}
               <Text style={[styles.colorText]}>
@@ -1230,6 +1215,15 @@ const Orca3d = () => {
               </Text>
               <ScrollView>{renderizarHistoricos()}</ScrollView>
             </View>
+                        <Pressable style={styles.buttonhe} onPress={handletutorial1}>
+              <Image
+                source={require("../front/assets/ajuda.png")}
+                style={{
+                  width: 50,
+                  height: 50,
+                }}
+              />
+            </Pressable>
           </View>
           <View style={styles.inputContainerCaixaDBotoes}>
             <View style={{ flexDirection: "row" }}>
